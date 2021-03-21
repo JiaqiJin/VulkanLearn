@@ -108,7 +108,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLFW_INCLUDE_VULKAN;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\VisualStudio\VulkanLearn\Dep\glm;E:\VisualStudio\VulkanLearn\Dep\glfw-3.3.2.bin.WIN64\include;C:\VulkanSDK\1.2.154.1\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\VisualStudio\VulkanLearn\Dep\stbimage;E:\VisualStudio\VulkanLearn\Dep\glm;E:\VisualStudio\VulkanLearn\Dep\glfw-3.3.2.bin.WIN64\include;C:\VulkanSDK\1.2.154.1\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -142,7 +142,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLFW_INCLUDE_VULKAN;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\VisualStudio\VulkanLearn\Dep\glm;E:\VisualStudio\VulkanLearn\Dep\glfw-3.3.2.bin.WIN64\include;C:\VulkanSDK\1.2.154.1\Include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\VisualStudio\VulkanLearn\Dep\stbimage;E:\VisualStudio\VulkanLearn\Dep\glm;E:\VisualStudio\VulkanLearn\Dep\glfw-3.3.2.bin.WIN64\include;C:\VulkanSDK\1.2.154.1\Include;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
