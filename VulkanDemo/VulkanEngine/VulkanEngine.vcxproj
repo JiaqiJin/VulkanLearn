@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{895cc11f-43fa-48ad-9e53-82216f375fac}</ProjectGuid>
+    <ProjectGuid>{d1e4273a-65ef-4272-bc68-6c655fb50aab}</ProjectGuid>
     <RootNamespace>VulkanEngine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -116,13 +116,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\VulkanSDK\1.2.154.1\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\VisualStudio\VulkanLearn\Dep\glm;E:\VisualStudio\VulkanLearn\Dep\irrKlang\include;E:\VisualStudio\VulkanLearn\Dep\fbxsdk\include;E:\VisualStudio\VulkanLearn\Dep\glfw-3.3.2.bin.WIN64\include;C:\VulkanSDK\1.2.154.1\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\VulkanSDK\1.2.154.1\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\VisualStudio\VulkanLearn\Dep\irrKlang\lib\Winx64-visualStudio;E:\VisualStudio\VulkanLearn\Dep\fbxsdk\lib\x64\debug;E:\VisualStudio\VulkanLearn\Dep\glfw-3.3.2.bin.WIN64\lib-vc2019;C:\VulkanSDK\1.2.154.1\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vulkan-1.lib;glfw3.lib;libfbxsdk.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -133,25 +134,29 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>E:\VisualStudio\VulkanLearn\Dep\glm;E:\VisualStudio\VulkanLearn\Dep\irrKlang\include;E:\VisualStudio\VulkanLearn\Dep\fbxsdk\include;E:\VisualStudio\VulkanLearn\Dep\glfw-3.3.2.bin.WIN64\include;C:\VulkanSDK\1.2.154.1\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>E:\VisualStudio\VulkanLearn\Dep\irrKlang\lib\Winx64-visualStudio;E:\VisualStudio\VulkanLearn\Dep\fbxsdk\lib\x64\debug;E:\VisualStudio\VulkanLearn\Dep\glfw-3.3.2.bin.WIN64\lib-vc2019;C:\VulkanSDK\1.2.154.1\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vulkan-1.lib;glfw3.lib;libfbxsdk.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\Application\WinApplication.cpp" />
-    <ClCompile Include="Engine\Application\WinWindow.cpp" />
-    <ClCompile Include="Example\TriangleDemo.cpp" />
+    <ClCompile Include="Engine\RHI\Renderer.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\Application\WinApplication.h" />
-    <ClInclude Include="Engine\Application\WinWindow.h" />
-    <ClInclude Include="Engine\Common\Common.h" />
-    <ClInclude Include="Engine\Common\Log.h" />
+    <ClInclude Include="Engine\Globals.h" />
+    <ClInclude Include="Engine\Math\Math.h" />
+    <ClInclude Include="Engine\RHI\Input.h" />
+    <ClInclude Include="Engine\RHI\Renderer.h" />
+    <ClInclude Include="Engine\RHI\ShaderPath.h" />
+    <ClInclude Include="Engine\RHI\Vertex.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

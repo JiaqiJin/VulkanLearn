@@ -28,11 +28,16 @@
 #include <set>
 #include <unordered_map>
 
+#include "testShader/ResourceInc.h"
+
 const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;
 
-const std::string MODEL_PATH = "models/viking_room.obj";
-const std::string TEXTURE_PATH = "models/viking_room.png";
+//const std::string MODEL_PATH = "models/viking_room.obj";
+//const std::string TEXTURE_PATH = "models/viking_room.png";
+Resource resource;
+const std::string MODEL_PATH = resource.model_path_;
+const std::string TEXTURE_PATH = resource.texture_path_;
 
 const int MAX_FRAMES_IN_FLIGHT = 2;
 
