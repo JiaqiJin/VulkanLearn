@@ -151,12 +151,14 @@
     <ClCompile Include="Renderer\context.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Renderer\VulkanRender.cpp" />
+    <ClCompile Include="Renderer\VulkanUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\context.h" />
     <ClInclude Include="Renderer\raii.h" />
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Renderer\VulkanRender.h" />
+    <ClInclude Include="Renderer\VulkanUtil.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
