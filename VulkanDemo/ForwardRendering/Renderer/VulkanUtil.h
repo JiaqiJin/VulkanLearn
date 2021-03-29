@@ -21,6 +21,12 @@ public:
 	VUtility(const VUtility&) = delete;
 	VUtility& operator= (const VUtility&) = delete;
 
+	VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
+	VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes);
+	VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities);
 private:
 	const VContext* context;
+	vk::Device device;
+	VkQueue graphicsQueue;
+	VkQueue presentQueue;
 };

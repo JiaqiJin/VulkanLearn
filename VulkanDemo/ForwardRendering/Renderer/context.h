@@ -44,6 +44,8 @@ public:
 	VContext(const VContext&) = delete;
 	VContext& operator= (const VContext&) = delete;
 
+	std::pair<int, int> getWindowFrameBufferSize() const;
+
 	auto getQueueFamilyIndices() const
 	{
 		return queue_family_indices;

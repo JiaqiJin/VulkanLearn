@@ -22,6 +22,13 @@ const std::vector<const char*> DEVICE_EXTENSIONS = {
 	VK_KHR_SWAPCHAIN_EXTENSION_NAME
 };
 
+std::pair<int, int> VContext::getWindowFrameBufferSize() const
+{
+	int width, height;
+	glfwGetFramebufferSize(window, &height, &width);
+	return std::make_pair(width, height);
+}
+
 QueueFamilyIndices QueueFamilyIndices::findQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR surface)
 {
 	QueueFamilyIndices indices;
