@@ -11,10 +11,14 @@ public:
 
 private:
 	void createSwapChain();
+	void createGraphicsPipelines();
 
+	VRaii<VkShaderModule> createShaderModule(const std::vector<char>& code);
 private:
 	VContext vulkanContext;
 	VUtility utility{ vulkanContext };
+
+	QueueFamilyIndices queueFamilyIndices;
 
 	vk::Device device;
 
@@ -26,4 +30,12 @@ private:
 	VkExtent2D swapChainExtent;
 
 	VRaii<VkSwapchainKHR> swapChain;
+	VRaii<VkPipelineLayout> pipelineLayout;
+
+private:
+	void initialize()
+	{
+		createSwapChain();
+		createGraphicsPipelines();
+	}
 };

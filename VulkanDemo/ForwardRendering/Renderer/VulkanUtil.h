@@ -24,9 +24,15 @@ public:
 	VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
 	VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes);
 	VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities);
+
+	void createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectMask, VkImageView* pImageView);
+	VRaii<VkImageView> createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectMask);
+
 private:
 	const VContext* context;
+	VkDevice graphicsDevice;
 	vk::Device device;
+	VkPhysicalDevice physicalDevice;
 	VkQueue graphicsQueue;
 	VkQueue presentQueue;
 };
