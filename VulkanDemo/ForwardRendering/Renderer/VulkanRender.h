@@ -47,5 +47,6 @@ private:
 		createSwapChainImageViews();
 		createRenderPasses();
 		createGraphicsPipelines();
+		createFrameBuffers();
 	}
 };

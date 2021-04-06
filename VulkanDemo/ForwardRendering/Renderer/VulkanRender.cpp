@@ -355,7 +355,36 @@ void VulkanRender::createGraphicsPipelines()
 	// VkGraphicsPipelineCreateInfo 
 }
 
-void VulkanRender::createFrameBuffers()
+void VulkanRender::createFrameBuffers() // TODO ADD DEPTH attachments
 {
+	// swap chain frame buffers
+	{
+		swapChainFramebuffers.clear();
+		swapChainFramebuffers.reserve(swapChainImageViews.size());
 
+		for (size_t i = 0; i < swapChainImageViews.size(); i++)
+		{
+			std::array<VkImageView, 1> attachments = { swapChainImageViews[i] };
+
+			VkFramebufferCreateInfo framebufferInfo{};
+			framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+			framebufferInfo.renderPass = renderPass.get();
+			framebufferInfo.attachmentCount = (uint32_t)attachments.size();
+			framebufferInfo.pAttachments = attachments.data();
+			framebufferInfo.width = swapChainExtent.width;
+			framebufferInfo.height = swapChainExtent.height;
+			framebufferInfo.layers = 1;
+
+			auto framebuffer_clear = [device = this->device](auto& obj)
+			{
+				device.destroyFramebuffer(obj);
+			};
+			swapChainFramebuffers.emplace_back(device.createFramebuffer(framebufferInfo, nullptr), framebuffer_clear);
+		}
+	}
+
+	// depth frame buffer
+	{
+	
+	}
 }
