@@ -33,5 +33,14 @@ int main() {
 
     return 0;
 }
+/*
+renderPass = VRaii<vk::RenderPass>(
+            tempRenderpass,
+            [device = this->device](auto& obj)
+            {
+                device.destroyRenderPass(obj);
+            }
+        );
+*/
 
 // https://gpuopen.com/learn/understanding-vulkan-objects/

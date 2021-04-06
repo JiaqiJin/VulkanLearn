@@ -107,6 +107,25 @@ void VulkanRender::createSwapChain()
 	swapChainExtent = extent;
 }
 
+// describe how access swap chain images and which part to access
+void VulkanRender::createSwapChainImageViews() 
+{
+	swapChainImageViews.clear();
+	swapChainImageViews.reserve(swapChainImages.size());
+
+	for (uint32_t i = 0; i < swapChainImages.size(); i++)
+	{
+		VkImageView tempImageview{};
+		utility.createImageView(swapChainImages[i], swapChainImageFormat, VK_IMAGE_ASPECT_COLOR_BIT, &tempImageview);
+		swapChainImageViews.emplace_back(tempImageview, 
+			[device = this->device](auto& obj)
+			{
+			device.destroyImageView(obj);
+			}
+		);
+	}
+}
+
 VRaii<VkShaderModule> VulkanRender::createShaderModule(const std::vector<char>& code)
 {
 	VkShaderModuleCreateInfo createInfo = {};
@@ -129,6 +148,67 @@ VRaii<VkShaderModule> VulkanRender::createShaderModule(const std::vector<char>& 
 	);
 }
 
+// Framebuffer attachment (color, depth buffer will be, samples use etc)
+void VulkanRender::createRenderPasses() // TODO depth component
+{
+	/*VkAttachmentDescription depthAttachment{};
+	depthAttachment.format = utility.findDepthFormat();
+	depthAttachment*/
+	{ // depth pass
+	
+	}
+	
+	// render pass
+	{
+		VkAttachmentDescription colorAttachment{};
+		colorAttachment.format = swapChainImageFormat;
+		colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
+		colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR; //Clear the values to a constant at the start
+		colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE; // stored in mem and read later
+		colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE; // no stencil
+		colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+		colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+		colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR; // to be directly used in swap chain
+
+		VkAttachmentReference colorAttachmentRef{};
+		colorAttachmentRef.attachment = 0;
+		colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+
+		/*VkAttachmentReference depthAttachmentRef{};
+		colorAttachmentRef.attachment = 1;
+		colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;*/
+
+		VkSubpassDescription subpass{};
+		subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+		subpass.colorAttachmentCount = 1;
+		subpass.pColorAttachments = &colorAttachmentRef;
+		//subpass.pDepthStencilAttachment = &depthAttachmentRef;
+
+		std::array<VkAttachmentDescription, 1> attachments{colorAttachment};
+
+		VkRenderPassCreateInfo renderPassInfo{};
+		renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
+		renderPassInfo.attachmentCount = (uint32_t)attachments.size();
+		renderPassInfo.pAttachments = attachments.data();
+		renderPassInfo.subpassCount = 1;
+		renderPassInfo.pSubpasses = &subpass;
+
+		VkRenderPass tempRenderpass{};
+		if (vkCreateRenderPass(graphicsDevice, &renderPassInfo, nullptr, &tempRenderpass) != VK_SUCCESS)
+		{
+			throw std::runtime_error("failed to create render pass!");
+		}
+	
+		renderPass = VRaii<vk::RenderPass>(
+			tempRenderpass,
+			[device = this->device](auto& obj)
+			{
+				device.destroyRenderPass(obj);
+			}
+		);
+	}
+}
+
 void VulkanRender::createGraphicsPipelines()
 {
 	auto vertShaderCode = readFile("Shaders/vert.spv");
@@ -149,7 +229,7 @@ void VulkanRender::createGraphicsPipelines()
 	fragShaderStageInfo.module = fragShaderModule.get();
 	fragShaderStageInfo.pName = "main";
 
-	VkPipelineShaderStageCreateInfo shaderStages[] = {vertShaderStageInfo, fragShaderStageInfo};
+	VkPipelineShaderStageCreateInfo shaderStages[] = { vertShaderStageInfo, fragShaderStageInfo };
 
 	// vertex data
 	VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
@@ -209,8 +289,8 @@ void VulkanRender::createGraphicsPipelines()
 	VkPipelineDepthStencilStateCreateInfo depthStencil = {};
 	depthStencil.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
 	depthStencil.depthTestEnable = VK_TRUE;
-	depthStencil.depthWriteEnable = VK_FALSE; 
-	depthStencil.depthCompareOp = VK_COMPARE_OP_LESS_OR_EQUAL; 
+	depthStencil.depthWriteEnable = VK_FALSE;
+	depthStencil.depthCompareOp = VK_COMPARE_OP_LESS_OR_EQUAL;
 	depthStencil.depthBoundsTestEnable = VK_FALSE;
 	depthStencil.stencilTestEnable = VK_FALSE;
 
@@ -260,18 +340,22 @@ void VulkanRender::createGraphicsPipelines()
 	pipelineLayoutInfo.pPushConstantRanges = nullptr; // Optional
 
 	VkPipelineLayout tempLayout;
-	auto pipelineLayoutResult = vkCreatePipelineLayout(graphicsDevice, &pipelineLayoutInfo, nullptr,	&tempLayout);
+	auto pipelineLayoutResult = vkCreatePipelineLayout(graphicsDevice, &pipelineLayoutInfo, nullptr, &tempLayout);
 	if (pipelineLayoutResult != VK_SUCCESS)
 	{
 		throw std::runtime_error("failed to create pipeline layout!");
 	}
 	pipelineLayout = VRaii<VkPipelineLayout>(
-		tempLayout, 
+		tempLayout,
 		[device = this->device](auto& obj)
 		{
 			device.destroyPipelineLayout(obj);
 		}
 	);
-
 	// VkGraphicsPipelineCreateInfo 
+}
+
+void VulkanRender::createFrameBuffers()
+{
+
 }

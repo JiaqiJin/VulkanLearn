@@ -11,7 +11,10 @@ public:
 
 private:
 	void createSwapChain();
+	void createSwapChainImageViews();
+	void createRenderPasses();
 	void createGraphicsPipelines();
+	void createFrameBuffers();
 
 	VRaii<VkShaderModule> createShaderModule(const std::vector<char>& code);
 private:
@@ -26,16 +29,23 @@ private:
 	VkPhysicalDevice physicalDevice;
 
 	std::vector<VkImage> swapChainImages;
+	std::vector<VkImageView> swapChainImageViews;
+	std::vector<VRaii<vk::Framebuffer>> swapChainFramebuffers;
 	VkFormat swapChainImageFormat;
 	VkExtent2D swapChainExtent;
 
 	VRaii<VkSwapchainKHR> swapChain;
 	VRaii<VkPipelineLayout> pipelineLayout;
 
+	VRaii<vk::RenderPass> renderPass;
+	VRaii<VkPipelineLayout> pipelineLayout;
+
 private:
 	void initialize()
 	{
 		createSwapChain();
+		createSwapChainImageViews();
+		createRenderPasses();
 		createGraphicsPipelines();
 	}
 };
