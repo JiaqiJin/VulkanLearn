@@ -1,62 +1,32 @@
 #pragma once
 
-#include "context.h"
-#include "raii.h"
-#include "VulkanUtil.h"
+#include <glm/glm.hpp>
 
-class VulkanRender
+#include <memory>
+
+struct GLFWwindow;
+class _VulkanRenderer_Impl;
+
+class VulkanRenderer
 {
 public:
-	VulkanRender(GLFWwindow* window);
-	void Draw(float deltatime);
-	
+	VulkanRenderer(GLFWwindow* window);
+	~VulkanRenderer();
+
+	int getDebugViewIndex() const;
+
+	void resize(int width, int height);
+	void changeDebugViewIndex(int target_view);
+	void requestDraw(float deltatime);
+	void cleanUp();
+
+	void setCamera(const glm::mat4& view, const glm::vec3 campos);
+
+	VulkanRenderer(const VulkanRenderer&) = delete;
+	VulkanRenderer& operator= (const VulkanRenderer&) = delete;
+	VulkanRenderer(VulkanRenderer&&) = delete;
+	VulkanRenderer& operator= (VulkanRenderer&&) = delete;
+
 private:
-	void createSwapChain();
-	void createSwapChainImageViews();
-	void createRenderPasses();
-	void createGraphicsPipelines();
-	void createFrameBuffers();
-	void createGraphicsCommandBuffers();
-	void createSemaphores();
-
-	void drawFrame();
-	VRaii<VkShaderModule> createShaderModule(const std::vector<char>& code);
-private:
-	VContext vulkanContext;
-	VUtility utility{ vulkanContext };
-
-	QueueFamilyIndices queueFamilyIndices;
-
-	vk::Device device;
-
-	VkDevice graphicsDevice;
-	VkPhysicalDevice physicalDevice;
-	vk::Queue graphicsQueue;
-	vk::Queue presentQueue;
-
-	std::vector<VkImage> swapChainImages;
-	std::vector<VRaii<vk::ImageView>> swapChainImageViews;
-	std::vector<VRaii<vk::Framebuffer>> swapChainFramebuffers;
-	VkFormat swapChainImageFormat;
-	VkExtent2D swapChainExtent;
-
-	VRaii<VkSwapchainKHR> swapChain;
-	VRaii<VkPipeline> graphicsPipeline;
-	VRaii<VkPipelineLayout> pipelineLayout;
-	VRaii<vk::RenderPass> renderPass;
-
-	vk::CommandPool graphicsCommandPool;
-	std::vector<VkCommandBuffer> commandBuffers;
-
-	VRaii<vk::Semaphore> imageAvailableSemaphore;
-	VRaii<vk::Semaphore> renderFinishedSemaphore;
-private:
-	void initialize()
-	{
-		createSwapChain();
-		createSwapChainImageViews();
-		createRenderPasses();
-		createGraphicsPipelines();
-		createFrameBuffers();
-	}
+	std::unique_ptr<_VulkanRenderer_Impl> p_impl;
 };

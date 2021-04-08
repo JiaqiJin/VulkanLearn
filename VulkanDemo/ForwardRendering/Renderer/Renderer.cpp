@@ -21,3 +21,8 @@ void Renderer::Draw(float deltatime)
 {
 	p_render->Draw(deltatime);
 }
+
+void Renderer::cleanUp()
+{
+	p_render->cleanUp();
+}

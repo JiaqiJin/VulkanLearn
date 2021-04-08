@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\VisualStudio\VulkanLearn\Dep\glm;E:\VisualStudio\VulkanLearn\Dep\irrKlang\include;E:\VisualStudio\VulkanLearn\Dep\fbxsdk\include;E:\VisualStudio\VulkanLearn\Dep\glfw-3.3.2.bin.WIN64\include;C:\VulkanSDK\1.2.154.1\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\VisualStudio\VulkanLearn\Dep\glm;E:\VisualStudio\VulkanLearn\Dep\stbimage;E:\VisualStudio\VulkanLearn\Dep\irrKlang\include;E:\VisualStudio\VulkanLearn\Dep\fbxsdk\include;E:\VisualStudio\VulkanLearn\Dep\glfw-3.3.2.bin.WIN64\include;C:\VulkanSDK\1.2.154.1\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
@@ -134,7 +134,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\VisualStudio\VulkanLearn\Dep\glm;E:\VisualStudio\VulkanLearn\Dep\irrKlang\include;E:\VisualStudio\VulkanLearn\Dep\fbxsdk\include;E:\VisualStudio\VulkanLearn\Dep\glfw-3.3.2.bin.WIN64\include;C:\VulkanSDK\1.2.154.1\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\VisualStudio\VulkanLearn\Dep\glm;E:\VisualStudio\VulkanLearn\Dep\stbimage;E:\VisualStudio\VulkanLearn\Dep\irrKlang\include;E:\VisualStudio\VulkanLearn\Dep\fbxsdk\include;E:\VisualStudio\VulkanLearn\Dep\glfw-3.3.2.bin.WIN64\include;C:\VulkanSDK\1.2.154.1\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
@@ -147,16 +147,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\RHI\Renderer.cpp" />
+    <ClCompile Include="imgui\imgui.cpp" />
+    <ClCompile Include="imgui\imgui_demo.cpp" />
+    <ClCompile Include="imgui\imgui_draw.cpp" />
+    <ClCompile Include="imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="imgui\imgui_impl_vulkan.cpp" />
+    <ClCompile Include="imgui\imgui_tables.cpp" />
+    <ClCompile Include="imgui\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\Globals.h" />
-    <ClInclude Include="Engine\Math\Math.h" />
-    <ClInclude Include="Engine\RHI\Input.h" />
-    <ClInclude Include="Engine\RHI\Renderer.h" />
-    <ClInclude Include="Engine\RHI\ShaderPath.h" />
-    <ClInclude Include="Engine\RHI\Vertex.h" />
+    <ClInclude Include="imgui\imconfig.h" />
+    <ClInclude Include="imgui\imgui.h" />
+    <ClInclude Include="imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="imgui\imgui_impl_vulkan.h" />
+    <ClInclude Include="imgui\imgui_internal.h" />
+    <ClInclude Include="imgui\imstb_rectpack.h" />
+    <ClInclude Include="imgui\imstb_textedit.h" />
+    <ClInclude Include="imgui\imstb_truetype.h" />
+    <ClInclude Include="vendor\json.hpp" />
+    <ClInclude Include="vendor\tiny_gltf.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

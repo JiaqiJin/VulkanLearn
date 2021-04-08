@@ -149,16 +149,22 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Renderer\context.cpp" />
-    <ClCompile Include="Renderer\Renderer.cpp" />
+    <ClCompile Include="Renderer\model.cpp" />
+    <ClCompile Include="Renderer\util.cpp" />
     <ClCompile Include="Renderer\VulkanRender.cpp" />
     <ClCompile Include="Renderer\VulkanUtil.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\context.h" />
+    <ClInclude Include="Renderer\model.h" />
     <ClInclude Include="Renderer\raii.h" />
-    <ClInclude Include="Renderer\Renderer.h" />
+    <ClInclude Include="Renderer\util.h" />
     <ClInclude Include="Renderer\VulkanRender.h" />
     <ClInclude Include="Renderer\VulkanUtil.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\shader.frag" />
