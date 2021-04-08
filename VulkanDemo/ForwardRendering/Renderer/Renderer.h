@@ -14,6 +14,8 @@ public:
 	Renderer(GLFWwindow* window);
 	Renderer();
 
+	void Draw(float deltatime);
+
 	Renderer(const Renderer&) = delete;
 	Renderer& operator= (const Renderer&) = delete;
 	Renderer(Renderer&&) = delete;

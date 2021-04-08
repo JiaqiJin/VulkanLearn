@@ -468,3 +468,26 @@ SwapChainSupportDetails SwapChainSupportDetails::querySwapChainSupport(VkPhysica
 
 	return details;
 }
+
+void VContext::createCommandPools()
+{
+	auto device = graphicsDevice.get();
+	auto commandpool_deleter = [device = device](auto& obj)
+	{
+		device.destroyCommandPool(obj);
+	};
+
+	auto& indices = queue_family_indices;
+
+	VkCommandPoolCreateInfo poolInfo{};
+
+	poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
+	poolInfo.queueFamilyIndex = indices.graphicsFamily.value();
+	poolInfo.flags = 0;
+
+	graphicsCommandPool = VRaii<vk::CommandPool>(
+		device.createCommandPool(poolInfo, nullptr),
+		commandpool_deleter);
+
+	// TODO compute command queue
+}

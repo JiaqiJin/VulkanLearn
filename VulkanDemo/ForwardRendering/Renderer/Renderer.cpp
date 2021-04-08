@@ -16,3 +16,8 @@
 
 Renderer::Renderer(GLFWwindow* window)
 	:p_render(std::make_unique<VulkanRender>(window)) {}
+
+void Renderer::Draw(float deltatime)
+{
+	p_render->Draw(deltatime);
+}

@@ -81,6 +81,11 @@ public:
 		return windowSurface.get();
 	}
 
+	vk::CommandPool getGraphicsCommandPool() const
+	{
+		return graphicsCommandPool.get();
+	}
+
 private:
 	static void DestroyDebugReportCallbackEXT(VkInstance instance, 
 		VkDebugReportCallbackEXT callback, const VkAllocationCallbacks* pAllocator);
@@ -94,6 +99,7 @@ private:
 	void pickPhysicalDevice();
 	void findQueueFamilyIndices();
 	void createLogicalDevice();
+	void createCommandPools();
 
 	void initVulkan()
 	{
@@ -103,6 +109,7 @@ private:
 		pickPhysicalDevice();
 		findQueueFamilyIndices();
 		createLogicalDevice();
+		createCommandPools();
 	}
 
 private:
@@ -118,6 +125,8 @@ private:
 
 	VkQueue graphicsQueue;
 	VkQueue presentQueue;
+	
+	VRaii<vk::CommandPool> graphicsCommandPool;
 
 	QueueFamilyIndices queue_family_indices;
 };
