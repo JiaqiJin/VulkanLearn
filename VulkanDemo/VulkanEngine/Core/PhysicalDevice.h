@@ -2,6 +2,7 @@
 
 #include <vulkan/vulkan.h>
 #include "QueueFamily.h"
+#include "Utils.h"
 #include <vector>
 
 namespace Rendering

@@ -4,6 +4,8 @@
 
 namespace Rendering
 {
+	class PhysicalDevice;
+
 	class QueueFamily
 	{
 	public:
@@ -19,12 +21,15 @@ namespace Rendering
 	class QueueFamilyIndices
 	{
 	public:
-		QueueFamilyIndices();
+		QueueFamilyIndices(Rendering::PhysicalDevice& physicalDevice);
 
-		QueueFamily& getGraphicsQueueFamily() const { return *m_graphicsQueueFamily; }
-		QueueFamily& getPresentQueueFamily() const { return *m_presentQueueFamily; }
+		QueueFamily const& getGraphicsQueueFamily() const { return *m_graphicsQueueFamily; }
+		QueueFamily const& getPresentQueueFamily() const { return *m_presentQueueFamily; }
+
+		bool isValid() const { return m_graphicsQueueFamily && m_presentQueueFamily; }
+
 	private:
-		QueueFamily* m_graphicsQueueFamily = nullptr;
-		QueueFamily* m_presentQueueFamily = nullptr;
+		QueueFamily const* m_graphicsQueueFamily = nullptr; // const * beacuse we need changed value
+		QueueFamily const* m_presentQueueFamily = nullptr;;
 	};
 }
