@@ -10,15 +10,9 @@ namespace Rendering
 	class PhysicalDevice
 	{
 	public:
-		explicit PhysicalDevice(VkPhysicalDevice device);
-		~PhysicalDevice() = default;
+		explicit PhysicalDevice(VkPhysicalDevice handle);
 
 		VkPhysicalDevice const& getPhysicalDevice() const { return m_physicalDevice; }
-
-		PhysicalDevice(PhysicalDevice const&) = delete;
-		PhysicalDevice(PhysicalDevice&&);
-		PhysicalDevice& operator=(PhysicalDevice const&) = delete;
-		PhysicalDevice& operator=(PhysicalDevice&&) = delete;
 
 		VkPhysicalDeviceProperties const& getProperties() const { return m_properties; }
 		VkPhysicalDeviceFeatures const& getFeatures() const { return m_deviceFeatures; }
@@ -38,7 +32,7 @@ namespace Rendering
 		void queryQueueFamilyProperties();
 
 	private:
-		VkPhysicalDevice m_physicalDevice;
+		VkPhysicalDevice m_physicalDevice = VK_NULL_HANDLE;
 
 		std::vector<VkExtensionProperties> m_availableExtensions;
 		std::vector<char const*> m_availableExtensionNames;

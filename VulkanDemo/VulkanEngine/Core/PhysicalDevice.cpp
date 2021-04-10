@@ -9,13 +9,6 @@ namespace Rendering
 		init();
 	}
 
-	PhysicalDevice::PhysicalDevice(PhysicalDevice&& other)
-	{
-		std::swap(other.m_physicalDevice, m_physicalDevice);
-
-		init();
-	}
-
 	void PhysicalDevice::init()
 	{
 		queryAvailableExtensions();
