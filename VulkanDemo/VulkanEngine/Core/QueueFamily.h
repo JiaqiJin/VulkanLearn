@@ -15,4 +15,16 @@ namespace Rendering
 		uint32_t m_index;
 		VkQueueFamilyProperties m_properties;
 	};
+
+	class QueueFamilyIndices
+	{
+	public:
+		QueueFamilyIndices();
+
+		QueueFamily& getGraphicsQueueFamily() const { return *m_graphicsQueueFamily; }
+		QueueFamily& getPresentQueueFamily() const { return *m_presentQueueFamily; }
+	private:
+		QueueFamily* m_graphicsQueueFamily = nullptr;
+		QueueFamily* m_presentQueueFamily = nullptr;
+	};
 }

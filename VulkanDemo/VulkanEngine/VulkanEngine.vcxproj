@@ -170,6 +170,7 @@
     <ClInclude Include="Core\PhysicalDevice.h" />
     <ClInclude Include="Core\Queue.h" />
     <ClInclude Include="Core\QueueFamily.h" />
+    <ClInclude Include="Core\UniqueHandle.h" />
     <ClInclude Include="Core\Utils.h" />
     <ClInclude Include="glm.h" />
     <ClInclude Include="imgui\imconfig.h" />

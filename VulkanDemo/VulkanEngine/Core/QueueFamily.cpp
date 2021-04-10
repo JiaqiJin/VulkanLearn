@@ -5,3 +5,4 @@ Rendering::QueueFamily::QueueFamily(uint32_t index, VkQueueFamilyProperties prop
 {
 
 }
+
