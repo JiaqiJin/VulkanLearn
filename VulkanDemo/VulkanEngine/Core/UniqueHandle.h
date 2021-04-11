@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vulkan/vulkan.h>
+
 namespace Rendering
 {
     template<typename T>
@@ -43,7 +45,7 @@ namespace Rendering
 
         ~UniqueHandle()
         {
-            // Nothing to do; handle destruction is very custom and handled in the object itself
+            
         }
 
     private:

@@ -3,31 +3,35 @@
 #include <vulkan/vulkan.h>
 #include "UniqueHandle.h"
 
+/*
+* Wrapper class Vulkan surface 
+* VkSurfaceKHR represents an abstrat type of surface to present the redered images.
+*/
 namespace Rendering
 {
-	class Instance;
-	class Window;
+    class Instance;
+    class Window;
 
-	class Surface
-	{
-	public:
-		explicit Surface(Instance& instance, Window& window);
-		~Surface();
+    class Surface
+    {
+    public:
+        explicit Surface(const Instance& instance, const Window& window);
+        ~Surface();
 
-		Surface(Surface const&) = default;
-		Surface(Surface&&) = default;
-		Surface& operator=(Surface const&) = default;
-		Surface& operator=(Surface&&) = default;
+        Surface(const Surface&) = default;
+        Surface(Surface&&) = default;
+        Surface& operator=(const Surface&) = default;
+        Surface& operator=(Surface&&) = default;
 
-		VkSurfaceKHR getSurface() const { return m_surface; }
+        VkSurfaceKHR getHandle() const { return m_handle; }
 
-		int getWidth() const;
-		int getHeight() const;
+        int getWidth() const;
+        int getHeight() const;
 
-	private:
-		UniqueHandle<VkSurfaceKHR> m_surface;
+    private:
+        UniqueHandle<VkSurfaceKHR> m_handle;
 
-		Instance& m_instance;
-		Window& m_window;
-	};
+        const Instance& m_instance;
+        const Window& m_window;
+    };
 }

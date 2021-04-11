@@ -147,11 +147,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Core\Device.cpp" />
     <ClCompile Include="Core\Instance.cpp" />
     <ClCompile Include="Core\PhysicalDevice.cpp" />
     <ClCompile Include="Core\PhysicalDeviceSurface.cpp" />
-    <ClCompile Include="Core\Queue.cpp" />
     <ClCompile Include="Core\QueueFamily.cpp" />
     <ClCompile Include="Core\Surface.cpp" />
     <ClCompile Include="Core\Utils.cpp" />
@@ -167,11 +165,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
-    <ClInclude Include="Core\Device.h" />
     <ClInclude Include="Core\Instance.h" />
     <ClInclude Include="Core\PhysicalDevice.h" />
     <ClInclude Include="Core\PhysicalDeviceSurface.h" />
-    <ClInclude Include="Core\Queue.h" />
     <ClInclude Include="Core\QueueFamily.h" />
     <ClInclude Include="Core\Surface.h" />
     <ClInclude Include="Core\UniqueHandle.h" />

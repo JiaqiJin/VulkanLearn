@@ -2,8 +2,7 @@
 
 namespace Rendering
 {
-
-	bool Utils::checkSupportOption(std::vector<char const*> const& availableOptions, std::vector<char const*> const& requestedOptions)
+    bool utils::checkSupportOption(std::vector<char const*> const& availableOptions, std::vector<char const*> const& requestedOptions)
     {
         for (const auto& requestedOption : requestedOptions)
         {

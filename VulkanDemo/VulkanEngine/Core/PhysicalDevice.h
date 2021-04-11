@@ -2,44 +2,49 @@
 
 #include <vulkan/vulkan.h>
 #include "QueueFamily.h"
-#include "Utils.h"
 #include <vector>
 
+/*
+* Wrapper class for VkPhysicalDevice
+* This class is responsible for handling gpu features, properties, and queue families for the device creation.
+*/
 namespace Rendering
 {
-	class PhysicalDevice
-	{
-	public:
-		explicit PhysicalDevice(VkPhysicalDevice handle);
+    class PhysicalDevice
+    {
+    public:
+        explicit PhysicalDevice(VkPhysicalDevice handle);
 
-		VkPhysicalDevice const& getPhysicalDevice() const { return m_physicalDevice; }
+        VkPhysicalDevice getHandle() const { return m_handle; }
 
-		VkPhysicalDeviceProperties const& getProperties() const { return m_properties; }
-		VkPhysicalDeviceFeatures const& getFeatures() const { return m_deviceFeatures; }
-		std::vector<QueueFamily> const& getQueueFamilies() const { return m_queueFamilies; }
+        // Getters
+        const VkPhysicalDeviceProperties& getProperties() const { return m_properties; }
+        const VkPhysicalDeviceFeatures& getFeatures() const { return m_features; }
+        const std::vector<QueueFamily>& getQueueFamilies() const { return m_queueFamilies; }
 
-		bool ExtensionsSupported(std::vector<char const*> const& requestedExtensions) const
-		{
-			return Utils::checkSupportOption(m_availableExtensionNames, requestedExtensions);
-		}
+        // Check supported extension
+        bool areExtensionsSupported(std::vector<char const*> const& requestedExtensions) const;
 
-	private:
-		void init();
+    private:
+        void init();
 
-		void queryProperties();
-		void queryFeatures();
-		void queryAvailableExtensions();
-		void queryQueueFamilyProperties();
+        void queryAvailableExtensions();
+        void queryProperties();
+        void queryFeatures();
+        void queryQueueFamilyProperties();
 
-	private:
-		VkPhysicalDevice m_physicalDevice = VK_NULL_HANDLE;
+    private:
+        VkPhysicalDevice m_handle = VK_NULL_HANDLE;
 
-		std::vector<VkExtensionProperties> m_availableExtensions;
-		std::vector<char const*> m_availableExtensionNames;
+        // Holds the extension properties
+        std::vector<VkExtensionProperties> m_availableExtensions;
+        std::vector<char const*> m_availableExtensionNames;
 
-		// device suitable check
-		VkPhysicalDeviceProperties m_properties;
-		VkPhysicalDeviceFeatures m_deviceFeatures;
-		std::vector<QueueFamily> m_queueFamilies;
-	};
+        // The GPU properties
+        VkPhysicalDeviceProperties m_properties;
+        // The features that will be requested to be enabled in the logical device
+        VkPhysicalDeviceFeatures m_features;
+        // The queue family properties
+        std::vector<QueueFamily> m_queueFamilies;
+    };
 }

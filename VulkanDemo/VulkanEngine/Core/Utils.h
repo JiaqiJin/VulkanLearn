@@ -6,7 +6,7 @@
 
 namespace Rendering
 {
-	namespace Utils
+	namespace utils
 	{
 		bool checkSupportOption(std::vector<char const*> const& availableOptions, std::vector<char const*> const& requestedOptions);
 	}
