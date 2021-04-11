@@ -34,6 +34,7 @@ namespace Rendering
         const VkSurfaceCapabilitiesKHR& getCapabilities() const { return m_capabilities; }
         const std::vector<VkSurfaceFormatKHR>& getFormats() const { return m_formats; }
         std::vector<VkPresentModeKHR> getPresentModes() const { return m_presentModes; }
+        const PhysicalDevice& getPhysicalDevice() const { return m_physicalDevice; }
         bool isPresentationSupported(const QueueFamily& queueFamily) const;
 
         void onSurfaceChanged();
@@ -58,7 +59,7 @@ namespace Rendering
         const Surface& m_surface;
     };
 
-    class PhysicalDeviceSurfaceContainer
+   /* class PhysicalDeviceSurfaceContainer
     {
     public:
         PhysicalDeviceSurfaceContainer(PhysicalDevice&& physicalDdevice, const Surface& surface);
@@ -76,5 +77,5 @@ namespace Rendering
         PhysicalDevice m_physicalDevice;
         const Surface& m_surface;
         PhysicalDeviceSurfaceParameters m_parameters;
-    };
+    };*/
 }

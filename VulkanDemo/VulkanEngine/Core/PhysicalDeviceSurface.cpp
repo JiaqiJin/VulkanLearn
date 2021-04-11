@@ -82,12 +82,12 @@ namespace Rendering
     }
 
     // PhysicalDeviceSurfaceContainer
-    PhysicalDeviceSurfaceContainer::PhysicalDeviceSurfaceContainer(PhysicalDevice&& physicalDdevice, const Surface& surface)
+   /* PhysicalDeviceSurfaceContainer::PhysicalDeviceSurfaceContainer(PhysicalDevice&& physicalDdevice, const Surface& surface)
         : m_physicalDevice(std::move(physicalDdevice))
         , m_surface(surface)
         , m_parameters(m_physicalDevice, m_surface)
     {
 
-    }
+    }*/
 
 }
