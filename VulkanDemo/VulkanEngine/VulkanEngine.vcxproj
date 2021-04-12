@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application.cpp" />
     <ClCompile Include="Core\Device.cpp" />
     <ClCompile Include="Core\Instance.cpp" />
     <ClCompile Include="Core\PhysicalDevice.cpp" />
@@ -167,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="WindowApplication.h" />
     <ClInclude Include="Core\Device.h" />
     <ClInclude Include="Core\Instance.h" />
     <ClInclude Include="Core\PhysicalDevice.h" />

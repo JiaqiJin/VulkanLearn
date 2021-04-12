@@ -1,10 +1,10 @@
-#include "Application.h"
+#include "WindowApplication.h"
 
 int main()
 {
 	try
 	{
-		Application app;
+		WindowApplication app;
 		app.run();
 	}
 	catch (const std::exception& e)

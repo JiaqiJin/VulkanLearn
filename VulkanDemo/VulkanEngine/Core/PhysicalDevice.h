@@ -13,7 +13,7 @@ namespace Rendering
     class PhysicalDevice
     {
     public:
-        explicit PhysicalDevice(VkPhysicalDevice handle);
+        PhysicalDevice(VkPhysicalDevice handle);
 
         VkPhysicalDevice getHandle() const { return m_handle; }
 

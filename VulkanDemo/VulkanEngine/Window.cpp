@@ -19,6 +19,7 @@ namespace Rendering
 
         createWindow(title);
         glfwSetFramebufferSizeCallback(m_handle, Window::framebufferResizeCallback);
+        queryRequiredInstanceExtensions();
     }
 
     Window::~Window()
@@ -50,6 +51,15 @@ namespace Rendering
             if (callback)
                 callback(width, height);
         }
+    }
+
+    void Window::queryRequiredInstanceExtensions()
+    {
+        uint32_t glfwExtensionCount = 0;
+        const char** glfwExtensions;
+        glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
+
+        m_requiredInstanceExtensions.assign(glfwExtensions, glfwExtensions + glfwExtensionCount);
     }
 
     void Window::pollEvents() const

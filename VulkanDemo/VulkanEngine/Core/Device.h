@@ -11,12 +11,12 @@
 namespace Rendering
 {
 	class Queue;
-	class PhysicalDeviceSurfaceParameters;
+	class PhysicalDeviceSurfaceContainer;
 
 	class Device
 	{
 	public:
-		Device(const PhysicalDeviceSurfaceParameters& physicalDeviceSurfaceParam, std::vector<const char*> const& extensions);
+		Device(const PhysicalDeviceSurfaceContainer& physicalDeviceSurfaceParam, const std::vector<const char*>& extensions);
 		~Device();
 
 		Device(const Device&) = default;

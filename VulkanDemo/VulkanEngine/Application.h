@@ -1,34 +1,34 @@
-#include <iostream>
-#include <stdexcept>
+#pragma once
+
 #include <vector>
-#include <cstring>
-#include <cstdlib>
-#include <optional>
+#include <string>
+#include <memory>
 
-#include "Window.h"
-
-const uint32_t WIDTH = 800;
-const uint32_t HEIGHT = 600;
-
-class Application
+namespace Rendering
 {
-public:
-	Application()
+	class ApplicationImpl;
+
+	class Instance;
+	class Surface;
+	class PhysicalDevice;
+	class Device;
+	class Window;
+	class PhysicalDeviceSurfaceParameters;
+
+	class Application
 	{
-		m_window = std::make_unique<Rendering::Window>(WIDTH, HEIGHT, "Vulkan Demo");
-	}
+	public:
+		Application(const std::string& name, bool enableValidation, const Window& window);
+		~Application();
 
-	void run()
-	{
-		m_window->startEventLoop([this]() { drawFrame(); });
-	}
+		const Instance& getInstance() const;
+		const Surface& getSurface() const;
+		const Device& getDevice() const;
+		const PhysicalDeviceSurfaceParameters& getPhysicalDeviceSurfaceParameters() const;
+		const PhysicalDevice& getPhysicalDevice() const;
 
-private:
-	void drawFrame()
-	{
-
-	}
-
-private:
-	std::unique_ptr<Rendering::Window> m_window;
-};
+		void onSurfaceChanged();
+	private:
+		std::unique_ptr<ApplicationImpl> m_impl;
+	};
+}

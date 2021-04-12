@@ -59,7 +59,7 @@ namespace Rendering
         const Surface& m_surface;
     };
 
-   /* class PhysicalDeviceSurfaceContainer
+    class PhysicalDeviceSurfaceContainer
     {
     public:
         PhysicalDeviceSurfaceContainer(PhysicalDevice&& physicalDdevice, const Surface& surface);
@@ -77,5 +77,5 @@ namespace Rendering
         PhysicalDevice m_physicalDevice;
         const Surface& m_surface;
         PhysicalDeviceSurfaceParameters m_parameters;
-    };*/
+    };
 }

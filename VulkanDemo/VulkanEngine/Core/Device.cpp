@@ -8,11 +8,11 @@
 
 namespace Rendering
 {
-	Device::Device(const PhysicalDeviceSurfaceParameters& physicalDeviceSurfaceParam, std::vector<const char*> const& extensions)
+	Device::Device(const PhysicalDeviceSurfaceContainer& physicalDeviceSurfaceContainer, std::vector<const char*> const& extensions)
 	{
-		const PhysicalDevice& physicalDevice = physicalDeviceSurfaceParam.getPhysicalDevice();
+		const PhysicalDevice& physicalDevice = physicalDeviceSurfaceContainer.getPhysicalDevice();
 
-		const QueueFamilyIndices indices = physicalDeviceSurfaceParam.getQueueFamilyIndices();
+		const QueueFamilyIndices indices = physicalDeviceSurfaceContainer.getParameters().getQueueFamilyIndices();
 
 		std::set<const QueueFamily*> uniqueQueueFamilies = { &indices.getGraphicsQueueFamily(), &indices.getPresentQueueFamily() };
 

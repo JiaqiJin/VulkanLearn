@@ -47,6 +47,7 @@ namespace Rendering
 
         static void framebufferResizeCallback(GLFWwindow* window, int width, int height) noexcept;
         void onFramebufferResized(int width, int height);
+        void queryRequiredInstanceExtensions();
 
         bool shouldClose() const;
         void pollEvents() const;
