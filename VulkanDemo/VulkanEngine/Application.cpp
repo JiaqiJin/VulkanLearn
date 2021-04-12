@@ -13,29 +13,27 @@ const std::vector<const char*> DEVICE_EXTENSIONS = {
      VK_KHR_SWAPCHAIN_EXTENSION_NAME,
 };
 
-bool isDeviceSuitable(const Rendering::PhysicalDeviceSurfaceContainer& container)
+bool isDeviceSuitable(const Rendering::PhysicalDevice& device, const Rendering::SwapChainSupportDetails& detail)
 {
-    const auto& physicalDevice = container.getPhysicalDevice();
-    const auto& parameters = container.getParameters();
-
-    bool const areExtensionsSupported = physicalDevice.areExtensionsSupported(DEVICE_EXTENSIONS);
+    
+    bool const areExtensionsSupported = device.areExtensionsSupported(DEVICE_EXTENSIONS);
 
     bool swapchainSupported = false;
     if (areExtensionsSupported)
     {
-        swapchainSupported = !parameters.getFormats().empty() && !parameters.getPresentModes().empty();
+        swapchainSupported = !detail.getFormats().empty() && !detail.getPresentModes().empty();
     }
 
-    return parameters.getQueueFamilyIndices().isValid() && areExtensionsSupported && swapchainSupported && physicalDevice.getFeatures().samplerAnisotropy;
+    return detail.getQueueFamilyIndices().isValid() && areExtensionsSupported && swapchainSupported && device.getFeatures().samplerAnisotropy;
 }
 
-std::size_t findSuitablePhysicalDeviceIndex(std::vector<Rendering::PhysicalDeviceSurfaceContainer> const& physicalDevices)
+std::size_t findSuitablePhysicalDeviceIndex(std::vector<Rendering::PhysicalDevice> const& physicalDevices, const Rendering::SwapChainSupportDetails& detail)
 {
     for (std::size_t index = 0; index < physicalDevices.size(); index++)
     {
         const auto& physicalDevice = physicalDevices[index];
 
-        if (isDeviceSuitable(physicalDevice))
+        if (isDeviceSuitable(physicalDevice, detail))
             return index;
     }
 
@@ -53,17 +51,16 @@ namespace Rendering
         const Surface& getSurface() const { return m_surface; }
         const Device& getDevice() const { return m_device; }
 
-        const PhysicalDeviceSurfaceContainer& getPhysicalDeviceSurfaceContainer() const { return m_physicalDevices[m_currentPhysicalDeviceIndex]; }
-        PhysicalDeviceSurfaceContainer& getPhysicalDeviceSurfaceContainer() { return m_physicalDevices[m_currentPhysicalDeviceIndex]; }
-        const PhysicalDevice& getPhysicalDevice() const { return getPhysicalDeviceSurfaceContainer().getPhysicalDevice(); }
-        const PhysicalDeviceSurfaceParameters& getPhysicalDeviceSurfaceParameters() const { return getPhysicalDeviceSurfaceContainer().getParameters(); }
-        PhysicalDeviceSurfaceParameters& getPhysicalDeviceSurfaceParameters() { return getPhysicalDeviceSurfaceContainer().getParameters(); }
-
+        const SwapChainSupportDetails& getSupportDetail() const { return detail; }
+        SwapChainSupportDetails& getSupportDetail() { return detail; }
+        const PhysicalDevice& getPhysicalDevice() const { return m_physicalDevices[m_currentPhysicalDeviceIndex]; }
+       
     private:
         Instance m_instance;
         Surface m_surface;
-        std::vector<Rendering::PhysicalDeviceSurfaceContainer> m_physicalDevices;
-        std::size_t m_currentPhysicalDeviceIndex;
+        std::vector<Rendering::PhysicalDevice> m_physicalDevices;
+        uint32_t m_currentPhysicalDeviceIndex;
+        SwapChainSupportDetails detail;
         Device m_device;
     };
 
@@ -71,8 +68,9 @@ namespace Rendering
         : m_instance(name, window.getRequiredInstanceExtensions(), enableValidation)
         , m_surface(m_instance, window)
         , m_physicalDevices(m_instance.findPhysicalDevices(m_surface))
-        , m_currentPhysicalDeviceIndex(findSuitablePhysicalDeviceIndex(m_physicalDevices))
-        , m_device(getPhysicalDeviceSurfaceContainer(), DEVICE_EXTENSIONS)
+        , detail(m_physicalDevices.front(), m_surface)
+        , m_currentPhysicalDeviceIndex(findSuitablePhysicalDeviceIndex(m_physicalDevices, detail))
+        , m_device(detail,m_physicalDevices[m_currentPhysicalDeviceIndex], m_surface, DEVICE_EXTENSIONS)
     {
         printf("creating all");
     }
@@ -101,9 +99,9 @@ namespace Rendering
         return m_impl->getDevice();
     }
 
-    const PhysicalDeviceSurfaceParameters& Application::getPhysicalDeviceSurfaceParameters() const
+    const SwapChainSupportDetails& Application::getDetail() const
     {
-        return m_impl->getPhysicalDeviceSurfaceParameters();
+        return m_impl->getSupportDetail();
     }
 
     const PhysicalDevice& Application::getPhysicalDevice() const
@@ -113,6 +111,6 @@ namespace Rendering
 
     void Application::onSurfaceChanged()
     {
-        m_impl->getPhysicalDeviceSurfaceParameters().onSurfaceChanged();
+        m_impl->getSupportDetail().onSurfaceChanged(getPhysicalDevice(), getSurface());
     }
 }

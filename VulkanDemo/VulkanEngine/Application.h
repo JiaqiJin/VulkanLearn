@@ -13,7 +13,7 @@ namespace Rendering
 	class PhysicalDevice;
 	class Device;
 	class Window;
-	class PhysicalDeviceSurfaceParameters;
+	class SwapChainSupportDetails;
 
 	class Application
 	{
@@ -24,7 +24,7 @@ namespace Rendering
 		const Instance& getInstance() const;
 		const Surface& getSurface() const;
 		const Device& getDevice() const;
-		const PhysicalDeviceSurfaceParameters& getPhysicalDeviceSurfaceParameters() const;
+		const SwapChainSupportDetails& getDetail() const;
 		const PhysicalDevice& getPhysicalDevice() const;
 
 		void onSurfaceChanged();

@@ -83,7 +83,7 @@ namespace Rendering
             throw std::runtime_error("Failed to create Vulkan instance");
     }
 
-    std::vector<PhysicalDeviceSurfaceContainer> Instance::findPhysicalDevices(const Surface& surface)
+    std::vector<PhysicalDevice> Instance::findPhysicalDevices(const Surface& surface)
     {
         uint32_t count = 0;
         vkEnumeratePhysicalDevices(m_handle, &count, nullptr);
@@ -93,11 +93,15 @@ namespace Rendering
         std::vector<VkPhysicalDevice> physicalDeviceHandles(count);
         vkEnumeratePhysicalDevices(m_handle, &count, physicalDeviceHandles.data());
 
-        std::vector<PhysicalDeviceSurfaceContainer> physicalDevices;
-        physicalDevices.reserve(count);
-        for (auto const& handle : physicalDeviceHandles)
-            physicalDevices.emplace_back(PhysicalDevice{ handle }, surface);
+        std::vector<PhysicalDevice> physicaldevice(count);
+        //physicaldevice.reserve(count);
+        //uint32_t i = physicaldevice.size();
+        for (const auto& device : physicalDeviceHandles)
+        {
+            const auto d = device;
+            physicaldevice.push_back(PhysicalDevice(d));
+        }
 
-        return physicalDevices;
+        return physicaldevice;
     }
 }

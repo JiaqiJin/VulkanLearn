@@ -20,32 +20,26 @@ namespace Rendering
     class QueueFamilyIndices;
     class QueueFamily;
 
-    class PhysicalDeviceSurfaceParameters
+    class SwapChainSupportDetails
     {
     public:
-        PhysicalDeviceSurfaceParameters(const PhysicalDevice& physicalDevice, const Surface& surface);
-        ~PhysicalDeviceSurfaceParameters() = default;;
-
-        PhysicalDeviceSurfaceParameters(const PhysicalDeviceSurfaceParameters&) = delete;
-        PhysicalDeviceSurfaceParameters(PhysicalDeviceSurfaceParameters&&) = default;;
-        PhysicalDeviceSurfaceParameters& operator=(const PhysicalDeviceSurfaceParameters&) = delete;
-        PhysicalDeviceSurfaceParameters& operator=(PhysicalDeviceSurfaceParameters&&) = delete;
+        SwapChainSupportDetails(const PhysicalDevice& physicalDevice, const Surface& surface);
+        ~SwapChainSupportDetails() = default;
 
         const VkSurfaceCapabilitiesKHR& getCapabilities() const { return m_capabilities; }
         const std::vector<VkSurfaceFormatKHR>& getFormats() const { return m_formats; }
         std::vector<VkPresentModeKHR> getPresentModes() const { return m_presentModes; }
-        const PhysicalDevice& getPhysicalDevice() const { return m_physicalDevice; }
         bool isPresentationSupported(const QueueFamily& queueFamily) const;
 
-        void onSurfaceChanged();
+        void onSurfaceChanged(const PhysicalDevice& physicalDevice, const Surface& surface);
 
         const QueueFamilyIndices& getQueueFamilyIndices() const { return *m_queueFamilyIndices; };
 
     private:
-        void queryCapabilities();
-        void queryFormats();
-        void queryPresentModes();
-        void queryPresentationSupport();
+        void queryCapabilities(const PhysicalDevice& physicalDevice, const Surface& surface);
+        void queryFormats(const PhysicalDevice& physicalDevice, const Surface& surface);
+        void queryPresentModes(const PhysicalDevice& physicalDevice, const Surface& surface);
+        void queryPresentationSupport(const PhysicalDevice& physicalDevice, const Surface& surface);
 
     private:
         VkSurfaceCapabilitiesKHR m_capabilities;
@@ -54,28 +48,5 @@ namespace Rendering
         std::vector<bool> m_queuePresentationSupport;
 
         std::unique_ptr<QueueFamilyIndices> m_queueFamilyIndices;
-
-        const PhysicalDevice& m_physicalDevice;
-        const Surface& m_surface;
-    };
-
-    class PhysicalDeviceSurfaceContainer
-    {
-    public:
-        PhysicalDeviceSurfaceContainer(PhysicalDevice&& physicalDdevice, const Surface& surface);
-
-        PhysicalDeviceSurfaceContainer(const PhysicalDeviceSurfaceContainer&) = delete;
-        PhysicalDeviceSurfaceContainer(PhysicalDeviceSurfaceContainer&&) = default;
-        PhysicalDeviceSurfaceContainer& operator=(const PhysicalDeviceSurfaceContainer&) = delete;
-        PhysicalDeviceSurfaceContainer& operator=(PhysicalDeviceSurfaceContainer&&) = delete;
-
-        const PhysicalDevice& getPhysicalDevice() const { return m_physicalDevice; }
-        const PhysicalDeviceSurfaceParameters& getParameters() const { return m_parameters; }
-        PhysicalDeviceSurfaceParameters& getParameters() { return m_parameters; }
-
-    private:
-        PhysicalDevice m_physicalDevice;
-        const Surface& m_surface;
-        PhysicalDeviceSurfaceParameters m_parameters;
     };
 }

@@ -28,13 +28,13 @@ namespace Rendering
 
     // Forward declaration
     class PhysicalDevice;
-    class PhysicalDeviceSurfaceParameters;
+    class SwapChainSupportDetails;
     class QueueFamily;
 
     class QueueFamilyIndices
     {
     public:
-        QueueFamilyIndices(const PhysicalDevice& physicalDevice, const PhysicalDeviceSurfaceParameters& physicalDeviceSurfaceParameters);
+        QueueFamilyIndices(const PhysicalDevice& physicalDevice, const SwapChainSupportDetails& support);
 
         bool isValid() const { return m_graphicsQueueFamily && m_presentQueueFamily; }
 
