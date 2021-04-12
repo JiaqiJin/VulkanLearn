@@ -24,7 +24,7 @@ namespace Rendering
 		const Instance& getInstance() const;
 		const Surface& getSurface() const;
 		const Device& getDevice() const;
-		const SwapChainSupportDetails& getDetail() const;
+		const SwapChainSupportDetails& getSwapChainSupportDetails() const;
 		const PhysicalDevice& getPhysicalDevice() const;
 
 		void onSurfaceChanged();

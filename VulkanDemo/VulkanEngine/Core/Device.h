@@ -5,20 +5,19 @@
 #include "UniqueHandle.h"
 
 /*
-* Wrapper class for VkDevice 
+* Wrapper class for VkDevice
 * Need specifying the queues to be created and device feature for the logical device creating
 */
 namespace Rendering
 {
 	class Queue;
 	class PhysicalDevice;
-	class Surface;
-	class SwapChainSupportDetails;
+	class QueueFamilyIndices;
 
 	class Device
 	{
 	public:
-		Device(const SwapChainSupportDetails& detail, const PhysicalDevice& physicalDevice, const Surface& surface, const std::vector<const char*>& extensions);
+		Device(const PhysicalDevice& device, const QueueFamilyIndices& indice, const std::vector<const char*>& extensions);
 		~Device();
 
 		Device(const Device&) = default;
@@ -34,7 +33,7 @@ namespace Rendering
 
 	private:
 		UniqueHandle<VkDevice> m_handle;
-		
+
 		std::vector<Queue> m_queues;
 
 		Queue const* m_graphicsQueue = nullptr;

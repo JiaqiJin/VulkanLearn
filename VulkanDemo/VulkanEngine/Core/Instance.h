@@ -12,8 +12,8 @@
 */
 namespace Rendering
 {
-    class PhysicalDevice;
     class Surface;
+    class PhysicalDevice;
 
     class Instance
     {
@@ -29,7 +29,9 @@ namespace Rendering
 
         VkInstance getHandle() const { return m_handle; }
 
+        // Querying valid physical devices on the machine
         std::vector<PhysicalDevice> findPhysicalDevices(const Surface& surface);
+
     private:
         // Creating VkInstance object
         void createInstance(const std::string& appName, std::vector<const char*> extensions, bool enableValidation);

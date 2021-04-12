@@ -13,21 +13,24 @@ const std::vector<const char*> DEVICE_EXTENSIONS = {
      VK_KHR_SWAPCHAIN_EXTENSION_NAME,
 };
 
-bool isDeviceSuitable(const Rendering::PhysicalDevice& device, const Rendering::SwapChainSupportDetails& detail)
+bool isDeviceSuitable(const Rendering::PhysicalDevice& physicalDevice, const Rendering::SwapChainSupportDetails& detail)
 {
-    
-    bool const areExtensionsSupported = device.areExtensionsSupported(DEVICE_EXTENSIONS);
+    const auto& parameters = detail;
+
+    bool const areExtensionsSupported = physicalDevice.areExtensionsSupported(DEVICE_EXTENSIONS);
 
     bool swapchainSupported = false;
     if (areExtensionsSupported)
     {
-        swapchainSupported = !detail.getFormats().empty() && !detail.getPresentModes().empty();
+        swapchainSupported = !parameters.getFormats().empty() && !parameters.getPresentModes().empty();
     }
 
-    return detail.getQueueFamilyIndices().isValid() && areExtensionsSupported && swapchainSupported && device.getFeatures().samplerAnisotropy;
+    return parameters.getQueueFamilyIndices().isValid() && areExtensionsSupported 
+        && swapchainSupported && physicalDevice.getFeatures().samplerAnisotropy;
 }
 
-std::size_t findSuitablePhysicalDeviceIndex(std::vector<Rendering::PhysicalDevice> const& physicalDevices, const Rendering::SwapChainSupportDetails& detail)
+std::size_t findSuitablePhysicalDeviceIndex(std::vector<Rendering::PhysicalDevice> const& physicalDevices, 
+    const Rendering::SwapChainSupportDetails& detail)
 {
     for (std::size_t index = 0; index < physicalDevices.size(); index++)
     {
@@ -51,16 +54,16 @@ namespace Rendering
         const Surface& getSurface() const { return m_surface; }
         const Device& getDevice() const { return m_device; }
 
-        const SwapChainSupportDetails& getSupportDetail() const { return detail; }
-        SwapChainSupportDetails& getSupportDetail() { return detail; }
         const PhysicalDevice& getPhysicalDevice() const { return m_physicalDevices[m_currentPhysicalDeviceIndex]; }
-       
+        const SwapChainSupportDetails& getSwapChainSupportDetails() const { return m_detail; }
+        SwapChainSupportDetails& getSwapChainSupportDetails() {  return m_detail; }
+
     private:
         Instance m_instance;
         Surface m_surface;
         std::vector<Rendering::PhysicalDevice> m_physicalDevices;
-        uint32_t m_currentPhysicalDeviceIndex;
-        SwapChainSupportDetails detail;
+        SwapChainSupportDetails m_detail;
+        std::size_t m_currentPhysicalDeviceIndex;
         Device m_device;
     };
 
@@ -68,11 +71,11 @@ namespace Rendering
         : m_instance(name, window.getRequiredInstanceExtensions(), enableValidation)
         , m_surface(m_instance, window)
         , m_physicalDevices(m_instance.findPhysicalDevices(m_surface))
-        , detail(m_physicalDevices.front(), m_surface)
-        , m_currentPhysicalDeviceIndex(findSuitablePhysicalDeviceIndex(m_physicalDevices, detail))
-        , m_device(detail,m_physicalDevices[m_currentPhysicalDeviceIndex], m_surface, DEVICE_EXTENSIONS)
+        , m_detail(m_physicalDevices.front(), m_surface)
+        , m_currentPhysicalDeviceIndex(findSuitablePhysicalDeviceIndex(m_physicalDevices, m_detail))
+        , m_device(getPhysicalDevice(), getSwapChainSupportDetails().getQueueFamilyIndices(), DEVICE_EXTENSIONS)
     {
-        printf("creating all");
+        //printf("creating all");
     }
 
     // Application
@@ -99,9 +102,9 @@ namespace Rendering
         return m_impl->getDevice();
     }
 
-    const SwapChainSupportDetails& Application::getDetail() const
+    const SwapChainSupportDetails& Application::getSwapChainSupportDetails() const
     {
-        return m_impl->getSupportDetail();
+        return m_impl->getSwapChainSupportDetails();
     }
 
     const PhysicalDevice& Application::getPhysicalDevice() const
@@ -111,6 +114,6 @@ namespace Rendering
 
     void Application::onSurfaceChanged()
     {
-        m_impl->getSupportDetail().onSurfaceChanged(getPhysicalDevice(), getSurface());
+        m_impl->getSwapChainSupportDetails().onSurfaceChanged();
     }
 }

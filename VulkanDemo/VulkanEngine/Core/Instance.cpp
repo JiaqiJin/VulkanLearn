@@ -4,7 +4,7 @@
 #include "PhysicalDeviceSurface.h"
 #include <stdexcept>
 
-namespace 
+namespace
 {
     std::vector<VkLayerProperties> getAvailableLayers()
     {
@@ -93,15 +93,11 @@ namespace Rendering
         std::vector<VkPhysicalDevice> physicalDeviceHandles(count);
         vkEnumeratePhysicalDevices(m_handle, &count, physicalDeviceHandles.data());
 
-        std::vector<PhysicalDevice> physicaldevice(count);
-        //physicaldevice.reserve(count);
-        //uint32_t i = physicaldevice.size();
-        for (const auto& device : physicalDeviceHandles)
-        {
-            const auto d = device;
-            physicaldevice.push_back(PhysicalDevice(d));
-        }
+        std::vector<PhysicalDevice> physicalDevices;
+        physicalDevices.reserve(count);
+        for (auto const& handle : physicalDeviceHandles)
+            physicalDevices.emplace_back(PhysicalDevice{ handle });
 
-        return physicaldevice;
+        return physicalDevices;
     }
 }

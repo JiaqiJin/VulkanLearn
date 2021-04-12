@@ -8,12 +8,9 @@
 
 namespace Rendering
 {
-    Device::Device(const SwapChainSupportDetails& detail, const PhysicalDevice& physicalDevice, 
-        const Surface& surface, const std::vector<const char*>& extensions)
-	{
-		const QueueFamilyIndices indices = detail.getQueueFamilyIndices();
-
-		std::set<const QueueFamily*> uniqueQueueFamilies = { &indices.getGraphicsQueueFamily(), &indices.getPresentQueueFamily() };
+    Device::Device(const PhysicalDevice& physicalDevice, const QueueFamilyIndices& indices, std::vector<const char*> const& extensions)
+    {
+        std::set<const QueueFamily*> uniqueQueueFamilies = { &indices.getGraphicsQueueFamily(), &indices.getPresentQueueFamily() };
 
         std::vector<float> queuePriorities = { 1.0f };
 
@@ -57,12 +54,12 @@ namespace Rendering
 
         if (m_graphicsQueue == nullptr || m_presentQueue == nullptr)
             throw std::runtime_error("failed to get device queues!");
-	}
+    }
 
-	Device::~Device()
-	{
+    Device::~Device()
+    {
         vkDestroyDevice(m_handle, nullptr);
-	}
+    }
 
     void Device::waitIdle() const
     {

@@ -22,7 +22,7 @@ namespace Rendering
         const VkQueueFamilyProperties& getProperties() const { return m_properties; }
 
     private:
-        uint32_t m_index; 
+        uint32_t m_index;
         VkQueueFamilyProperties m_properties;
     };
 
@@ -34,7 +34,7 @@ namespace Rendering
     class QueueFamilyIndices
     {
     public:
-        QueueFamilyIndices(const PhysicalDevice& physicalDevice, const SwapChainSupportDetails& support);
+        QueueFamilyIndices(const PhysicalDevice& physicalDevice, const SwapChainSupportDetails& SwapChainSupportDetails);
 
         bool isValid() const { return m_graphicsQueueFamily && m_presentQueueFamily; }
 

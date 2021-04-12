@@ -14,15 +14,15 @@ namespace Rendering
 
     }
 
-    QueueFamilyIndices::QueueFamilyIndices(const PhysicalDevice& physicalDevice, 
-        const SwapChainSupportDetails& support)
+    QueueFamilyIndices::QueueFamilyIndices(const PhysicalDevice& physicalDevice,
+        const SwapChainSupportDetails& SwapChainSupportDetails)
     {
         for (const QueueFamily& queueFamily : physicalDevice.getQueueFamilies())
         {
             if (queueFamily.getProperties().queueFlags & VK_QUEUE_GRAPHICS_BIT)
                 m_graphicsQueueFamily = &queueFamily;
 
-            if (support.isPresentationSupported(queueFamily))
+            if (SwapChainSupportDetails.isPresentationSupported(queueFamily))
                 m_presentQueueFamily = &queueFamily;
 
             if (isValid())
