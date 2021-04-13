@@ -2,7 +2,7 @@
 #include "Core/Device.h"
 #include "Core/Instance.h"
 #include "Core/PhysicalDevice.h"
-#include "Core/PhysicalDeviceSurface.h"
+#include "Core/SwapChainSupport.h"
 #include "Core/QueueFamily.h"
 #include "Window.h"
 #include "Core/Surface.h"
@@ -76,6 +76,7 @@ namespace Rendering
         , m_device(getPhysicalDevice(), getSwapChainSupportDetails().getQueueFamilyIndices(), DEVICE_EXTENSIONS)
     {
         //printf("creating all");
+        //printf(m_physicalDevices[m_currentPhysicalDeviceIndex].getProperties().deviceName);
     }
 
     // Application

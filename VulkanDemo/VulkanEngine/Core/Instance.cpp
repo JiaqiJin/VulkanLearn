@@ -1,7 +1,7 @@
 #include "Instance.h"
 #include "PhysicalDevice.h"
 #include "Utils.h"
-#include "PhysicalDeviceSurface.h"
+#include "SwapChainSupport.h"
 #include <stdexcept>
 
 namespace

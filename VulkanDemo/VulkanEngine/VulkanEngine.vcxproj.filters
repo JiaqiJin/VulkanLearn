@@ -57,7 +57,7 @@
     <ClCompile Include="Core\Instance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Core\PhysicalDeviceSurface.cpp">
+    <ClCompile Include="Core\SwapChainSupport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Core\Queue.cpp">
@@ -67,6 +67,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Swapchain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -128,7 +131,7 @@
     <ClInclude Include="Core\UniqueHandle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Core\PhysicalDeviceSurface.h">
+    <ClInclude Include="Core\SwapChainSupport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\Queue.h">
@@ -138,6 +141,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Swapchain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
