@@ -13,8 +13,8 @@ namespace Rendering
 	class PhysicalDevice;
 	class Device;
 	class Window;
-	class SwapChainSupportDetails;
-	class Swapchain;
+	struct SwapChainSupportDetails;
+	//class Swapchain;
 
 	class Application
 	{

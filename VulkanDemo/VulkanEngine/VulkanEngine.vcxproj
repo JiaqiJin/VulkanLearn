@@ -165,11 +165,13 @@
     <ClCompile Include="imgui\imgui_tables.cpp" />
     <ClCompile Include="imgui\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Objects\Object.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Core\Swapchain.h" />
+    <ClInclude Include="Objects\Object.h" />
     <ClInclude Include="WindowApplication.h" />
     <ClInclude Include="Core\Device.h" />
     <ClInclude Include="Core\Instance.h" />
