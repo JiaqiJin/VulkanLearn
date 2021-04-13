@@ -3,12 +3,13 @@
 #include "SwapChainSupport.h"
 #include "QueueFamily.h"
 #include "PhysicalDevice.h"
+#include "Instance.h"
 #include <set>
 #include <stdexcept>
 
 namespace Rendering
 {
-    Device::Device(const PhysicalDevice& physicalDevice, const QueueFamilyIndices& indices, std::vector<const char*> const& extensions)
+    Device::Device(const PhysicalDevice& physicalDevice, const QueueFamilyIndices& indices, const Instance& instance, std::vector<const char*> const& extensions)
     {
         std::set<const QueueFamily*> uniqueQueueFamilies = { &indices.getGraphicsQueueFamily(), &indices.getPresentQueueFamily() };
 
@@ -54,11 +55,47 @@ namespace Rendering
 
         if (m_graphicsQueue == nullptr || m_presentQueue == nullptr)
             throw std::runtime_error("failed to get device queues!");
+
+      
+        VmaVulkanFunctions vmaVulkanFunc{};
+        vmaVulkanFunc.vkAllocateMemory = vkAllocateMemory;
+        vmaVulkanFunc.vkBindBufferMemory = vkBindBufferMemory;
+        vmaVulkanFunc.vkBindImageMemory = vkBindImageMemory;
+        vmaVulkanFunc.vkCreateBuffer = vkCreateBuffer;
+        vmaVulkanFunc.vkCreateImage = vkCreateImage;
+        vmaVulkanFunc.vkDestroyBuffer = vkDestroyBuffer;
+        vmaVulkanFunc.vkDestroyImage = vkDestroyImage;
+        vmaVulkanFunc.vkFlushMappedMemoryRanges = vkFlushMappedMemoryRanges;
+        vmaVulkanFunc.vkFreeMemory = vkFreeMemory;
+        vmaVulkanFunc.vkGetBufferMemoryRequirements = vkGetBufferMemoryRequirements;
+        vmaVulkanFunc.vkGetImageMemoryRequirements = vkGetImageMemoryRequirements;
+        vmaVulkanFunc.vkGetPhysicalDeviceMemoryProperties = vkGetPhysicalDeviceMemoryProperties;
+        vmaVulkanFunc.vkGetPhysicalDeviceProperties = vkGetPhysicalDeviceProperties;
+        vmaVulkanFunc.vkInvalidateMappedMemoryRanges = vkInvalidateMappedMemoryRanges;
+        vmaVulkanFunc.vkMapMemory = vkMapMemory;
+        vmaVulkanFunc.vkUnmapMemory = vkUnmapMemory;
+        vmaVulkanFunc.vkCmdCopyBuffer = vkCmdCopyBuffer;
+
+        VmaAllocatorCreateInfo allocatorInfo{};
+        allocatorInfo.physicalDevice = physicalDevice.getHandle();
+        allocatorInfo.device = m_handle;
+        allocatorInfo.instance = instance.getHandle();
+        allocatorInfo.pVulkanFunctions = &vmaVulkanFunc;
+
+        auto resultVma = vmaCreateAllocator(&allocatorInfo, &m_memoryAllocator);
+
+        if (resultVma != VK_SUCCESS)
+        {
+            throw std::runtime_error("Cannot create allocator");
+        }
+
     }
 
     Device::~Device()
     {
         vkDestroyDevice(m_handle, nullptr);
+
+        vmaDestroyAllocator(m_memoryAllocator);
     }
 
     void Device::waitIdle() const

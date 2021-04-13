@@ -75,7 +75,7 @@ namespace Rendering
         , m_physicalDevices(m_instance.findPhysicalDevices(m_surface))
         , m_detail(m_physicalDevices.front(), m_surface)
         , m_currentPhysicalDeviceIndex(findSuitablePhysicalDeviceIndex(m_physicalDevices, m_detail))
-        , m_device(getPhysicalDevice(), getSwapChainSupportDetails().getQueueFamilyIndices(), DEVICE_EXTENSIONS)
+        , m_device(getPhysicalDevice(), getSwapChainSupportDetails().getQueueFamilyIndices(), getInstance(),DEVICE_EXTENSIONS)
     {
         //printf("creating all");
         //printf(m_physicalDevices[m_currentPhysicalDeviceIndex].getProperties().deviceName);

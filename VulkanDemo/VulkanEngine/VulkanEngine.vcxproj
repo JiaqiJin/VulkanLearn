@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\VisualStudio\VulkanLearn\Dep\glm;E:\VisualStudio\VulkanLearn\Dep\stbimage;E:\VisualStudio\VulkanLearn\Dep\irrKlang\include;E:\VisualStudio\VulkanLearn\Dep\fbxsdk\include;E:\VisualStudio\VulkanLearn\Dep\glfw-3.3.2.bin.WIN64\include;C:\VulkanSDK\1.2.154.1\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\VisualStudio\VulkanLearn\Dep\VMA;E:\VisualStudio\VulkanLearn\Dep\glm;E:\VisualStudio\VulkanLearn\Dep\stbimage;E:\VisualStudio\VulkanLearn\Dep\irrKlang\include;E:\VisualStudio\VulkanLearn\Dep\fbxsdk\include;E:\VisualStudio\VulkanLearn\Dep\glfw-3.3.2.bin.WIN64\include;C:\VulkanSDK\1.2.154.1\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
@@ -134,7 +134,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\VisualStudio\VulkanLearn\Dep\glm;E:\VisualStudio\VulkanLearn\Dep\stbimage;E:\VisualStudio\VulkanLearn\Dep\irrKlang\include;E:\VisualStudio\VulkanLearn\Dep\fbxsdk\include;E:\VisualStudio\VulkanLearn\Dep\glfw-3.3.2.bin.WIN64\include;C:\VulkanSDK\1.2.154.1\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\VisualStudio\VulkanLearn\Dep\VMA;E:\VisualStudio\VulkanLearn\Dep\glm;E:\VisualStudio\VulkanLearn\Dep\stbimage;E:\VisualStudio\VulkanLearn\Dep\irrKlang\include;E:\VisualStudio\VulkanLearn\Dep\fbxsdk\include;E:\VisualStudio\VulkanLearn\Dep\glfw-3.3.2.bin.WIN64\include;C:\VulkanSDK\1.2.154.1\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
@@ -149,7 +149,9 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Core\Device.cpp" />
+    <ClCompile Include="Core\Image.cpp" />
     <ClCompile Include="Core\Instance.cpp" />
+    <ClCompile Include="Core\libHelper.cpp" />
     <ClCompile Include="Core\PhysicalDevice.cpp" />
     <ClCompile Include="Core\SwapChainSupport.cpp" />
     <ClCompile Include="Core\Queue.cpp" />
@@ -170,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Core\Image.h" />
     <ClInclude Include="Core\Swapchain.h" />
     <ClInclude Include="Objects\Object.h" />
     <ClInclude Include="WindowApplication.h" />

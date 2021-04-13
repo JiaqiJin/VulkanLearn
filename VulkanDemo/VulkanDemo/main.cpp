@@ -898,9 +898,11 @@ private:
         createBuffer(imageSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, stagingBuffer, stagingBufferMemory, VMA_MEMORY_USAGE_CPU_ONLY);
 
         void* data;
-        //vkMapMemory(device, stagingBufferMemory, 0, imageSize, 0, &data);
+        const VkResult result = vmaMapMemory(m_allocator, m_allocation, (void**)&data);
+        vkMapMemory(device, stagingBufferMemory, 0, imageSize, 0, &data);
         std::memcpy(m_allocation_info.pMappedData, pixels, static_cast<size_t>(imageSize));
-        //vkUnmapMemory(device, stagingBufferMemory);
+        vkUnmapMemory(device, stagingBufferMemory);
+        //const VkResult result = vmaMapMemory(m_allocator, m_allocation, (void**)&data);
 
         stbi_image_free(pixels);
 
@@ -910,7 +912,7 @@ private:
         copyBufferToImage(stagingBuffer, textureImage, static_cast<uint32_t>(texWidth), static_cast<uint32_t>(texHeight));
         //transitioned to VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL while generating mipmaps
 
-        //vkDestroyBuffer(device, stagingBuffer, nullptr);
+       // vkDestroyBuffer(device, stagingBuffer, nullptr);
         //vkFreeMemory(device, stagingBufferMemory, nullptr);
         vmaDestroyBuffer(m_allocator, vertexBuffer, m_allocation);
         generateMipmaps(textureImage, VK_FORMAT_R8G8B8A8_SRGB, texWidth, texHeight, mipLevels);
@@ -1223,16 +1225,16 @@ private:
         createBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, stagingBuffer, stagingBufferMemory, VMA_MEMORY_USAGE_CPU_ONLY);
 
         void* data;
-        // vkMapMemory(device, stagingBufferMemory, 0, bufferSize, 0, &data);
+        vkMapMemory(device, stagingBufferMemory, 0, bufferSize, 0, &data);
         memcpy(m_allocation_info.pMappedData, vertices.data(), (size_t)bufferSize);
-        //vkUnmapMemory(device, stagingBufferMemory);
+        vkUnmapMemory(device, stagingBufferMemory);
 
         createBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, vertexBuffer, vertexBufferMemory, VMA_MEMORY_USAGE_CPU_ONLY);
 
         copyBuffer(stagingBuffer, vertexBuffer, bufferSize);
 
-       //vkDestroyBuffer(device, stagingBuffer, nullptr);
-        //vkFreeMemory(device, stagingBufferMemory, nullptr);
+       vkDestroyBuffer(device, stagingBuffer, nullptr);
+        vkFreeMemory(device, stagingBufferMemory, nullptr);
         vmaDestroyBuffer(m_allocator, vertexBuffer, m_allocation);
     }
 
@@ -1244,16 +1246,16 @@ private:
         createBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, stagingBuffer, stagingBufferMemory, VMA_MEMORY_USAGE_CPU_ONLY);
 
         void* data;
-        //vkMapMemory(device, stagingBufferMemory, 0, bufferSize, 0, &data);
+        vkMapMemory(device, stagingBufferMemory, 0, bufferSize, 0, &data);
         memcpy(m_allocation_info.pMappedData, indices.data(), (size_t)bufferSize);
-        //vkUnmapMemory(device, stagingBufferMemory);
+        vkUnmapMemory(device, stagingBufferMemory);
 
         createBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, indexBuffer, indexBufferMemory, VMA_MEMORY_USAGE_CPU_ONLY);
 
         copyBuffer(stagingBuffer, indexBuffer, bufferSize);
 
-        //vkDestroyBuffer(device, stagingBuffer, nullptr);
-        //vkFreeMemory(device, stagingBufferMemory, nullptr);
+        vkDestroyBuffer(device, stagingBuffer, nullptr);
+        vkFreeMemory(device, stagingBufferMemory, nullptr);
         vmaDestroyBuffer(m_allocator, vertexBuffer, m_allocation);
     }
 
@@ -1521,9 +1523,9 @@ private:
         ubo.proj[1][1] *= -1;
 
         void* data;
-        //vkMapMemory(device, uniformBuffersMemory[currentImage], 0, sizeof(ubo), 0, &data);
+        vkMapMemory(device, uniformBuffersMemory[currentImage], 0, sizeof(ubo), 0, &data);
         memcpy(m_allocation_info.pMappedData, &ubo, sizeof(ubo));
-        //vkUnmapMemory(device, uniformBuffersMemory[currentImage]);
+        vkUnmapMemory(device, uniformBuffersMemory[currentImage]);
         vmaDestroyBuffer(m_allocator, uniformBuffers[currentImage], m_allocation);
     }
 
