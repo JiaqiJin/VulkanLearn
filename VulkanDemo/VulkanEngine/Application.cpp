@@ -4,10 +4,12 @@
 #include "Core/PhysicalDevice.h"
 #include "Core/SwapChainSupport.h"
 #include "Core/QueueFamily.h"
+#include "Core/Swapchain.h"
 #include "Window.h"
 #include "Core/Surface.h"
 
 #include <stdexcept>
+#include <iostream>
 
 const std::vector<const char*> DEVICE_EXTENSIONS = {
      VK_KHR_SWAPCHAIN_EXTENSION_NAME,
@@ -65,6 +67,7 @@ namespace Rendering
         SwapChainSupportDetails m_detail;
         std::size_t m_currentPhysicalDeviceIndex;
         Device m_device;
+        Swapchain m_swapChain;
     };
 
     ApplicationImpl::ApplicationImpl(std::string const& name, bool enableValidation, Window const& window)
@@ -74,9 +77,11 @@ namespace Rendering
         , m_detail(m_physicalDevices.front(), m_surface)
         , m_currentPhysicalDeviceIndex(findSuitablePhysicalDeviceIndex(m_physicalDevices, m_detail))
         , m_device(getPhysicalDevice(), getSwapChainSupportDetails().getQueueFamilyIndices(), DEVICE_EXTENSIONS)
+        , m_swapChain(getDevice(), getSwapChainSupportDetails())
     {
         //printf("creating all");
         //printf(m_physicalDevices[m_currentPhysicalDeviceIndex].getProperties().deviceName);
+        //std::cout << static_cast<int>(m_swapChain.getExtend().height) << std::endl;
     }
 
     // Application

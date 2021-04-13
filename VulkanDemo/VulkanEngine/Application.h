@@ -14,6 +14,7 @@ namespace Rendering
 	class Device;
 	class Window;
 	class SwapChainSupportDetails;
+	class Swapchain;
 
 	class Application
 	{

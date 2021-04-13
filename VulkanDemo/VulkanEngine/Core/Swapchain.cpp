@@ -2,6 +2,11 @@
 #include "Device.h"
 #include "Surface.h"
 #include "QueueFamily.h"
+#include "SwapChainSupport.h"
+
+#include <algorithm>
+#include <stdexcept>
+#include <iostream>
 
 namespace Rendering
 {
@@ -50,9 +55,9 @@ namespace Rendering
 		return actualExtend;
 	}
 
-	Swapchain::Swapchain(const Device& device, const Surface& surface)
-		: m_device(device),
-		m_surface(surface)
+	Swapchain::Swapchain(const Device& device, const SwapChainSupportDetails& support)
+		: m_device(device), 
+		m_detail(support)
 	{
 		createSwapchain();
 	}
@@ -64,6 +69,58 @@ namespace Rendering
 
 	void Swapchain::createSwapchain()
 	{
+		m_surfaceFormat = chooseSwapSurfaceFormat(m_detail.getFormats());
+		VkPresentModeKHR presentMode = chooseSwapPresentMode(m_detail.getPresentModes());
+		m_extent = chooseSwapExtent(m_detail.getSurface(), m_detail.getCapabilities());
 
+		// how many img have in swap chain
+		const uint32_t minImageCount = m_detail.getCapabilities().minImageCount;
+		const uint32_t maxImageCount = m_detail.getCapabilities().maxImageCount;
+
+		uint32_t imageCount = minImageCount + 1;
+
+		if(maxImageCount > 0)
+			imageCount = std::min(imageCount, maxImageCount);
+
+		VkSwapchainCreateInfoKHR swapchainCreateInfo{};
+		swapchainCreateInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
+		swapchainCreateInfo.surface = m_detail.getSurface().getHandle();
+
+		swapchainCreateInfo.minImageCount = imageCount;
+		swapchainCreateInfo.imageFormat = m_surfaceFormat.format;
+		swapchainCreateInfo.imageColorSpace = m_surfaceFormat.colorSpace;
+		swapchainCreateInfo.imageExtent = m_extent;
+		swapchainCreateInfo.imageArrayLayers = 1;
+		swapchainCreateInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+
+		// handle swap chain images to multiple queue families
+		const QueueFamilyIndices& indices = m_detail.getQueueFamilyIndices();
+		int32_t graphicsQueueFamilyIndex = indices.getGraphicsQueueFamily().getIndex();
+		uint32_t presentQueueFamilyIndex = indices.getPresentQueueFamily().getIndex();
+
+		if(graphicsQueueFamilyIndex != presentQueueFamilyIndex)
+		{
+			uint32_t queueFamilyIndices[] = { graphicsQueueFamilyIndex, presentQueueFamilyIndex };
+			swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT; // Images can be used across multiple queue families
+			swapchainCreateInfo.queueFamilyIndexCount = 2;
+			swapchainCreateInfo.pQueueFamilyIndices = queueFamilyIndices;
+		}
+		else
+		{
+			swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE; // An image is owned by one queue family 
+			swapchainCreateInfo.queueFamilyIndexCount = 0;
+			swapchainCreateInfo.pQueueFamilyIndices = nullptr;
+		}
+
+		swapchainCreateInfo.preTransform = m_detail.getCapabilities().currentTransform;
+		swapchainCreateInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR; // alpha channel 
+		swapchainCreateInfo.presentMode = presentMode;
+		swapchainCreateInfo.clipped = VK_TRUE;
+		swapchainCreateInfo.oldSwapchain = VK_NULL_HANDLE;
+
+		if (vkCreateSwapchainKHR(m_device.getHandle(), &swapchainCreateInfo, nullptr, &m_handle.get()) != VK_SUCCESS)
+		{
+			throw std::runtime_error("failed to create swap chain!");
+		}
 	}
 }

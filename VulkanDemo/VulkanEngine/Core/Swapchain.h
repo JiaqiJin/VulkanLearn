@@ -12,17 +12,17 @@
 namespace Rendering
 {
 	class Device;
-	class Surface;
+	struct SwapChainSupportDetails;
 
 	class Swapchain
 	{
 	public:
-		Swapchain(const Device& device, const Surface& surface);
+		Swapchain(const Device& device, const SwapChainSupportDetails& support);
 		~Swapchain();
 
 		VkSwapchainKHR getHandle() const { return m_handle; }
-		const Device& getDevice() const { return m_device; }
-		const Surface& getSurface() const { return m_surface; }
+		VkExtent2D getExtend() { return m_extent; }
+		VkSurfaceFormatKHR getSurfaceFormat() { return m_surfaceFormat; }
 
 	private:
 		void createSwapchain();
@@ -30,7 +30,10 @@ namespace Rendering
 	private:
 		UniqueHandle<VkSwapchainKHR> m_handle;
 
+		VkExtent2D m_extent;
+		VkSurfaceFormatKHR m_surfaceFormat;
+
 		const Device& m_device;
-		const Surface& m_surface;
+		const SwapChainSupportDetails& m_detail;
 	};
 }
