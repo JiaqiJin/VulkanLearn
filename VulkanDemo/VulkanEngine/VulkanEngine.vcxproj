@@ -150,8 +150,9 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Core\Device.cpp" />
     <ClCompile Include="Core\Image.cpp" />
+    <ClCompile Include="Core\ImageView.cpp" />
     <ClCompile Include="Core\Instance.cpp" />
-    <ClCompile Include="Core\libHelper.cpp" />
+    <ClCompile Include="libHelper.cpp" />
     <ClCompile Include="Core\PhysicalDevice.cpp" />
     <ClCompile Include="Core\SwapChainSupport.cpp" />
     <ClCompile Include="Core\Queue.cpp" />
@@ -173,6 +174,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Core\Image.h" />
+    <ClInclude Include="Core\ImageView.h" />
     <ClInclude Include="Core\Swapchain.h" />
     <ClInclude Include="Objects\Object.h" />
     <ClInclude Include="WindowApplication.h" />

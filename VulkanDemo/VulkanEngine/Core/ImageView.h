@@ -16,6 +16,12 @@ namespace Rendering
 	{
 	public:
 		ImageView(const Device& device, const Image& image, VkImageAspectFlags aspectFlags);
+		~ImageView();
+
+		ImageView(const ImageView&) = default;
+		ImageView(ImageView&&) = default;
+		ImageView& operator=(const ImageView&) = default;
+		ImageView& operator=(ImageView&&) = default;
 
 		VkImageView getHandle() const { return m_handle; }
 	private:

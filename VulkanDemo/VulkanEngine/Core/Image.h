@@ -8,6 +8,7 @@
 namespace Rendering
 {
 	class Device;
+	class ImageView;
 
 	class Image
 	{
@@ -28,6 +29,8 @@ namespace Rendering
 		VkImageTiling getTiling() const { return m_tiling; }
 		const Device& getDevice() const { return m_device; }
 		
+		std::unique_ptr<ImageView> createImageView(VkImageAspectFlags aspectFlags);
+
 		// Features
 		uint8_t* Map();
 		void unMap();

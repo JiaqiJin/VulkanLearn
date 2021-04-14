@@ -2,6 +2,8 @@
 #include "Image.h"
 #include "Device.h"
 
+#include <stdexcept>
+
 namespace Rendering
 {
 	ImageView::ImageView(const Device& device, const Image& image, VkImageAspectFlags aspectFlags)

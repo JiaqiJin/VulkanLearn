@@ -1,5 +1,6 @@
 #include "Image.h"
 #include "Device.h"
+#include "ImageView.h"
 
 #include <stdexcept>
 
@@ -58,6 +59,11 @@ namespace Rendering
 			unMap();
 			vmaDestroyImage(m_device.getMemoryAllocator(), m_handle, m_memory);
 		}
+	}
+
+	std::unique_ptr<ImageView> Image::createImageView(VkImageAspectFlags aspectFlags)
+	{
+		return std::make_unique<ImageView>(m_device, *this, aspectFlags);
 	}
 
 	uint8_t* Image::Map()
