@@ -10,10 +10,12 @@
 */
 namespace Rendering
 {
+	class Shader;
+	class Device;
 	class Pipeline 
 	{
 	public:
-		Pipeline(); // TODO
+		Pipeline(const Device& device, VkExtent2D extent, const Shader& shader); // TODO
 
 		Pipeline(const Pipeline&) = default;
 		Pipeline(Pipeline&&) = default;
@@ -24,5 +26,6 @@ namespace Rendering
 
 	private:
 		UniqueHandle<VkPipeline> m_handle;
+		const Device& m_device;
 	};
 }
