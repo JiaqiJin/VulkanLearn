@@ -23,7 +23,7 @@ namespace Rendering
 		Image& operator=(const Image&) = default;
 		Image& operator=(Image&&) = default;
 
-		VmaAllocation getMemory() const { return m_memory; }
+		VmaAllocation getVmaMemory() const { return m_Vmamemory; }
 		VkImage getHandle() const { return m_handle; }
 		VkFormat getFormat() const { return m_format; }
 		VkImageTiling getTiling() const { return m_tiling; }
@@ -39,12 +39,11 @@ namespace Rendering
 		const Device& m_device;
 		UniqueHandle<VkImage> m_handle;
 		bool m_isOwned = true;
-		
-		VmaAllocation m_memory{ VK_NULL_HANDLE };
 
 		VkImageTiling m_tiling;
 		VkFormat m_format;
 
+		VmaAllocation m_Vmamemory{ VK_NULL_HANDLE };
 		uint8_t* mappedData{ nullptr };
 		bool mapped = false;
 	};

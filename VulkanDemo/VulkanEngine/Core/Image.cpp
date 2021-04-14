@@ -54,10 +54,10 @@ namespace Rendering
 	{
 		if (m_isOwned)
 			vkDestroyImage(m_device.getHandle(), m_handle, nullptr);
-		if (m_memory != VK_NULL_HANDLE && m_isOwned)
+		if (m_Vmamemory != VK_NULL_HANDLE && m_isOwned)
 		{
 			unMap();
-			vmaDestroyImage(m_device.getMemoryAllocator(), m_handle, m_memory);
+			vmaDestroyImage(m_device.getMemoryAllocator(), m_handle, m_Vmamemory);
 		}
 	}
 
@@ -74,7 +74,7 @@ namespace Rendering
 			{
 				printf("Mapping image memory that is not linear");
 			}
-			auto result = (vmaMapMemory(m_device.getMemoryAllocator(), m_memory, reinterpret_cast<void**>(&mappedData)));
+			auto result = (vmaMapMemory(m_device.getMemoryAllocator(), m_Vmamemory, reinterpret_cast<void**>(&mappedData)));
 			if(result != VK_SUCCESS)
 				throw std::runtime_error("failed Mapping memory!");
 			mapped = true;
@@ -86,7 +86,7 @@ namespace Rendering
 	{
 		if (mapped)
 		{
-			vmaUnmapMemory(m_device.getMemoryAllocator(), m_memory);
+			vmaUnmapMemory(m_device.getMemoryAllocator(), m_Vmamemory);
 			mappedData = nullptr;
 			mapped = false;
 		}

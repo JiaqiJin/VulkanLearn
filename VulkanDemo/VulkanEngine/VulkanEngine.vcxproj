@@ -152,6 +152,9 @@
     <ClCompile Include="Core\Image.cpp" />
     <ClCompile Include="Core\ImageView.cpp" />
     <ClCompile Include="Core\Instance.cpp" />
+    <ClCompile Include="Core\Pipeline.cpp" />
+    <ClCompile Include="Core\Shader.cpp" />
+    <ClCompile Include="Core\ShaderModule.cpp" />
     <ClCompile Include="libHelper.cpp" />
     <ClCompile Include="Core\PhysicalDevice.cpp" />
     <ClCompile Include="Core\SwapChainSupport.cpp" />
@@ -175,6 +178,9 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Core\Image.h" />
     <ClInclude Include="Core\ImageView.h" />
+    <ClInclude Include="Core\Pipeline.h" />
+    <ClInclude Include="Core\Shader.h" />
+    <ClInclude Include="Core\ShaderModule.h" />
     <ClInclude Include="Core\Swapchain.h" />
     <ClInclude Include="Objects\Object.h" />
     <ClInclude Include="WindowApplication.h" />
