@@ -7,6 +7,7 @@
 #include "Core/Swapchain.h"
 #include "Window.h"
 #include "Core/Surface.h"
+#include "Core/Shader.h"
 
 #include <stdexcept>
 #include <iostream>
@@ -67,6 +68,8 @@ namespace Rendering
         SwapChainSupportDetails m_detail;
         std::size_t m_currentPhysicalDeviceIndex;
         Device m_device;
+        std::shared_ptr<Shader> m_shader;
+        std::vector<ShaderKey> moduleKey{ {ShaderType::Vertex, "Shaders/vert.spv", "main"}, {ShaderType::Vertex, "Shaders/frag.spv", "main"} };
     };
 
     ApplicationImpl::ApplicationImpl(std::string const& name, bool enableValidation, Window const& window)
@@ -77,9 +80,12 @@ namespace Rendering
         , m_currentPhysicalDeviceIndex(findSuitablePhysicalDeviceIndex(m_physicalDevices, m_detail))
         , m_device(getPhysicalDevice(), getSwapChainSupportDetails().getQueueFamilyIndices(), getInstance(),DEVICE_EXTENSIONS)
     {
-        //printf("creating all");
+        printf("creating all");
         //printf(m_physicalDevices[m_currentPhysicalDeviceIndex].getProperties().deviceName);
         //std::cout << static_cast<int>(m_swapChain.getExtend().height) << std::endl;
+        m_shader = ShaderBuilder().addShader(ShaderType::Vertex, "Shaders/vert.spv", "main").
+            addShader(ShaderType::Fragment, "Shaders/frag.spv", "main").buildShader(m_device);
+        m_shader->createShaderStageCreateInfo();
     }
 
     // Application

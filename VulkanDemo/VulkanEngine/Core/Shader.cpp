@@ -5,29 +5,26 @@
 
 namespace Rendering
 {
-	std::vector<VkPipelineShaderStageCreateInfo> CompiledShader::createShaderStageCreateInfo() const
-	{
-		std::vector<VkPipelineShaderStageCreateInfo> createInfo{};
-		std::transform(m_shaderModules.begin(), m_shaderModules.end(), std::back_inserter(createInfo),
-			[](ShaderModule const& shaderModule) { return shaderModule.createStageCreateInfo(); });
-		return createInfo;
-	}
 
 	Shader::Shader(const Device& device, std::vector<ShaderKey> moduleKey)
 		: m_device(device)
 		, m_moduleKey(std::move(moduleKey))
 	{
-		
+		addShaders();
 	}
 
-	CompiledShader Shader::compiler() const
+	void Shader::addShaders()
 	{
-		std::vector<ShaderModule> modules;
 		for (const ShaderKey key : m_moduleKey)
-		{
-			modules.emplace_back(m_device, key);
-		}
-		return CompiledShader(std::move(modules));
+			m_shaderModules.emplace_back(m_device, key);
+	}
+
+	std::vector<VkPipelineShaderStageCreateInfo> Shader::createShaderStageCreateInfo() const
+	{
+		std::vector<VkPipelineShaderStageCreateInfo> createInfo{};
+		std::transform(m_shaderModules.begin(), m_shaderModules.end(), std::back_inserter(createInfo),
+			[](ShaderModule const& shaderModule) { return shaderModule.createStageCreateInfo(); });
+		return createInfo;
 	}
 
 	ShaderBuilder& ShaderBuilder::addShader(Rendering::ShaderType type, const std::string& path, const std::string& entryPoint)

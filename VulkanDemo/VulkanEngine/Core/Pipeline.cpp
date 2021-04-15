@@ -10,8 +10,7 @@ namespace Rendering
 		: m_device(device)
 	{
 		// Compiler shaders
-		auto compilerShader = shader.compiler();
-		std::vector<VkPipelineShaderStageCreateInfo> shaderStages = compilerShader.createShaderStageCreateInfo();
+		std::vector<VkPipelineShaderStageCreateInfo> shaderStages = shader.createShaderStageCreateInfo();
 
 		// Vertex Input format of vertex passing to vertex shaders
 		VkPipelineVertexInputStateCreateInfo vertexInputCreateInfo{};
