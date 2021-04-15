@@ -21,8 +21,8 @@ namespace Rendering
 		~Swapchain();
 
 		VkSwapchainKHR getHandle() const { return m_handle; }
-		VkExtent2D getExtend() { return m_extent; }
-		VkSurfaceFormatKHR getSurfaceFormat() { return m_surfaceFormat; }
+		VkExtent2D getExtend() const { return m_extent; }
+		VkSurfaceFormatKHR getSurfaceFormat() const { return m_surfaceFormat; }
 
 	private:
 		void createSwapchain();
