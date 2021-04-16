@@ -1,12 +1,13 @@
 #include "Pipeline.h"
 #include "Shader.h"
 #include "Device.h"
+#include "RenderPass.h"
 
 #include <stdexcept>
 
-namespace Rendering
+namespace Rendering // TODO ADDING PIPELINE LAYOUT
 {
-	Pipeline::Pipeline(const Device& device, VkExtent2D extent, const Shader& shader)
+	Pipeline::Pipeline(const Device& device, const RenderPass& renderPass, VkExtent2D extent, const Shader& shader)
 		: m_device(device)
 	{
 		// Compiler shaders
@@ -108,12 +109,18 @@ namespace Rendering
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 		pipelineCreateInfo.stageCount = static_cast<uint32_t>(shaderStages.size());
 		pipelineCreateInfo.pStages = shaderStages.data();
+		pipelineCreateInfo.pVertexInputState = &vertexInputCreateInfo;
+		pipelineCreateInfo.pInputAssemblyState = &inputAssemblyCreateInfo;
 		pipelineCreateInfo.pViewportState = &viewportStateCreateInfo;
 		pipelineCreateInfo.pRasterizationState = &rasterizerCreateInfo;
 		pipelineCreateInfo.pMultisampleState = &multisamplingCreateInfo;
 		pipelineCreateInfo.pDepthStencilState = &depthStencilCreateInfo;
 		pipelineCreateInfo.pColorBlendState = &colorBlendingCreateInfo;
 		pipelineCreateInfo.pDynamicState = nullptr;
+		pipelineCreateInfo.renderPass = renderPass.getHandle();
+		pipelineCreateInfo.subpass = 0;
+		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
+		pipelineCreateInfo.basePipelineIndex = -1;
 
 		if (vkCreateGraphicsPipelines(m_device.getHandle(), VK_NULL_HANDLE, 1, &pipelineCreateInfo, nullptr, &m_handle.get()) != VK_SUCCESS)
 			throw std::runtime_error("failed to create graphics pipeline!");

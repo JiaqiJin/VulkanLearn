@@ -1,5 +1,6 @@
 #include "WindowApplication.h"
 // https://gavinkg.github.io/ILearnVulkanFromScratch-CN/
+// https://gpuopen.com/learn/understanding-vulkan-objects/
 int main()
 {
 	try
