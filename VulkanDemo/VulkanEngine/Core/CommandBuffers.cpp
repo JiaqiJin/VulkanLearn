@@ -2,6 +2,8 @@
 #include "Device.h"
 #include "CommandPool.h"
 
+#include <stdexcept>
+
 namespace Rendering
 {
 	CommandBuffersContainer::CommandBuffersContainer(const Device& device, const CommandPool& commandPool, size_t size)

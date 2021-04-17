@@ -3,6 +3,8 @@
 #include "SwapChainSupport.h"
 #include "CommandBuffers.h"
 
+#include <stdexcept>
+
 namespace Rendering
 {
 	CommandPool::CommandPool(const Device& device, const SwapChainSupportDetails& detail)
