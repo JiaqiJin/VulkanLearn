@@ -1,5 +1,6 @@
 #include "Fence.h"
 #include "Device.h"
+#include <stdexcept>
 
 namespace Rendering
 {
