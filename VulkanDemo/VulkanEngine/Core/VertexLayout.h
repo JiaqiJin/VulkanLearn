@@ -69,6 +69,8 @@ namespace Rendering
 		};
 
 		void setBindings(const std::vector<Binding>& bindings);
+		std::vector<VkVertexInputBindingDescription> const& getBindingDescriptions() const { return m_bindingDescriptions; }
+		std::vector<VkVertexInputAttributeDescription> const& getAttributeDescriptions() const { return m_attributeDescriptions; };
 
 	private:
 		std::vector<VkDeviceSize> m_bindingOffsets;

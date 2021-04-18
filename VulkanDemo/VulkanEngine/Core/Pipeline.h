@@ -13,11 +13,12 @@ namespace Rendering
 	class Shader;
 	class Device;
 	class RenderPass;
+	class VertexLayout;
 
 	class Pipeline 
 	{
 	public:
-		Pipeline(const Device& device, const RenderPass& renderPass, VkExtent2D extent, const Shader& shader); // TODO
+		Pipeline(const Device& device, const RenderPass& renderPass, VkExtent2D extent, const Shader& shader, const VertexLayout& vertexLayout); // TODO
 
 		Pipeline(const Pipeline&) = default;
 		Pipeline(Pipeline&&) = default;

@@ -2,12 +2,14 @@
 #include "Shader.h"
 #include "Device.h"
 #include "RenderPass.h"
+#include "VertexLayout.h"
 
 #include <stdexcept>
 
 namespace Rendering // TODO ADDING PIPELINE LAYOUT
 {
-	Pipeline::Pipeline(const Device& device, const RenderPass& renderPass, VkExtent2D extent, const Shader& shader)
+	Pipeline::Pipeline(const Device& device, const RenderPass& renderPass, VkExtent2D extent, const Shader& shader, 
+		const VertexLayout& vertexLayout)
 		: m_device(device)
 	{
 		// Compiler shaders
@@ -19,9 +21,15 @@ namespace Rendering // TODO ADDING PIPELINE LAYOUT
 		vertexInputCreateInfo.vertexBindingDescriptionCount = 0;
 		vertexInputCreateInfo.pVertexBindingDescriptions = nullptr;
 		vertexInputCreateInfo.vertexAttributeDescriptionCount = 0;
-		vertexInputCreateInfo.pVertexAttributeDescriptions = nullptr; 
-		// TODO VERTEX LAYOUT
+		vertexInputCreateInfo.pVertexAttributeDescriptions = nullptr;
 
+		auto bindingDescriptions = vertexLayout.getBindingDescriptions();
+		vertexInputCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(bindingDescriptions.size());
+		vertexInputCreateInfo.pVertexBindingDescriptions = bindingDescriptions.data();
+
+		auto attributeDescriptions = vertexLayout.getAttributeDescriptions();
+		vertexInputCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
+		vertexInputCreateInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
 
 		// Input assembly kind of geometry to draw
 		VkPipelineInputAssemblyStateCreateInfo inputAssemblyCreateInfo{};
