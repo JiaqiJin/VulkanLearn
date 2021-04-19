@@ -6,6 +6,7 @@
 namespace Rendering
 {
 	class Device;
+	class DeviceMemory;
 
 	class Buffer
 	{
@@ -17,8 +18,9 @@ namespace Rendering
 		Buffer(Buffer&&) = default;
 		Buffer& operator=(const Buffer&) = default;
 		Buffer& operator=(Buffer&&) = default;
-		// TODO ADDING MEMORY 
+
 		VkMemoryRequirements getMemoryRequirements() const;
+		void bindMemory(const DeviceMemory& memory) const;
 
 		VkBuffer getHandle() const { return m_handle; }
 

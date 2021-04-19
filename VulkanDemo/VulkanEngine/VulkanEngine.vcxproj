@@ -161,6 +161,7 @@
     <ClCompile Include="Core\Pipeline.cpp" />
     <ClCompile Include="Core\Renderer.cpp" />
     <ClCompile Include="Core\RenderPass.cpp" />
+    <ClCompile Include="Core\ScopedOneTimeCommandBuffer.cpp" />
     <ClCompile Include="Core\Semaphore.cpp" />
     <ClCompile Include="Core\Shader.cpp" />
     <ClCompile Include="Core\ShaderModule.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="Core\Pipeline.h" />
     <ClInclude Include="Core\Renderer.h" />
     <ClInclude Include="Core\RenderPass.h" />
+    <ClInclude Include="Core\ScopedOneTimeCommandBuffer.h" />
     <ClInclude Include="Core\Semaphore.h" />
     <ClInclude Include="Core\Shader.h" />
     <ClInclude Include="Core\ShaderModule.h" />

@@ -1,5 +1,6 @@
 #include "Buffer.h"
 #include "Device.h"
+#include "DeviceMemory.h"
 
 #include <stdexcept>
 
@@ -23,6 +24,11 @@ namespace Rendering
 		vkDestroyBuffer(m_device.getHandle(), m_handle, nullptr);
 	}
 
+	void Buffer::bindMemory(const DeviceMemory& memory) const
+	{
+		vkBindBufferMemory(m_device.getHandle(), m_handle, memory.getHandle(), 0);
+	}
+
 	VkMemoryRequirements Buffer::getMemoryRequirements() const
 	{
 		VkMemoryRequirements memoryRequirements;
@@ -30,4 +36,6 @@ namespace Rendering
 
 		return memoryRequirements;
 	}
+
+
 }

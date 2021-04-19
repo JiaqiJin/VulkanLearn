@@ -14,6 +14,7 @@ namespace Rendering
 	class Device;
 	class Window;
 	struct SwapChainSupportDetails;
+	class CommandPool;
 	//class Swapchain;
 
 	class Application
@@ -28,8 +29,11 @@ namespace Rendering
 		const SwapChainSupportDetails& getSwapChainSupportDetails() const;
 		const PhysicalDevice& getPhysicalDevice() const;
 
+		const CommandPool& getShortLivedCommandPool() const;
+
 		void onSurfaceChanged();
 	private:
 		std::unique_ptr<ApplicationImpl> m_impl;
+		std::unique_ptr<CommandPool> m_shortLivedCommandPool;
 	};
 }

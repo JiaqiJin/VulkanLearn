@@ -7,6 +7,7 @@
 #include "Core/Swapchain.h"
 #include "Window.h"
 #include "Core/Surface.h"
+#include "Core/CommandPool.h"
 
 #include <stdexcept>
 #include <iostream>
@@ -91,6 +92,8 @@ namespace Rendering
     {
         //printf("creating all");
         m_impl = std::make_unique<ApplicationImpl>(name, enableValidation, window);
+
+        m_shortLivedCommandPool = std::make_unique<CommandPool>(getDevice(), getSwapChainSupportDetails());
     }
 
     Application::~Application() = default;
@@ -118,6 +121,11 @@ namespace Rendering
     const PhysicalDevice& Application::getPhysicalDevice() const
     {
         return m_impl->getPhysicalDevice();
+    }
+
+    const CommandPool& Application::getShortLivedCommandPool() const
+    {
+        return *m_shortLivedCommandPool;
     }
 
     void Application::onSurfaceChanged()
