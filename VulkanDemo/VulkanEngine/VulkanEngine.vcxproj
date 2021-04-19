@@ -148,9 +148,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Core\Buffer.cpp" />
     <ClCompile Include="Core\CommandBuffers.cpp" />
     <ClCompile Include="Core\CommandPool.cpp" />
     <ClCompile Include="Core\Device.cpp" />
+    <ClCompile Include="Core\DeviceMemory.cpp" />
     <ClCompile Include="Core\Fence.cpp" />
     <ClCompile Include="Core\Framebuffer.cpp" />
     <ClCompile Include="Core\Image.cpp" />
@@ -184,8 +186,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Core\Buffer.h" />
     <ClInclude Include="Core\CommandBuffers.h" />
     <ClInclude Include="Core\CommandPool.h" />
+    <ClInclude Include="Core\DeviceMemory.h" />
     <ClInclude Include="Core\Fence.h" />
     <ClInclude Include="Core\Framebuffer.h" />
     <ClInclude Include="Core\Image.h" />
