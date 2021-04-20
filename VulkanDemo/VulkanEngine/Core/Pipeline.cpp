@@ -3,12 +3,13 @@
 #include "Device.h"
 #include "RenderPass.h"
 #include "VertexLayout.h"
+#include "PipelineLayout.h"
 
 #include <stdexcept>
 
 namespace Rendering // TODO ADDING PIPELINE LAYOUT
 {
-	Pipeline::Pipeline(const Device& device, const RenderPass& renderPass, VkExtent2D extent, const Shader& shader, 
+	Pipeline::Pipeline(const Device& device, const PipelineLayout& pipelineLayout, const RenderPass& renderPass, VkExtent2D extent, const Shader& shader,
 		const VertexLayout& vertexLayout)
 		: m_device(device)
 	{
@@ -125,6 +126,7 @@ namespace Rendering // TODO ADDING PIPELINE LAYOUT
 		pipelineCreateInfo.pDepthStencilState = &depthStencilCreateInfo;
 		pipelineCreateInfo.pColorBlendState = &colorBlendingCreateInfo;
 		pipelineCreateInfo.pDynamicState = nullptr;
+		pipelineCreateInfo.layout = pipelineLayout.getHandle();
 		pipelineCreateInfo.renderPass = renderPass.getHandle();
 		pipelineCreateInfo.subpass = 0;
 		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
