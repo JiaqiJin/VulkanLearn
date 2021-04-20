@@ -9,6 +9,8 @@ namespace Rendering
 	class Device;
 	class CommandPool;
 	class Queue;
+	class Semaphore;
+	class Fence;
 
 	class CommandBuffersContainer
 	{
@@ -36,6 +38,10 @@ namespace Rendering
 		CommandBuffer(const std::shared_ptr<CommandBuffersContainer>& container, std::size_t index);
 
 		const VkCommandBuffer& getHandle() const;
+		void reset() const;
+		void begin(bool oneTime = true) const;
+		void end() const;
+		void submit(const Queue& queue, const Semaphore* signalSemaphore, const Semaphore* waitSemaphore, const Fence* signalFence) const;
 
 	private:
 		std::shared_ptr<CommandBuffersContainer> m_container;

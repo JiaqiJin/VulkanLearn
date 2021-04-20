@@ -2,16 +2,17 @@
 
 #include <vulkan/vulkan.h>
 #include "UniqueHandle.h"
+#include "../Objects/Object.h"
 
 namespace Rendering
 {
 	class Device;
 	class DeviceMemory;
 
-	class Buffer
+	class Buffer : public Object
 	{
 	public:
-		Buffer(const Device& device, VkDeviceSize size, VkBufferUsageFlags usage);
+		Buffer(const Application& app, VkDeviceSize size, VkBufferUsageFlags usage);
 		~Buffer();
 
 		Buffer(const Buffer&) = default;
@@ -20,12 +21,16 @@ namespace Rendering
 		Buffer& operator=(Buffer&&) = default;
 
 		VkMemoryRequirements getMemoryRequirements() const;
-		void bindMemory(const DeviceMemory& memory) const;
+		void bindMemory(DeviceMemory const& memory) const;
 
 		VkBuffer getHandle() const { return m_handle; }
+		VkDeviceSize getSize() const { return m_size; }
+
+		static void copy(const Buffer& source, const Buffer& destination);
 
 	private:
 		UniqueHandle<VkBuffer> m_handle;
-		const Device& m_device;
+		VkDeviceSize m_size;
+		//const Device& m_device;
 	};
 }
