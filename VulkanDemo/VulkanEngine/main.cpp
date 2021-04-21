@@ -20,3 +20,5 @@ int main()
 	std::getchar();
 	return EXIT_SUCCESS;
 }
+
+// Descriptor set todo

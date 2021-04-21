@@ -11,6 +11,7 @@ namespace Rendering
     class Device;
     class DescriptorPool;
     class DescriptorSetLayout;
+    class Buffer;
 
     class DescriptorSets
     {
@@ -22,6 +23,8 @@ namespace Rendering
         DescriptorSets(DescriptorSets&&) = default;
         DescriptorSets& operator=(const DescriptorSets&) = default;
         DescriptorSets& operator=(DescriptorSets&&) = default;
+
+        void update(std::size_t index, const Buffer& uniformBuffer);
 
         const std::vector<VkDescriptorSet>& getHandles() const { return m_handles; }
         std::size_t getSize() const;

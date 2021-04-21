@@ -2,6 +2,7 @@
 #include "DescriptorPool.h"
 #include "DescriptorSetLayout.h"
 #include "Device.h"
+#include "Buffer.h"
 
 #include <array>
 #include <stdexcept>
@@ -29,6 +30,32 @@ namespace Rendering
 	DescriptorSets::~DescriptorSets()
 	{
 
+	}
+
+	void DescriptorSets::update(std::size_t index, const Buffer& uniformBuffer)
+	{
+		VkDescriptorSet setHandle = m_handles[index];
+
+		std::vector<VkWriteDescriptorSet> descriptorWrites;
+
+		{
+			VkDescriptorBufferInfo bufferInfo{};
+			bufferInfo.buffer = uniformBuffer.getHandle();
+			bufferInfo.offset = 0;
+			bufferInfo.range = uniformBuffer.getSize();
+
+			VkWriteDescriptorSet& descriptorWrite = descriptorWrites.emplace_back();
+			descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+			descriptorWrite.dstSet = setHandle;
+			descriptorWrite.dstBinding = 0;
+			descriptorWrite.dstArrayElement = 0;
+			descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+			descriptorWrite.descriptorCount = 1;
+			descriptorWrite.pBufferInfo = &bufferInfo;
+		}
+
+		// TODO
+		vkUpdateDescriptorSets(m_device.getHandle(), static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 	}
 
 	std::size_t DescriptorSets::getSize() const
