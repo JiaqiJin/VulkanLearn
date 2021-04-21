@@ -151,6 +151,8 @@
     <ClCompile Include="Core\Buffer.cpp" />
     <ClCompile Include="Core\CommandBuffers.cpp" />
     <ClCompile Include="Core\CommandPool.cpp" />
+    <ClCompile Include="Core\DescriptorPool.cpp" />
+    <ClCompile Include="Core\DescriptorSet.cpp" />
     <ClCompile Include="Core\DescriptorSetLayout.cpp" />
     <ClCompile Include="Core\Device.cpp" />
     <ClCompile Include="Core\DeviceMemory.cpp" />
@@ -160,6 +162,7 @@
     <ClCompile Include="Core\ImageView.cpp" />
     <ClCompile Include="Core\Instance.cpp" />
     <ClCompile Include="Core\Pipeline.cpp" />
+    <ClCompile Include="Core\PipelineLayout.cpp" />
     <ClCompile Include="Core\Renderer.cpp" />
     <ClCompile Include="Core\RenderPass.cpp" />
     <ClCompile Include="Core\ScopedOneTimeCommandBuffer.cpp" />
@@ -191,6 +194,7 @@
     <ClInclude Include="Core\Buffer.h" />
     <ClInclude Include="Core\CommandBuffers.h" />
     <ClInclude Include="Core\CommandPool.h" />
+    <ClInclude Include="Core\DescriptorPool.h" />
     <ClInclude Include="Core\DescriptorSetLayout.h" />
     <ClInclude Include="Core\DeviceMemory.h" />
     <ClInclude Include="Core\Fence.h" />
@@ -198,6 +202,7 @@
     <ClInclude Include="Core\Image.h" />
     <ClInclude Include="Core\ImageView.h" />
     <ClInclude Include="Core\Pipeline.h" />
+    <ClInclude Include="Core\PipelineLayout.h" />
     <ClInclude Include="Core\Renderer.h" />
     <ClInclude Include="Core\RenderPass.h" />
     <ClInclude Include="Core\ScopedOneTimeCommandBuffer.h" />
@@ -206,6 +211,7 @@
     <ClInclude Include="Core\ShaderModule.h" />
     <ClInclude Include="Core\Swapchain.h" />
     <ClInclude Include="Core\VertexLayout.h" />
+    <ClInclude Include="Core\DescriptorSet.h" />
     <ClInclude Include="Objects\Object.h" />
     <ClInclude Include="WindowApplication.h" />
     <ClInclude Include="Core\Device.h" />

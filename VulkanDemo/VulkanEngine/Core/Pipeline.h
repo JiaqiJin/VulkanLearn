@@ -19,7 +19,7 @@ namespace Rendering
 	class Pipeline 
 	{
 	public:
-		Pipeline(const Device& device, const PipelineLayout& ipelineLayout, const RenderPass& renderPass, VkExtent2D extent, const Shader& shader, const VertexLayout& vertexLayout); // TODO
+		Pipeline(const Device& device, const PipelineLayout& pipelineLayout, const RenderPass& renderPass, VkExtent2D extent, const Shader& shader, const VertexLayout& vertexLayout); // TODO
 
 		Pipeline(const Pipeline&) = default;
 		Pipeline(Pipeline&&) = default;
