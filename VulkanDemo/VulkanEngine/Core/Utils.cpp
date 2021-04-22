@@ -1,4 +1,9 @@
 #include "Utils.h"
+#include "../Application.h"
+#include "Image.h"
+#include "Buffer.h"
+#include "DeviceMemory.h"
+#include <algorithm>
 
 namespace Rendering
 {
@@ -17,4 +22,24 @@ namespace Rendering
 
         return true;
     }
+
+    void utils::createBuffer(Application const& app, VkDeviceSize size, VkBufferUsageFlags usage,
+        VkMemoryPropertyFlags properties, std::unique_ptr<Buffer>& buffer, std::unique_ptr<DeviceMemory>& bufferMemory)
+    {
+        buffer = std::make_unique<Buffer>(app, size, usage);
+        bufferMemory = std::make_unique<DeviceMemory>(app.getDevice(), app.getPhysicalDevice(), buffer->getMemoryRequirements(), properties);
+        buffer->bindMemory(*bufferMemory);
+    }
+
+    void utils::createImage(Application const& app, uint32_t width, uint32_t height,
+        VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties,
+        std::unique_ptr<Image>& image, std::unique_ptr<DeviceMemory>& imageMemory)
+    {
+        image = std::make_unique<Image>(app.getDevice(), width, height, format, tiling, usage);
+        imageMemory = std::make_unique<DeviceMemory>(app.getDevice(), app.getPhysicalDevice(), image->getMemoryRequirements(), properties);
+        image->bindMemory(*imageMemory);
+    }
+
+
+
 }

@@ -1,6 +1,7 @@
 #include "Image.h"
 #include "Device.h"
 #include "ImageView.h"
+#include "DeviceMemory.h"
 
 #include <stdexcept>
 
@@ -91,4 +92,18 @@ namespace Rendering
 			mapped = false;
 		}
 	}
+
+	VkMemoryRequirements Image::getMemoryRequirements() const
+	{
+		VkMemoryRequirements memRequirements;
+		vkGetImageMemoryRequirements(m_device.getHandle(), m_handle, &memRequirements);
+
+		return memRequirements;
+	}
+
+	void Image::bindMemory(DeviceMemory const& memory) const
+	{
+		vkBindImageMemory(m_device.getHandle(), m_handle, memory.getHandle(), 0);
+	}
+
 }

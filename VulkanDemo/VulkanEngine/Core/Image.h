@@ -9,6 +9,7 @@ namespace Rendering
 {
 	class Device;
 	class ImageView;
+	class DeviceMemory;
 
 	class Image
 	{
@@ -27,9 +28,12 @@ namespace Rendering
 		VkImage getHandle() const { return m_handle; }
 		VkFormat getFormat() const { return m_format; }
 		VkImageTiling getTiling() const { return m_tiling; }
-		const Device& getDevice() const { return m_device; }
+		//const Device& getDevice() const { return m_device; }
 		
 		std::unique_ptr<ImageView> createImageView(VkImageAspectFlags aspectFlags);
+
+		VkMemoryRequirements getMemoryRequirements() const;
+		void bindMemory(DeviceMemory const& memory) const;
 
 		// Features
 		uint8_t* Map();
