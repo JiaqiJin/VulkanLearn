@@ -3,6 +3,8 @@
 #include "DescriptorSetLayout.h"
 #include "Device.h"
 #include "Buffer.h"
+#include "Texture.h"
+#include "Sampler.h"
 
 #include <array>
 #include <stdexcept>
@@ -32,7 +34,8 @@ namespace Rendering
 
 	}
 
-	void DescriptorSets::update(std::size_t index, const Buffer& uniformBuffer)
+	void DescriptorSets::update(std::size_t index, const Buffer& uniformBuffer, 
+		const std::shared_ptr<Texture>& texture, const std::shared_ptr<Sampler>& sampler)
 	{
 		VkDescriptorSet setHandle = m_handles[index];
 
@@ -54,7 +57,24 @@ namespace Rendering
 			descriptorWrite.pBufferInfo = &bufferInfo;
 		}
 
-		// TODO
+		if (texture && sampler)
+		{
+			VkWriteDescriptorSet& descriptorWrite = descriptorWrites.emplace_back();
+
+			VkDescriptorImageInfo imageInfo{};
+			imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+			imageInfo.imageView = texture->getImageViewHandle();
+			imageInfo.sampler = sampler->getHandle();
+
+			descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+			descriptorWrite.dstSet = setHandle;
+			descriptorWrite.dstBinding = 1;
+			descriptorWrite.dstArrayElement = 0;
+			descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+			descriptorWrite.descriptorCount = 1;
+			descriptorWrite.pImageInfo = &imageInfo;
+		}
+
 		vkUpdateDescriptorSets(m_device.getHandle(), static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 	}
 
