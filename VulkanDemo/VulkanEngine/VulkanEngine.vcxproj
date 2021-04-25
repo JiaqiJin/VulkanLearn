@@ -167,10 +167,12 @@
     <ClCompile Include="Core\Renderer.cpp" />
     <ClCompile Include="Core\RenderPass.cpp" />
     <ClCompile Include="Core\Sampler.cpp" />
+    <ClCompile Include="Core\SceneObject.cpp" />
     <ClCompile Include="Core\ScopedOneTimeCommandBuffer.cpp" />
     <ClCompile Include="Core\Semaphore.cpp" />
     <ClCompile Include="Core\Shader.cpp" />
     <ClCompile Include="Core\ShaderModule.cpp" />
+    <ClCompile Include="Core\Transform.cpp" />
     <ClCompile Include="Core\VertexLayout.cpp" />
     <ClCompile Include="libHelper.cpp" />
     <ClCompile Include="Core\PhysicalDevice.cpp" />
@@ -211,11 +213,13 @@
     <ClInclude Include="Core\Renderer.h" />
     <ClInclude Include="Core\RenderPass.h" />
     <ClInclude Include="Core\Sampler.h" />
+    <ClInclude Include="Core\SceneObject.h" />
     <ClInclude Include="Core\ScopedOneTimeCommandBuffer.h" />
     <ClInclude Include="Core\Semaphore.h" />
     <ClInclude Include="Core\Shader.h" />
     <ClInclude Include="Core\ShaderModule.h" />
     <ClInclude Include="Core\Swapchain.h" />
+    <ClInclude Include="Core\Transform.h" />
     <ClInclude Include="Core\VertexLayout.h" />
     <ClInclude Include="Core\DescriptorSet.h" />
     <ClInclude Include="Objects\Object.h" />
