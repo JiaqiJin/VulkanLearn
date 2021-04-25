@@ -16,6 +16,28 @@ namespace Rendering
         throw std::runtime_error("unknown attribute");
     }
 
+    VkIndexType findComponentType(VertexLayout::ComponentType indexType)
+    {
+        switch (indexType)
+        {
+        case VertexLayout::ComponentType::UnsignedByte:
+            return VK_INDEX_TYPE_UINT8_EXT;
+        case VertexLayout::ComponentType::UnsignedShort:
+            return VK_INDEX_TYPE_UINT16;
+        case VertexLayout::ComponentType::UnsignedInt:
+            return VK_INDEX_TYPE_UINT32;
+
+        case VertexLayout::ComponentType::Byte:
+        case VertexLayout::ComponentType::Short:
+        case VertexLayout::ComponentType::Int:
+        case VertexLayout::ComponentType::Float:
+        case VertexLayout::ComponentType::Double:
+            throw std::invalid_argument("Given component type isn't valid for indices");
+        }
+
+        throw std::invalid_argument("indexType");
+    }
+
 	void VertexLayout::setBindings(const std::vector<Binding>& bindings)
 	{
         std::transform(bindings.begin(), bindings.end(), std::back_inserter(m_bindingOffsets),
@@ -46,5 +68,8 @@ namespace Rendering
         }
 	}
 
-
+    void VertexLayout::setIndexType(ComponentType indexType)
+    {
+        m_indexType = findComponentType(indexType);
+    }
 }

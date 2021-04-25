@@ -54,7 +54,7 @@ namespace Rendering
 
 		struct Binding
 		{
-			Binding(size_t offset, size_t stride) : offset(offset), stride(stride) {}
+			Binding(std::size_t offset, std::size_t length, std::size_t stride) : offset(offset), length(length), stride(stride) {}
 
 			template<class... Args>
 			Binding& addAttribute(Args&&... args)
@@ -65,12 +65,21 @@ namespace Rendering
 
 			size_t stride = 0;
 			size_t offset = 0;
+			std::size_t length = 0;
 			std::vector<Attribute> attributes;
 		};
 
-		void setBindings(const std::vector<Binding>& bindings);
+		void setBindings(std::vector<Binding> const& bindings);
+		std::vector<VkDeviceSize> const& getBindingOffsets() const { return m_bindingOffsets; }
 		std::vector<VkVertexInputBindingDescription> const& getBindingDescriptions() const { return m_bindingDescriptions; }
 		std::vector<VkVertexInputAttributeDescription> const& getAttributeDescriptions() const { return m_attributeDescriptions; };
+
+		void setIndexType(ComponentType indexType);
+		VkIndexType getIndexType() const { return m_indexType; }
+
+		void setIndexDataOffset(std::size_t offset) { m_indexDataOffset = offset; }
+		VkDeviceSize getIndexDataOffset() const { return m_indexDataOffset; }
+
 
 	private:
 		std::vector<VkDeviceSize> m_bindingOffsets;
@@ -78,5 +87,6 @@ namespace Rendering
 		std::vector<VkVertexInputAttributeDescription> m_attributeDescriptions;
 
 		VkIndexType m_indexType = VK_INDEX_TYPE_UINT16;
+		VkDeviceSize m_indexDataOffset = 0;
 	};
 }

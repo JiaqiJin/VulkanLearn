@@ -1,11 +1,14 @@
 #include "Pipeline.h"
 #include "Shader.h"
+#include "ShaderModule.h"
 #include "Device.h"
 #include "RenderPass.h"
 #include "VertexLayout.h"
 #include "PipelineLayout.h"
 
 #include <stdexcept>
+
+Rendering::Pipeline const* Rendering::Pipeline::ms_boundPipeline = nullptr;
 
 namespace Rendering // TODO ADDING PIPELINE LAYOUT
 {

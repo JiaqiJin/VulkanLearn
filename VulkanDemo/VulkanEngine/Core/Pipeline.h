@@ -12,6 +12,7 @@ namespace Rendering
 {
 	class Shader;
 	class Device;
+	class ShaderModule;
 	class RenderPass;
 	class VertexLayout;
 	class PipelineLayout;
@@ -28,8 +29,13 @@ namespace Rendering
 
 		VkPipeline getHandle() const { return m_handle; }
 
+		static void resetBoundPipeline() { ms_boundPipeline = nullptr; }
+
 	private:
 		UniqueHandle<VkPipeline> m_handle;
 		const Device& m_device;
+
+	private:
+		static const Pipeline* ms_boundPipeline;
 	};
 }

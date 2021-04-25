@@ -1,6 +1,8 @@
 #include "Sampler.h"
 #include "Device.h"
 
+#include <stdexcept>
+
 namespace Rendering
 {
 	Sampler::Sampler(const Device& device)
