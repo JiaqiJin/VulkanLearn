@@ -2,7 +2,7 @@
 
 #include <vulkan/vulkan.h>
 #include "UniqueHandle.h"
-
+#include "../Objects/Object.h"
 /*
 * Wrapper class for VkImageView
 * Describe how to access the image and which part of the image to access
@@ -10,12 +10,11 @@
 namespace Rendering
 {
 	class Image;
-	class Device;
 
-	class ImageView
+	class ImageView : public Object
 	{
 	public:
-		ImageView(const Device& device, const Image& image, VkImageAspectFlags aspectFlags);
+		explicit ImageView(const Application& app, const Image& image, VkImageAspectFlags aspectFlags);
 		~ImageView();
 
 		ImageView(const ImageView&) = default;
@@ -24,8 +23,8 @@ namespace Rendering
 		ImageView& operator=(ImageView&&) = default;
 
 		VkImageView getHandle() const { return m_handle; }
+
 	private:
-		const Device& m_device;
 		UniqueHandle<VkImageView> m_handle;
 	};
 }

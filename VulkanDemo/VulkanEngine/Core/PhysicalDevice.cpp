@@ -8,7 +8,7 @@ namespace Rendering
         init();
     }
 
-    bool PhysicalDevice::areExtensionsSupported(std::vector<char const*> const& requestedExtensions) const
+    bool PhysicalDevice::areExtensionsSupported(std::vector<const char*> const& requestedExtensions) const
     {
         return utils::checkSupportOption(m_availableExtensionNames, requestedExtensions);
     }

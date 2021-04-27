@@ -1,23 +1,28 @@
 #include "Device.h"
-#include "Queue.h"
-#include "SwapChainSupport.h"
-#include "QueueFamily.h"
 #include "PhysicalDevice.h"
-#include "Instance.h"
+#include "PhysicalDeviceSurfaceContainer.h"
+#include "QueueFamilyIndices.h"
+#include "Queue.h"
 #include <set>
 #include <stdexcept>
 
 namespace Rendering
 {
-    Device::Device(const PhysicalDevice& physicalDevice, const QueueFamilyIndices& indices, const Instance& instance, std::vector<const char*> const& extensions)
+    Device::Device(PhysicalDeviceSurfaceContainer const& physicalDeviceSurfaceContainer, std::vector<const char*> const& extensions)
     {
-        std::set<const QueueFamily*> uniqueQueueFamilies = { &indices.getGraphicsQueueFamily(), &indices.getPresentQueueFamily() };
+        PhysicalDevice const& physicalDevice = physicalDeviceSurfaceContainer.getPhysicalDevice();
+
+        QueueFamilyIndices const& indices = physicalDeviceSurfaceContainer.getParameters().getQueueFamilyIndices();
+
+        std::set<QueueFamily const*> uniqueQueueFamilies = { &indices.getGraphicsQueueFamily(), &indices.getPresentQueueFamily() };
+
+        // The device is created with 1 queue of each family
 
         std::vector<float> queuePriorities = { 1.0f };
 
         std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
         queueCreateInfos.reserve(uniqueQueueFamilies.size());
-        for (const QueueFamily* queueFamily : uniqueQueueFamilies)
+        for (QueueFamily const* queueFamily : uniqueQueueFamilies)
         {
             VkDeviceQueueCreateInfo& queueCreateInfo = queueCreateInfos.emplace_back();
             queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
@@ -26,6 +31,7 @@ namespace Rendering
             queueCreateInfo.pQueuePriorities = queuePriorities.data();
         }
 
+        // TODO specify these features externally
         VkPhysicalDeviceFeatures deviceFeatures{};
         deviceFeatures.samplerAnisotropy = VK_TRUE;
         deviceFeatures.geometryShader = VK_TRUE;
@@ -41,11 +47,11 @@ namespace Rendering
         if (vkCreateDevice(physicalDevice.getHandle(), &deviceCreateInfo, nullptr, &m_handle.get()) != VK_SUCCESS)
             throw std::runtime_error("failed to create logical device!");
 
-        for (const QueueFamily* queueFamily : uniqueQueueFamilies)
+        for (QueueFamily const* queueFamily : uniqueQueueFamilies)
         {
             VkQueue handle = VK_NULL_HANDLE;
             vkGetDeviceQueue(m_handle, queueFamily->getIndex(), 0, &handle);
-            const Queue& queue = m_queues.emplace_back(handle, *queueFamily);
+            Queue const& queue = m_queues.emplace_back(handle, *queueFamily);
 
             if (queueFamily->getIndex() == indices.getGraphicsQueueFamily().getIndex())
                 m_graphicsQueue = &queue;
@@ -55,51 +61,15 @@ namespace Rendering
 
         if (m_graphicsQueue == nullptr || m_presentQueue == nullptr)
             throw std::runtime_error("failed to get device queues!");
-
-      
-        VmaVulkanFunctions vmaVulkanFunc{};
-        vmaVulkanFunc.vkAllocateMemory = vkAllocateMemory;
-        vmaVulkanFunc.vkBindBufferMemory = vkBindBufferMemory;
-        vmaVulkanFunc.vkBindImageMemory = vkBindImageMemory;
-        vmaVulkanFunc.vkCreateBuffer = vkCreateBuffer;
-        vmaVulkanFunc.vkCreateImage = vkCreateImage;
-        vmaVulkanFunc.vkDestroyBuffer = vkDestroyBuffer;
-        vmaVulkanFunc.vkDestroyImage = vkDestroyImage;
-        vmaVulkanFunc.vkFlushMappedMemoryRanges = vkFlushMappedMemoryRanges;
-        vmaVulkanFunc.vkFreeMemory = vkFreeMemory;
-        vmaVulkanFunc.vkGetBufferMemoryRequirements = vkGetBufferMemoryRequirements;
-        vmaVulkanFunc.vkGetImageMemoryRequirements = vkGetImageMemoryRequirements;
-        vmaVulkanFunc.vkGetPhysicalDeviceMemoryProperties = vkGetPhysicalDeviceMemoryProperties;
-        vmaVulkanFunc.vkGetPhysicalDeviceProperties = vkGetPhysicalDeviceProperties;
-        vmaVulkanFunc.vkInvalidateMappedMemoryRanges = vkInvalidateMappedMemoryRanges;
-        vmaVulkanFunc.vkMapMemory = vkMapMemory;
-        vmaVulkanFunc.vkUnmapMemory = vkUnmapMemory;
-        vmaVulkanFunc.vkCmdCopyBuffer = vkCmdCopyBuffer;
-
-        VmaAllocatorCreateInfo allocatorInfo{};
-        allocatorInfo.physicalDevice = physicalDevice.getHandle();
-        allocatorInfo.device = m_handle;
-        allocatorInfo.instance = instance.getHandle();
-        allocatorInfo.pVulkanFunctions = &vmaVulkanFunc;
-
-        auto resultVma = vmaCreateAllocator(&allocatorInfo, &m_memoryAllocator);
-
-        if (resultVma != VK_SUCCESS)
-        {
-            throw std::runtime_error("Cannot create allocator");
-        }
-
-    }
-
-    Device::~Device()
-    {
-        vkDestroyDevice(m_handle, nullptr);
-
-        vmaDestroyAllocator(m_memoryAllocator);
     }
 
     void Device::waitIdle() const
     {
         vkDeviceWaitIdle(m_handle);
+    }
+
+    Device::~Device()
+    {
+        vkDestroyDevice(m_handle, nullptr);
     }
 }

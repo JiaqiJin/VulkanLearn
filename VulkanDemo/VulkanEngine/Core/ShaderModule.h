@@ -3,42 +3,41 @@
 #include <vulkan/vulkan.h>
 #include <string>
 #include "UniqueHandle.h"
+#include "../Objects/Object.h"
 
 namespace Rendering
 {
-	class Device;
+    class ShaderModule : Object
+    {
+    public:
+        enum class Type
+        {
+            Vertex,
+            Geometry,
+            Fragment,
+        };
 
-	enum class ShaderType
-	{
-		Vertex,
-		Geometry,
-		Fragment,
-	};
-	
-	struct ShaderKey
-	{
-		ShaderType type = ShaderType::Vertex;
-		std::string path;
-		std::string entryPoint;
-	};
+        struct Key
+        {
+            Type type = Type::Vertex;
+            std::string path;
+            std::string entryPoint;
+        };
 
-	class ShaderModule
-	{
-	public:
-		ShaderModule(const Device& device, const ShaderKey& key);
-		~ShaderModule();
+    public:
+        explicit ShaderModule(const Application& app, const Key& key);
+        ~ShaderModule();
 
-		ShaderModule(ShaderModule&&) = default;
-		ShaderModule& operator=(ShaderModule&&) = default;
+        ShaderModule(ShaderModule&&) = default;
+        ShaderModule& operator=(ShaderModule&&) = default;
 
-		// Hepler function use for assigning to a specific pipeline stage
-		VkPipelineShaderStageCreateInfo createStageCreateInfo() const;
+        VkPipelineShaderStageCreateInfo createStageCreateInfo() const;
 
-		VkShaderModule getHandle() const { return m_handle; }
-	private:
-		UniqueHandle<VkShaderModule> m_handle;
-		const Device& m_device;
+        VkShaderModule getHandle() const { return m_handle; }
 
-		ShaderKey m_key;
-	};
+    private:
+        UniqueHandle<VkShaderModule> m_handle;
+
+        Key m_key;
+    };
 }

@@ -1,54 +1,38 @@
 #pragma once
 
 #include <vulkan/vulkan.h>
-#include <vk_mem_alloc.h>
 #include <memory>
 #include "UniqueHandle.h"
+#include "../Objects/Object.h"
 
 namespace Rendering
 {
-	class Device;
-	class ImageView;
-	class DeviceMemory;
+    class DeviceMemory;
+    class ImageView;
 
-	class Image
-	{
-	public:
-		Image(const Device& device, uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage);
-		Image(const Device& device, VkImage image, VkFormat format);
-		Image(const Device& device, VkImage image, VkFormat format, VkImageTiling tiling);
-		~Image();
+    class Image : public Object
+    {
+    public:
+        explicit Image(const Application& app, uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage);
+        explicit Image(const Application& app, VkImage image, VkFormat format);
+        ~Image();
 
-		Image(const Image&) = default;
-		Image(Image&&) = default;
-		Image& operator=(const Image&) = default;
-		Image& operator=(Image&&) = default;
+        Image(Image const&) = default;
+        Image(Image&&) = default;
+        Image& operator=(Image const&) = default;
+        Image& operator=(Image&&) = default;
 
-		VmaAllocation getVmaMemory() const { return m_Vmamemory; }
-		VkImage getHandle() const { return m_handle; }
-		VkFormat getFormat() const { return m_format; }
-		VkImageTiling getTiling() const { return m_tiling; }
-		//const Device& getDevice() const { return m_device; }
-		
-		std::unique_ptr<ImageView> createImageView(VkImageAspectFlags aspectFlags);
+        VkMemoryRequirements getMemoryRequirements() const;
+        void bindMemory(DeviceMemory const& memory) const;
 
-		VkMemoryRequirements getMemoryRequirements() const;
-		void bindMemory(DeviceMemory const& memory) const;
+        std::unique_ptr<ImageView> createImageView(VkImageAspectFlags aspectFlags);
 
-		// Features
-		uint8_t* Map();
-		void unMap();
+        VkImage getHandle() const { return m_handle; }
+        VkFormat getFormat() const { return m_format; }
 
-	private:
-		const Device& m_device;
-		UniqueHandle<VkImage> m_handle;
-		bool m_isOwned = true;
-
-		VkImageTiling m_tiling;
-		VkFormat m_format;
-
-		VmaAllocation m_Vmamemory{ VK_NULL_HANDLE };
-		uint8_t* mappedData{ nullptr };
-		bool mapped = false;
-	};
+    private:
+        bool m_isOwned = true;
+        UniqueHandle<VkImage> m_handle;
+        VkFormat m_format;
+    };
 }

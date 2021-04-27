@@ -2,7 +2,7 @@
 
 #include <vulkan/vulkan.h>
 #include "UniqueHandle.h"
-
+#include "../Objects/Object.h"
 /*
 * Wrapper class for VkFramebuffer
 * Framebuffer represent a link to actual images that can be used as attachment. 
@@ -10,26 +10,24 @@
 */
 namespace Rendering
 {
-	class RenderPass;
-	class ImageView;
-	class Device;
+    class RenderPass;
+    class ImageView;
 
-	class Framebuffer
-	{
-	public:
-		Framebuffer(const Device& device, ImageView const& colorImageView, ImageView const& depthImageView,
-			const RenderPass& renderPass, VkExtent2D extent);
-		~Framebuffer();
+    class Framebuffer : public Object
+    {
+    public:
+        explicit Framebuffer(const Application& app, const ImageView& colorImageView, const ImageView& depthImageView,
+            const RenderPass& renderPass, VkExtent2D extent);
+        ~Framebuffer();
 
-		Framebuffer(const Framebuffer&) = default;
-		Framebuffer(Framebuffer&&) = default;
-		Framebuffer& operator=(const Framebuffer&) = default;
-		Framebuffer& operator=(Framebuffer&&) = default;
+        Framebuffer(const Framebuffer&) = default;
+        Framebuffer(Framebuffer&&) = default;
+        Framebuffer& operator=(const Framebuffer&) = default;
+        Framebuffer& operator=(Framebuffer&&) = default;
 
-		VkFramebuffer getHandle() const { return m_handle; }
-	private:
-		UniqueHandle<VkFramebuffer> m_handle;
+        VkFramebuffer getHandle() const { return m_handle; }
 
-		const Device& m_device;
-	};
+    private:
+        UniqueHandle<VkFramebuffer> m_handle;
+    };
 }

@@ -6,35 +6,35 @@
 namespace Rendering
 {
 
-	Shader::Shader(const Device& device, std::vector<ShaderKey> moduleKey)
-		: m_device(device)
-		, m_moduleKey(std::move(moduleKey))
-	{
-		addShaders();
-	}
+    std::vector<VkPipelineShaderStageCreateInfo> CompiledShader::createStageDescriptions() const
+    {
+        std::vector<VkPipelineShaderStageCreateInfo> stageDescriptions;
+        std::transform(m_shaderModules.begin(), m_shaderModules.end(), std::back_inserter(stageDescriptions),
+            [](ShaderModule const& shaderModule) { return shaderModule.createStageCreateInfo(); });
+        return stageDescriptions;
+    }
 
-	void Shader::addShaders()
-	{
-		for (const ShaderKey key : m_moduleKey)
-			m_shaderModules.emplace_back(m_device, key);
-	}
+    Shader::Shader(const Application& app, std::vector<ShaderModule::Key> moduleKeys) : Object(app), m_moduleKeys(std::move(moduleKeys))
+    {
 
-	std::vector<VkPipelineShaderStageCreateInfo> Shader::createShaderStageCreateInfo() const
-	{
-		std::vector<VkPipelineShaderStageCreateInfo> createInfo{};
-		std::transform(m_shaderModules.begin(), m_shaderModules.end(), std::back_inserter(createInfo),
-			[](ShaderModule const& shaderModule) { return shaderModule.createStageCreateInfo(); });
-		return createInfo;
-	}
+    }
 
-	ShaderBuilder& ShaderBuilder::addShader(Rendering::ShaderType type, const std::string& path, const std::string& entryPoint)
-	{
-		m_moduleKeys.push_back({ type , path, entryPoint });
-		return*this;
-	}
+    CompiledShader Shader::compile() const
+    {
+        std::vector<ShaderModule> modules;
+        for (ShaderModule::Key const& key : m_moduleKeys)
+            modules.emplace_back(getApp(), key);
+        return CompiledShader(std::move(modules));
+    }
 
-	std::unique_ptr<Shader> ShaderBuilder::buildShader(const Device& device)
-	{
-		return std::make_unique<Shader>(device, m_moduleKeys);
-	}
+    ShaderBuilder& ShaderBuilder::addStage(ShaderModule::Type type, const std::string& path, std::string entryPoint)
+    {
+        m_moduleKeys.push_back({ type, path, entryPoint });
+        return *this;
+    }
+
+    std::unique_ptr<Shader> ShaderBuilder::build(const Application& app) const
+    {
+        return std::make_unique<Shader>(app, m_moduleKeys);
+    }
 }

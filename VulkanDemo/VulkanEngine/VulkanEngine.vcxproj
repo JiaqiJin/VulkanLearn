@@ -149,6 +149,8 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Core\Buffer.cpp" />
+    <ClCompile Include="Core\Camera.cpp" />
+    <ClCompile Include="Core\CommandBuffer.cpp" />
     <ClCompile Include="Core\CommandBuffers.cpp" />
     <ClCompile Include="Core\CommandPool.cpp" />
     <ClCompile Include="Core\DescriptorPool.cpp" />
@@ -161,9 +163,15 @@
     <ClCompile Include="Core\Image.cpp" />
     <ClCompile Include="Core\ImageView.cpp" />
     <ClCompile Include="Core\Instance.cpp" />
+    <ClCompile Include="Core\Light.cpp" />
     <ClCompile Include="Core\Mesh.cpp" />
+    <ClCompile Include="Core\ObjectInstance.cpp" />
+    <ClCompile Include="Core\PhysicalDeviceSurfaceContainer.cpp" />
+    <ClCompile Include="Core\PhysicalDeviceSurfaceParameters.cpp" />
     <ClCompile Include="Core\Pipeline.cpp" />
     <ClCompile Include="Core\PipelineLayout.cpp" />
+    <ClCompile Include="Core\QueueFamily.cpp" />
+    <ClCompile Include="Core\QueueFamilyIndices.cpp" />
     <ClCompile Include="Core\Renderer.cpp" />
     <ClCompile Include="Core\RenderPass.cpp" />
     <ClCompile Include="Core\Sampler.cpp" />
@@ -172,13 +180,12 @@
     <ClCompile Include="Core\Semaphore.cpp" />
     <ClCompile Include="Core\Shader.cpp" />
     <ClCompile Include="Core\ShaderModule.cpp" />
+    <ClCompile Include="Core\Timer.cpp" />
     <ClCompile Include="Core\Transform.cpp" />
     <ClCompile Include="Core\VertexLayout.cpp" />
     <ClCompile Include="libHelper.cpp" />
     <ClCompile Include="Core\PhysicalDevice.cpp" />
-    <ClCompile Include="Core\SwapChainSupport.cpp" />
     <ClCompile Include="Core\Queue.cpp" />
-    <ClCompile Include="Core\QueueFamily.cpp" />
     <ClCompile Include="Core\Surface.cpp" />
     <ClCompile Include="Core\Swapchain.cpp" />
     <ClCompile Include="Core\Utils.cpp" />
@@ -192,11 +199,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Objects\Object.cpp" />
     <ClCompile Include="Core\Texture.cpp" />
+    <ClCompile Include="VulkanSurfaceCreator.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Core\Buffer.h" />
+    <ClInclude Include="Core\Camera.h" />
+    <ClInclude Include="Core\CommandBuffer.h" />
     <ClInclude Include="Core\CommandBuffers.h" />
     <ClInclude Include="Core\CommandPool.h" />
     <ClInclude Include="Core\DescriptorPool.h" />
@@ -206,10 +216,16 @@
     <ClInclude Include="Core\Framebuffer.h" />
     <ClInclude Include="Core\Image.h" />
     <ClInclude Include="Core\ImageView.h" />
+    <ClInclude Include="Core\Light.h" />
     <ClInclude Include="Core\Material.h" />
     <ClInclude Include="Core\Mesh.h" />
+    <ClInclude Include="Core\ObjectInstance.h" />
+    <ClInclude Include="Core\PhysicalDeviceSurfaceContainer.h" />
+    <ClInclude Include="Core\PhysicalDeviceSurfaceParameters.h" />
     <ClInclude Include="Core\Pipeline.h" />
     <ClInclude Include="Core\PipelineLayout.h" />
+    <ClInclude Include="Core\QueueFamily.h" />
+    <ClInclude Include="Core\QueueFamilyIndices.h" />
     <ClInclude Include="Core\Renderer.h" />
     <ClInclude Include="Core\RenderPass.h" />
     <ClInclude Include="Core\Sampler.h" />
@@ -219,18 +235,19 @@
     <ClInclude Include="Core\Shader.h" />
     <ClInclude Include="Core\ShaderModule.h" />
     <ClInclude Include="Core\Swapchain.h" />
+    <ClInclude Include="Core\Timer.h" />
     <ClInclude Include="Core\Transform.h" />
     <ClInclude Include="Core\VertexLayout.h" />
     <ClInclude Include="Core\DescriptorSet.h" />
     <ClInclude Include="Objects\Object.h" />
     <ClInclude Include="Core\Texture.h" />
+    <ClInclude Include="vendor\magic_enum.hpp" />
+    <ClInclude Include="VulkanSurfaceCreator.h" />
     <ClInclude Include="WindowApplication.h" />
     <ClInclude Include="Core\Device.h" />
     <ClInclude Include="Core\Instance.h" />
     <ClInclude Include="Core\PhysicalDevice.h" />
-    <ClInclude Include="Core\SwapChainSupport.h" />
     <ClInclude Include="Core\Queue.h" />
-    <ClInclude Include="Core\QueueFamily.h" />
     <ClInclude Include="Core\Surface.h" />
     <ClInclude Include="Core\UniqueHandle.h" />
     <ClInclude Include="Core\Utils.h" />

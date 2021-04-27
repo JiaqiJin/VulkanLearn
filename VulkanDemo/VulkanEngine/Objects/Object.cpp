@@ -3,12 +3,7 @@
 
 namespace Rendering
 {
-	Object::Object(const Application& app)
-		: m_app(app)
-	{
-
-	}
-
+	
 	const Instance& Object::getInstance() const
 	{
 		return m_app.getInstance();
@@ -29,8 +24,8 @@ namespace Rendering
 		return m_app.getPhysicalDevice();
 	}
 
-	const SwapChainSupportDetails& Object::getPhysicalSwapChainSupportDetails() const
+	const PhysicalDeviceSurfaceParameters& Object::getPhysicalDeviceSurfaceParameters() const
 	{
-		return m_app.getSwapChainSupportDetails();
+		return getApp().getPhysicalDeviceSurfaceParameters();
 	}
 }

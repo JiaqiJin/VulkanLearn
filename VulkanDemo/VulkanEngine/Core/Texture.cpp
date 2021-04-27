@@ -15,7 +15,6 @@ namespace Rendering
     {
         ScopedOneTimeCommandBuffer commandBuffer{ app };
 
-        // Barrier use for syncronization 
         VkImageMemoryBarrier barrier{};
         barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
         barrier.oldLayout = oldLayout;
@@ -148,19 +147,14 @@ namespace Rendering
 
         std::unique_ptr<Buffer> stagingBuffer;
         std::unique_ptr<DeviceMemory> stagingBufferMemory;
-        utils::createBuffer(getApp(), imageSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, 
-            VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, stagingBuffer, stagingBufferMemory);
+        utils::createBuffer(getApp(), imageSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, stagingBuffer, stagingBufferMemory);
 
         stagingBufferMemory->copyFrom(data, imageSize);
 
-        // Creating our image class
-        utils::createImage(getApp(), width, height, VK_FORMAT_R8G8B8A8_SRGB, 
-            VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
-            m_image, m_memory);
+        utils::createImage(getApp(), width, height, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_memory);
 
-
-        // Layout transitions (recording and excuting the command buffer)
         transitionImageLayout(getApp(), m_image->getHandle(), VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
+
         copyBufferToImage(getApp(), stagingBuffer->getHandle(), m_image->getHandle(), width, height);
         transitionImageLayout(getApp(), m_image->getHandle(), VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
 

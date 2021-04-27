@@ -5,33 +5,40 @@
 #include <algorithm>
 #include <memory>
 #include "ShaderModule.h"
+#include "../Objects/Object.h"
 
 struct VkPipelineShaderStageCreateInfo;
 
 namespace Rendering
 {
-	class Device;
+    class CompiledShader
+    {
+    public:
+        CompiledShader(std::vector<ShaderModule> shaderModules) : m_shaderModules(std::move(shaderModules)) {}
+        std::vector<VkPipelineShaderStageCreateInfo> createStageDescriptions() const;
 
-	class Shader
-	{
-	public:
-		Shader(const Device& device ,std::vector<ShaderKey> moduleKey);
-		//CompiledShader compiler() const;
-		std::vector<VkPipelineShaderStageCreateInfo> createShaderStageCreateInfo() const;
-	private:
-		void addShaders();
-	private:
-		const Device& m_device;
-		std::vector<ShaderKey> m_moduleKey;
-		std::vector<ShaderModule> m_shaderModules;
-	};
+    private:
+        std::vector<ShaderModule> m_shaderModules;
+    };
 
-	class ShaderBuilder
-	{
-	public:
-		ShaderBuilder& addShader(Rendering::ShaderType type, const std::string& path, const std::string& entryPoint = "main");
-		std::unique_ptr<Shader> buildShader(const Device& device);
-	private:
-		std::vector<ShaderKey> m_moduleKeys;
-	};
+    class Shader : Object
+    {
+    public:
+        Shader(const Application& app, std::vector<ShaderModule::Key> moduleKeys);
+
+        CompiledShader compile() const;
+
+    private:
+        std::vector<ShaderModule::Key> m_moduleKeys;
+    };
+
+    class ShaderBuilder
+    {
+    public:
+        ShaderBuilder& addStage(ShaderModule::Type type, const std::string& path, std::string entryPoint = "main");
+        std::unique_ptr<Shader> build(const Application& app) const;
+
+    private:
+        std::vector<ShaderModule::Key> m_moduleKeys;
+    };
 }

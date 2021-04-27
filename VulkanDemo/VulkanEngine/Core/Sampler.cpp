@@ -5,9 +5,8 @@
 
 namespace Rendering
 {
-	Sampler::Sampler(const Device& device)
-		: m_device(device)
-	{
+    Sampler::Sampler(const Application& app) : Object(app)
+    {
         VkSamplerCreateInfo samplerCreateInfo{};
         samplerCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
         samplerCreateInfo.magFilter = VK_FILTER_LINEAR;
@@ -26,12 +25,12 @@ namespace Rendering
         samplerCreateInfo.minLod = 0.0f;
         samplerCreateInfo.maxLod = 0.0f;
 
-        if (vkCreateSampler(m_device.getHandle(), &samplerCreateInfo, nullptr, &m_handle.get()) != VK_SUCCESS)
+        if (vkCreateSampler(getDevice().getHandle(), &samplerCreateInfo, nullptr, &m_handle.get()) != VK_SUCCESS)
             throw std::runtime_error("failed to create texture sampler!");
-	}
+    }
 
-	Sampler::~Sampler()
-	{
-        vkDestroySampler(m_device.getHandle(), m_handle, nullptr);
-	}
+    Sampler::~Sampler()
+    {
+        vkDestroySampler(getDevice().getHandle(), m_handle, nullptr);
+    }
 }

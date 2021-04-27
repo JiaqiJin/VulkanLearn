@@ -1,45 +1,55 @@
 #include "CommandPool.h"
 #include "Device.h"
-#include "SwapChainSupport.h"
+#include "QueueFamily.h"
+#include "../Application.h"
+#include "PhysicalDeviceSurfaceParameters.h"
+#include "QueueFamilyIndices.h"
 #include "CommandBuffers.h"
-
+#include "CommandBuffer.h"
+#include <stdexcept>
 #include <stdexcept>
 
 namespace Rendering
 {
-	CommandPool::CommandPool(const Device& device, const SwapChainSupportDetails& detail)
-		:m_device(device)
-	{
-		VkCommandPoolCreateInfo poolInfo{};
-		poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-		poolInfo.queueFamilyIndex = detail.getQueueFamilyIndices().getGraphicsQueueFamily().getIndex();
-		poolInfo.flags = 0;
+    CommandPool::CommandPool(Application const& app)
+        : Object(app)
+        , m_queueFamily(app.getPhysicalDeviceSurfaceParameters().getQueueFamilyIndices().getGraphicsQueueFamily())
+    {
+        VkCommandPoolCreateInfo poolCreateInfo{};
+        poolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
+        poolCreateInfo.queueFamilyIndex = m_queueFamily.getIndex();
+        poolCreateInfo.flags = 0; // TODO make use of it
 
-		if (vkCreateCommandPool(m_device.getHandle(), &poolInfo, nullptr, &m_handle.get()) != VK_SUCCESS) 
-			throw std::runtime_error("failed to create command pool!");
-	}
+        if (vkCreateCommandPool(getApp().getDevice().getHandle(), &poolCreateInfo, nullptr, &m_handle.get()) != VK_SUCCESS)
+            throw std::runtime_error("failed to create command pool!");
+    }
 
-	CommandPool::~CommandPool()
-	{
-		vkDestroyCommandPool(m_device.getHandle(), m_handle, nullptr);
-	}
+    void CommandPool::reset() const
+    {
+        VkCommandPoolResetFlags flags = 0;
+        vkResetCommandPool(getDevice().getHandle(), m_handle, flags);
+    }
 
-	CommandBuffer CommandPool::createCommandBuffer() const
-	{
-		return createCommandBuffers(1)[0];
-	}
+    CommandPool::~CommandPool()
+    {
+        vkDestroyCommandPool(getApp().getDevice().getHandle(), m_handle, nullptr);
+    }
 
-	std::vector<CommandBuffer> CommandPool::createCommandBuffers(std::size_t size) const
-	{
-		std::shared_ptr<CommandBuffersContainer> container = std::make_shared<CommandBuffersContainer>(m_device, *this, size);
+    CommandBuffer CommandPool::createCommandBuffer() const
+    {
+        return createCommandBuffers(1)[0];
+    }
 
-		std::vector<CommandBuffer> commandBuffers;
-		commandBuffers.reserve(size);
-		for (size_t i = 0; i < size; i++)
-		{
-			commandBuffers.emplace_back(container, i);
-		}
-		return commandBuffers;
-	}
+    std::vector<CommandBuffer>CommandPool::createCommandBuffers(std::size_t size) const
+    {
+        std::shared_ptr<CommandBuffers> container = std::make_shared<CommandBuffers>(getApp(), *this, size);
+
+        std::vector<CommandBuffer> commandBuffers;
+        commandBuffers.reserve(size);
+        for (std::size_t i = 0; i < size; i++)
+            commandBuffers.emplace_back(container, i);
+
+        return commandBuffers;
+    }
 
 }

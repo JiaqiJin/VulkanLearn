@@ -1,12 +1,15 @@
 #include "Swapchain.h"
+
+#include "ImageView.h"
+#include "Framebuffer.h"
+#include "Image.h"
+#include "PhysicalDeviceSurfaceParameters.h"
+#include "QueueFamilyIndices.h"
 #include "Device.h"
 #include "Surface.h"
 #include "QueueFamily.h"
-#include "SwapChainSupport.h"
-
 #include <algorithm>
 #include <stdexcept>
-#include <iostream>
 
 namespace Rendering
 {
@@ -55,36 +58,44 @@ namespace Rendering
 		return actualExtend;
 	}
 
-	Swapchain::Swapchain(const Device& device, const SwapChainSupportDetails& support)
-		: m_device(device), 
-		m_detail(support)
+	Swapchain::Swapchain(Application const& app) : Object(app)
 	{
 		createSwapchain();
+		retrieveImages();
+		createImageViews();
 	}
 	
 	Swapchain::~Swapchain()
 	{
-		vkDestroySwapchainKHR(m_device.getHandle() , m_handle, nullptr);
+		vkDestroySwapchainKHR(getDevice().getHandle(), m_handle, nullptr);
+	}
+
+	void Swapchain::createFramebuffers(const RenderPass& renderPass, const ImageView& depthImageView)
+	{
+		for (std::unique_ptr<ImageView> const& colorImageView : m_imageViews)
+			m_framebuffers.push_back(std::make_unique<Framebuffer>(getApp(), 
+				*colorImageView, depthImageView, renderPass, m_extent));
 	}
 
 	void Swapchain::createSwapchain()
 	{
-		m_surfaceFormat = chooseSwapSurfaceFormat(m_detail.getFormats());
-		VkPresentModeKHR presentMode = chooseSwapPresentMode(m_detail.getPresentModes());
-		m_extent = chooseSwapExtent(m_detail.getSurface(), m_detail.getCapabilities());
+		const PhysicalDeviceSurfaceParameters& parameters = getPhysicalDeviceSurfaceParameters();
 
-		// how many img have in swap chain
-		const uint32_t minImageCount = m_detail.getCapabilities().minImageCount;
-		const uint32_t maxImageCount = m_detail.getCapabilities().maxImageCount;
+		m_surfaceFormat = chooseSwapSurfaceFormat(parameters.getFormats());
+		VkPresentModeKHR presentMode = chooseSwapPresentMode(parameters.getPresentModes());
+		m_extent = chooseSwapExtent(getSurface(), parameters.getCapabilities());
+
+		const uint32_t minImageCount = parameters.getCapabilities().minImageCount;
+		const uint32_t maxImageCount = parameters.getCapabilities().maxImageCount;
 
 		uint32_t imageCount = minImageCount + 1;
 
-		if(maxImageCount > 0)
+		if (maxImageCount > 0)
 			imageCount = std::min(imageCount, maxImageCount);
 
 		VkSwapchainCreateInfoKHR swapchainCreateInfo{};
 		swapchainCreateInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-		swapchainCreateInfo.surface = m_detail.getSurface().getHandle();
+		swapchainCreateInfo.surface = getSurface().getHandle();
 
 		swapchainCreateInfo.minImageCount = imageCount;
 		swapchainCreateInfo.imageFormat = m_surfaceFormat.format;
@@ -93,34 +104,53 @@ namespace Rendering
 		swapchainCreateInfo.imageArrayLayers = 1;
 		swapchainCreateInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 
-		// handle swap chain images to multiple queue families
-		const QueueFamilyIndices& indices = m_detail.getQueueFamilyIndices();
-		int32_t graphicsQueueFamilyIndex = indices.getGraphicsQueueFamily().getIndex();
+		const QueueFamilyIndices& indices = parameters.getQueueFamilyIndices();
+		uint32_t graphicsQueueFamilyIndex = indices.getGraphicsQueueFamily().getIndex();
 		uint32_t presentQueueFamilyIndex = indices.getPresentQueueFamily().getIndex();
 
-		if(graphicsQueueFamilyIndex != presentQueueFamilyIndex)
+		if (graphicsQueueFamilyIndex != presentQueueFamilyIndex)
 		{
 			uint32_t queueFamilyIndices[] = { graphicsQueueFamilyIndex, presentQueueFamilyIndex };
-			swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT; // Images can be used across multiple queue families
+			swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
 			swapchainCreateInfo.queueFamilyIndexCount = 2;
 			swapchainCreateInfo.pQueueFamilyIndices = queueFamilyIndices;
 		}
 		else
 		{
-			swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE; // An image is owned by one queue family 
+			swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
 			swapchainCreateInfo.queueFamilyIndexCount = 0;
 			swapchainCreateInfo.pQueueFamilyIndices = nullptr;
 		}
 
-		swapchainCreateInfo.preTransform = m_detail.getCapabilities().currentTransform;
-		swapchainCreateInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR; // alpha channel 
+		swapchainCreateInfo.preTransform = parameters.getCapabilities().currentTransform;
+		swapchainCreateInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
 		swapchainCreateInfo.presentMode = presentMode;
 		swapchainCreateInfo.clipped = VK_TRUE;
 		swapchainCreateInfo.oldSwapchain = VK_NULL_HANDLE;
 
-		if (vkCreateSwapchainKHR(m_device.getHandle(), &swapchainCreateInfo, nullptr, &m_handle.get()) != VK_SUCCESS)
-		{
+		if (vkCreateSwapchainKHR(getDevice().getHandle(), &swapchainCreateInfo, nullptr, &m_handle.get()) != VK_SUCCESS)
 			throw std::runtime_error("failed to create swap chain!");
-		}
+	}
+
+	void Swapchain::retrieveImages()
+	{
+		uint32_t finalImageCount = 0;
+		vkGetSwapchainImagesKHR(getDevice().getHandle(), m_handle, &finalImageCount, nullptr);
+
+		std::vector<VkImage> imageHandles;
+		imageHandles.resize(finalImageCount);
+		vkGetSwapchainImagesKHR(getDevice().getHandle(), m_handle, &finalImageCount, imageHandles.data());
+
+		m_images.reserve(finalImageCount);
+		for (const VkImage& handle : imageHandles)
+			m_images.push_back(std::make_unique<Image>(getApp(), handle, m_surfaceFormat.format));
+	}
+
+	void Swapchain::createImageViews()
+	{
+		m_imageViews.reserve(m_images.size());
+
+		for (auto const& image : m_images)
+			m_imageViews.push_back(image->createImageView(VK_IMAGE_ASPECT_COLOR_BIT));
 	}
 }

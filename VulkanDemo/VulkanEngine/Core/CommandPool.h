@@ -3,6 +3,7 @@
 #include <vulkan/vulkan.h>
 #include <vector>
 #include "UniqueHandle.h"
+#include "../Objects/Object.h"
 
 /*
 * Wrapper class for VkCommandPool 
@@ -10,32 +11,33 @@
 */
 namespace Rendering
 {
-	class Device;
-	class QueueFamily;
-	class Queue;
-	class CommandBuffer;
-	struct SwapChainSupportDetails;
+    class Device;
+    class QueueFamily;
+    class CommandBuffer;
+    class Queue;
 
-	class CommandPool
-	{
-	public:
-		CommandPool(const Device& device, const SwapChainSupportDetails& detail);
-		~CommandPool();
+    class CommandPool : Object
+    {
+    public:
+        explicit CommandPool(Application const& app);
+        ~CommandPool();
 
-		CommandPool(const CommandPool&) = default;
-		CommandPool(CommandPool&&) = default;
-		CommandPool& operator=(const CommandPool&) = default;
-		CommandPool& operator=(CommandPool&&) = default;
+        CommandBuffer createCommandBuffer() const;
+        std::vector<CommandBuffer> createCommandBuffers(std::size_t size) const;
 
-		CommandBuffer createCommandBuffer() const;
+        CommandPool(const CommandPool&) = default;
+        CommandPool(CommandPool&&) = default;
+        CommandPool& operator=(const CommandPool&) = default;
+        CommandPool& operator=(CommandPool&&) = default;
 
-		VkCommandPool getHandle() const { return m_handle; }
-	private:
-		std::vector<CommandBuffer> createCommandBuffers(size_t size) const;
+        VkCommandPool getHandle() const { return m_handle; }
+        const QueueFamily& getQueueFamily() const { return m_queueFamily; }
 
-	private:
-		UniqueHandle<VkCommandPool> m_handle;
+        void reset() const;
 
-		const Device& m_device;
-	};
+    private:
+        UniqueHandle<VkCommandPool> m_handle;
+
+        const QueueFamily& m_queueFamily;
+    };
 }

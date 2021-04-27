@@ -3,36 +3,32 @@
 #include <vulkan/vulkan.h>
 #include <vector>
 #include "UniqueHandle.h"
+#include "../Objects/Object.h"
 
 namespace Rendering
 {
-	class Device;
-	class PhysicalDevice;
+    class DeviceMemory : public Object
+    {
+    public:
+        explicit DeviceMemory(const Application& app, VkMemoryRequirements memoryRequirements, VkMemoryPropertyFlags memoryProperties);
+        ~DeviceMemory();
 
-	class DeviceMemory
-	{
-	public:
-		DeviceMemory(const Device& device, const PhysicalDevice& physicalDevice, VkMemoryRequirements memoryRequirements, VkMemoryPropertyFlags memoryProperties);
-		~DeviceMemory();
+        DeviceMemory(const DeviceMemory&) = default;
+        DeviceMemory(DeviceMemory&&) = default;
+        DeviceMemory& operator=(const DeviceMemory&) = default;
+        DeviceMemory& operator=(DeviceMemory&&) = default;
 
-		DeviceMemory(const DeviceMemory&) = default;
-		DeviceMemory(DeviceMemory&&) = default;
-		DeviceMemory& operator=(const DeviceMemory&) = default;
-		DeviceMemory& operator=(DeviceMemory&&) = default;
+        void copyFrom(void const* sourcePointer, std::size_t sourceSize);
 
-		void copyFrom(const void* sourcePointer, std::size_t sourceSize);
+        template<typename T>
+        void copyFrom(const std::vector<T>& source)
+        {
+            copyFrom(source.data(), sizeof(T) * source.size());
+        }
 
-		VkDeviceMemory getHandle() const { return m_handle; };
+        VkDeviceMemory getHandle() const { return m_handle; };
 
-		template<typename T>
-		void copyFrom(std::vector<T> const& source)
-		{
-			copyFrom(source.data(), sizeof(T) * source.size());
-		}
-
-	private:
-		UniqueHandle<VkDeviceMemory> m_handle;
-
-		const Device& m_device;
-	};
+    private:
+        UniqueHandle<VkDeviceMemory> m_handle;
+    };
 }

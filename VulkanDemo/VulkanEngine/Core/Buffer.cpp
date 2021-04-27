@@ -10,13 +10,15 @@ namespace Rendering
 	Buffer::Buffer(const Application& app, VkDeviceSize size, VkBufferUsageFlags usage)
 		: Object(app)
 	{
-		VkBufferCreateInfo bufferInfo{};
-		bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-		bufferInfo.size = size;
-		bufferInfo.usage = usage;
-		bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+		m_size = size;
 
-		if (vkCreateBuffer(getDevice().getHandle(), &bufferInfo, nullptr, &m_handle.get()) != VK_SUCCESS)
+		VkBufferCreateInfo bufferCreateInfo{};
+		bufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+		bufferCreateInfo.size = size;
+		bufferCreateInfo.usage = usage;
+		bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+
+		if (vkCreateBuffer(getDevice().getHandle(), &bufferCreateInfo, nullptr, &m_handle.get()) != VK_SUCCESS)
 			throw std::runtime_error("failed to create buffer!");
 	}
 

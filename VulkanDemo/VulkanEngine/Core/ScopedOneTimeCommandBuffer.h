@@ -2,7 +2,7 @@
 
 #include <vulkan/vulkan.h>
 
-#include "CommandBuffers.h"
+#include "CommandBuffer.h"
 #include "../Objects/Object.h"
 
 namespace Rendering
@@ -10,7 +10,7 @@ namespace Rendering
     class ScopedOneTimeCommandBuffer : Object
     {
     public:
-        ScopedOneTimeCommandBuffer(const Application& app);
+        ScopedOneTimeCommandBuffer(Application const& app);
         ~ScopedOneTimeCommandBuffer();
 
         ScopedOneTimeCommandBuffer(const ScopedOneTimeCommandBuffer&) = delete;

@@ -47,7 +47,7 @@ namespace Rendering
 
         for (std::size_t i = 0; i < bindings.size(); i++)
         {
-            Binding const& binding = bindings[i];
+            const Binding& binding = bindings[i];
             VkVertexInputBindingDescription& bindingDescription = m_bindingDescriptions.emplace_back();
 
             bindingDescription.binding = static_cast<uint32_t>(i);
@@ -56,7 +56,7 @@ namespace Rendering
 
             m_attributeDescriptions.reserve(m_attributeDescriptions.size() + binding.attributes.size());
 
-            for (const Attribute& attribute : binding.attributes)
+            for (Attribute const& attribute : binding.attributes)
             {
                 VkVertexInputAttributeDescription& attributeDescription = m_attributeDescriptions.emplace_back();
 

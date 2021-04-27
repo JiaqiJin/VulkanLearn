@@ -1,7 +1,7 @@
 #include "Instance.h"
 #include "PhysicalDevice.h"
 #include "Utils.h"
-#include "SwapChainSupport.h"
+#include "PhysicalDeviceSurfaceContainer.h"
 #include <stdexcept>
 
 namespace
@@ -29,7 +29,7 @@ namespace
 
 namespace Rendering
 {
-    Instance::Instance(const std::string& appName, std::vector<const char*> extensions, bool enableValidation)
+    Instance::Instance(const std::string& appName, std::vector<const char*> extensions, bool enableValidation, bool enableApiDump)
     {
         m_availableLayers = getAvailableLayers();
         m_availableLayerNames.reserve(m_availableLayers.size());
@@ -41,21 +41,23 @@ namespace Rendering
         for (const auto& extension : m_availableExtensions)
             m_availableExtensionNames.push_back(extension.extensionName);
 
-        createInstance(appName, extensions, enableValidation);
+        createInstance(appName, extensions, enableValidation, enableApiDump);
     }
 
-    Rendering::Instance::~Instance()
+    Instance::~Instance()
     {
         vkDestroyInstance(m_handle, nullptr);
     }
 
-    void Instance::createInstance(const std::string& appName, std::vector<const char*> extensions, bool enableValidation)
+    void Instance::createInstance(const std::string& appName, std::vector<const char*> extensions, bool enableValidation, bool enableApiDump)
     {
         std::vector<const char*> requestedLayers;
         if (enableValidation)
             requestedLayers.push_back("VK_LAYER_KHRONOS_validation");
+        if (enableApiDump)
+            requestedLayers.push_back("VK_LAYER_LUNARG_api_dump");
 
-        std::vector<const char*> requestedExtensions = extensions;
+        std::vector<char const*> requestedExtensions = extensions;
 
         if (!utils::checkSupportOption(m_availableLayerNames, requestedLayers))
             throw std::runtime_error("Some of the required validation layers aren't supported");
@@ -83,7 +85,7 @@ namespace Rendering
             throw std::runtime_error("Failed to create Vulkan instance");
     }
 
-    std::vector<PhysicalDevice> Instance::findPhysicalDevices(const Surface& surface)
+    std::vector<PhysicalDeviceSurfaceContainer> Instance::findPhysicalDevices(const Surface& surface)
     {
         uint32_t count = 0;
         vkEnumeratePhysicalDevices(m_handle, &count, nullptr);
@@ -93,10 +95,10 @@ namespace Rendering
         std::vector<VkPhysicalDevice> physicalDeviceHandles(count);
         vkEnumeratePhysicalDevices(m_handle, &count, physicalDeviceHandles.data());
 
-        std::vector<PhysicalDevice> physicalDevices;
+        std::vector<PhysicalDeviceSurfaceContainer> physicalDevices;
         physicalDevices.reserve(count);
         for (auto const& handle : physicalDeviceHandles)
-            physicalDevices.emplace_back(PhysicalDevice{ handle });
+            physicalDevices.emplace_back(PhysicalDevice{ handle }, surface);
 
         return physicalDevices;
     }

@@ -2,27 +2,28 @@
 
 namespace Rendering
 {
-	class Application;
+    class Application;
 
-	class Instance;
-	class Surface;
-	class Device;
-	class PhysicalDevice;
-	struct SwapChainSupportDetails;
+    class Instance;
+    class Surface;
+    class Device;
+    class PhysicalDevice;
+    class PhysicalDeviceSurfaceParameters;
 
-	class Object
-	{
-	public:
-		Object(const Application& app);
+    class Object
+    {
+    public:
+        Object(const Application& app) : m_app(app) {}
 
-		const Application& getApp() const { return m_app; }
+        Application const& getApp() const { return m_app; }
 
-		const Instance& getInstance() const;
-		const Surface& getSurface() const;
-		const Device& getDevice() const;
-		const PhysicalDevice& getPhysicalDevice() const;
-		const SwapChainSupportDetails& getPhysicalSwapChainSupportDetails() const;
-	private:
-		const Application& m_app;
-	};
+        const Instance& getInstance() const;
+        const Surface& getSurface() const;
+        const Device& getDevice() const;
+        const PhysicalDevice& getPhysicalDevice() const;
+        const PhysicalDeviceSurfaceParameters& getPhysicalDeviceSurfaceParameters() const;
+
+    private:
+        const Application& m_app;
+    };
 }

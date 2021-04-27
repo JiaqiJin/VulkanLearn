@@ -2,7 +2,7 @@
 
 #include <vulkan/vulkan.h>
 #include "UniqueHandle.h"
-
+#include "../Objects/Object.h"
 /*
 * Wrapper class for VkRenderPass
 * Tell to vulkan framebuffer to use while rendering (color and depth buffer, samples to use). 
@@ -10,26 +10,24 @@
 */
 namespace Rendering
 {
-	class Device;
-	class Swapchain;
-	class PhysicalDevice;
+    class Swapchain;
 
-	class RenderPass
-	{
-	public:
-		RenderPass(const Device& device, const PhysicalDevice& physicalDevice, const Swapchain& swapChain);
-		~RenderPass();
+    class RenderPass : public Object
+    {
+    public:
+        explicit RenderPass(const Application& app, const Swapchain& swapchain);
+        ~RenderPass();
 
-		RenderPass(const RenderPass&) = default;
-		RenderPass(RenderPass&&) = default;
-		RenderPass& operator=(const RenderPass&) = default;
-		RenderPass& operator=(RenderPass&&) = default;
+        RenderPass(const RenderPass&) = default;
+        RenderPass(RenderPass&&) = default;
+        RenderPass& operator=(const RenderPass&) = default;
+        RenderPass& operator=(RenderPass&&) = default;
 
-		VkRenderPass getHandle() const { return m_handle; }
-		
-	private:
-		UniqueHandle<VkRenderPass> m_handle;
-		const Device& m_device;
-		VkFormat m_depthFormat;
-	};
+        VkRenderPass getHandle() const { return m_handle; }
+        VkFormat getDepthFormat() const { return m_depthFormat; }
+
+    private:
+        UniqueHandle<VkRenderPass> m_handle;
+        VkFormat m_depthFormat;
+    };
 }

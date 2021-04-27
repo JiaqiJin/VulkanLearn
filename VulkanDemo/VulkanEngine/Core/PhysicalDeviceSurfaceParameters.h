@@ -4,15 +4,6 @@
 #include <vector>
 #include <memory>
 
-#include "PhysicalDevice.h"
-#include "Surface.h"
-
-/*
-* Wrapper class for checking physical device and surface properties use for querying details of swap chain support
-* SwapChainSupportDetails class represents all parameters to evaluate features of physical device and surface.
-* Basic properties need to check : Surface capabilities(min/max number img in swap chain),
-* Surface format and Avaliable presentation modes.
-*/
 namespace Rendering
 {
     class PhysicalDevice;
@@ -20,21 +11,25 @@ namespace Rendering
     class QueueFamilyIndices;
     class QueueFamily;
 
-    struct SwapChainSupportDetails
+    class PhysicalDeviceSurfaceParameters
     {
     public:
-        SwapChainSupportDetails(const PhysicalDevice& physicalDevice, const Surface& surface);
-    
+        PhysicalDeviceSurfaceParameters(const PhysicalDevice& physicalDevice, Surface const& surface);
+        ~PhysicalDeviceSurfaceParameters();
+
+        PhysicalDeviceSurfaceParameters(const PhysicalDeviceSurfaceParameters&) = delete;
+        PhysicalDeviceSurfaceParameters(PhysicalDeviceSurfaceParameters&&);
+        PhysicalDeviceSurfaceParameters& operator=(const PhysicalDeviceSurfaceParameters&) = delete;
+        PhysicalDeviceSurfaceParameters& operator=(PhysicalDeviceSurfaceParameters&&) = delete;
+
         const VkSurfaceCapabilitiesKHR& getCapabilities() const { return m_capabilities; }
         const std::vector<VkSurfaceFormatKHR>& getFormats() const { return m_formats; }
         std::vector<VkPresentModeKHR> getPresentModes() const { return m_presentModes; }
-        const PhysicalDevice& getPhysicalDevice() const { return m_physicalDevice; }
-        bool isPresentationSupported(const QueueFamily& queueFamily) const;
-        const Surface& getSurface() const { return m_surface; }
+        bool isPresentationSupported(QueueFamily const& queueFamily) const;
 
         void onSurfaceChanged();
 
-        const QueueFamilyIndices& getQueueFamilyIndices() const { return *m_queueFamilyIndices; };
+        QueueFamilyIndices const& getQueueFamilyIndices() const { return *m_queueFamilyIndices; };
 
     private:
         void queryCapabilities();
@@ -50,8 +45,7 @@ namespace Rendering
 
         std::unique_ptr<QueueFamilyIndices> m_queueFamilyIndices;
 
-        const PhysicalDevice& m_physicalDevice;
-        const Surface& m_surface;
+        PhysicalDevice const& m_physicalDevice;
+        Surface const& m_surface;
     };
-
 }

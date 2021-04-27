@@ -1,7 +1,7 @@
 #pragma once
 #include <vulkan/vulkan.h>
 #include "UniqueHandle.h"
-
+#include "../Objects/Object.h"
 /*
 * Wrapper class for graphics pipeline
 * Pipeline stages : Input assembler, Vertex shader, Tessellation, Geomerty shader, Rasterization Fragment Shader, Color blending
@@ -10,32 +10,35 @@
 */
 namespace Rendering
 {
-	class Shader;
-	class Device;
-	class ShaderModule;
-	class RenderPass;
-	class VertexLayout;
-	class PipelineLayout;
+    class ShaderModule;
+    class Shader;
+    class PipelineLayout;
+    class RenderPass;
+    class VertexLayout;
 
-	class Pipeline 
-	{
-	public:
-		Pipeline(const Device& device, const PipelineLayout& pipelineLayout, const RenderPass& renderPass, VkExtent2D extent, const Shader& shader, const VertexLayout& vertexLayout); // TODO
+    class Pipeline : public Object
+    {
+    public:
+        explicit Pipeline(const Application& app, const PipelineLayout& layout, const RenderPass& renderPass,
+            VkExtent2D extent, const Shader& shader, const VertexLayout& vertexLayout);
+        ~Pipeline();
 
-		Pipeline(const Pipeline&) = default;
-		Pipeline(Pipeline&&) = default;
-		Pipeline& operator=(const Pipeline&) = default;
-		Pipeline& operator=(Pipeline&&) = default;
+        void bind(VkCommandBuffer commandBuffer) const;
 
-		VkPipeline getHandle() const { return m_handle; }
+        Pipeline(const Pipeline&) = default;
+        Pipeline(Pipeline&&) = default;
+        Pipeline& operator=(const Pipeline&) = default;
+        Pipeline& operator=(Pipeline&&) = default;
 
-		static void resetBoundPipeline() { ms_boundPipeline = nullptr; }
+        VkPipeline getHandle() const { return m_handle; }
 
-	private:
-		UniqueHandle<VkPipeline> m_handle;
-		const Device& m_device;
+    public:
+        static void resetBoundPipeline() { ms_boundPipeline = nullptr; }
 
-	private:
-		static const Pipeline* ms_boundPipeline;
-	};
+    private:
+        UniqueHandle<VkPipeline> m_handle;
+
+    private:
+        static Pipeline const* ms_boundPipeline;
+    };
 }

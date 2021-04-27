@@ -1,13 +1,12 @@
-#include "SwapChainSupport.h"
+#include "PhysicalDeviceSurfaceParameters.h"
 #include "PhysicalDevice.h"
 #include "Surface.h"
 #include "QueueFamily.h"
+#include "QueueFamilyIndices.h"
 
 namespace Rendering
 {
-    SwapChainSupportDetails::SwapChainSupportDetails(const PhysicalDevice& physicalDevice, const Surface& surface)
-        : m_physicalDevice(physicalDevice),
-        m_surface(surface)
+    PhysicalDeviceSurfaceParameters::PhysicalDeviceSurfaceParameters(PhysicalDevice const& physicalDevice, Surface const& surface) : m_physicalDevice(physicalDevice), m_surface(surface)
     {
         queryCapabilities();
         queryFormats();
@@ -17,7 +16,11 @@ namespace Rendering
         m_queueFamilyIndices = std::make_unique<QueueFamilyIndices>(physicalDevice, *this);
     }
 
-    bool Rendering::SwapChainSupportDetails::isPresentationSupported(const QueueFamily& queueFamily) const
+    PhysicalDeviceSurfaceParameters::~PhysicalDeviceSurfaceParameters() = default;
+
+    PhysicalDeviceSurfaceParameters::PhysicalDeviceSurfaceParameters(PhysicalDeviceSurfaceParameters&&) = default;
+
+    bool PhysicalDeviceSurfaceParameters::isPresentationSupported(QueueFamily const& queueFamily) const
     {
         uint32_t index = queueFamily.getIndex();
 
@@ -27,17 +30,17 @@ namespace Rendering
         return m_queuePresentationSupport[index];
     }
 
-    void SwapChainSupportDetails::onSurfaceChanged()
+    void PhysicalDeviceSurfaceParameters::onSurfaceChanged()
     {
         queryCapabilities();
     }
 
-    void SwapChainSupportDetails::queryCapabilities()
+    void PhysicalDeviceSurfaceParameters::queryCapabilities()
     {
         vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice.getHandle(), m_surface.getHandle(), &m_capabilities);
     }
 
-    void SwapChainSupportDetails::queryFormats()
+    void PhysicalDeviceSurfaceParameters::queryFormats()
     {
         uint32_t count;
         vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice.getHandle(), m_surface.getHandle(), &count, nullptr);
@@ -49,7 +52,7 @@ namespace Rendering
         }
     }
 
-    void SwapChainSupportDetails::queryPresentModes()
+    void PhysicalDeviceSurfaceParameters::queryPresentModes()
     {
         uint32_t count;
         vkGetPhysicalDeviceSurfacePresentModesKHR(m_physicalDevice.getHandle(), m_surface.getHandle(), &count, nullptr);
@@ -61,13 +64,13 @@ namespace Rendering
         }
     }
 
-    void SwapChainSupportDetails::queryPresentationSupport()
+    void PhysicalDeviceSurfaceParameters::queryPresentationSupport()
     {
-        const std::vector<QueueFamily>& queueFamilies = m_physicalDevice.getQueueFamilies();
+        std::vector<QueueFamily> const& queueFamilies = m_physicalDevice.getQueueFamilies();
 
         m_queuePresentationSupport.resize(queueFamilies.size());
 
-        for (const QueueFamily& queueFamily : queueFamilies)
+        for (QueueFamily const& queueFamily : queueFamilies)
         {
             uint32_t index = queueFamily.getIndex();
 

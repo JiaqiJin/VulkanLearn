@@ -2,15 +2,14 @@
 
 #include <vulkan/vulkan.h>
 #include "UniqueHandle.h"
+#include "../Objects/Object.h"
 
 namespace Rendering
 {
-    class Device;
-
-    class Fence 
+    class Fence : public Object
     {
     public:
-        Fence(const Device& device);
+        Fence(const Application& app);
         ~Fence();
 
         Fence(const Fence&) = default;
@@ -26,7 +25,5 @@ namespace Rendering
 
     private:
         UniqueHandle<VkFence> m_handle;
-
-        const Device& m_device;
     };
 }

@@ -11,37 +11,33 @@
 */
 namespace Rendering
 {
-	class Queue;
-	class PhysicalDevice;
-	class Instance;
-	class QueueFamilyIndices;
+    class PhysicalDeviceSurfaceContainer;
+    class Queue;
 
-	class Device
-	{
-	public:
-		Device(const PhysicalDevice& device, const QueueFamilyIndices& indice, const Instance& instance, const std::vector<const char*>& extensions);
-		~Device();
+    class Device
+    {
+    public:
+        explicit Device(const PhysicalDeviceSurfaceContainer& physicalDeviceSurfaceContainer, std::vector<const char*> const& extensions);
+        ~Device();
 
-		Device(const Device&) = default;
-		Device(Device&&) = default;
-		Device& operator=(const Device&) = default;
-		Device& operator=(Device&&) = default;
+        Device(Device const&) = default;
+        Device(Device&&) = default;
+        Device& operator=(Device const&) = default;
+        Device& operator=(Device&&) = default;
 
-		void waitIdle() const;
+        void waitIdle() const;
 
-		VkDevice getHandle() const { return m_handle; }
-		VmaAllocator getMemoryAllocator() const { return m_memoryAllocator; }
-		const Queue& getGraphicsQueue() const { return *m_graphicsQueue; }
-		const Queue& getPresentQueue() const { return *m_presentQueue; }
+        VkDevice getHandle() const { return m_handle; }
 
-	private:
-		UniqueHandle<VkDevice> m_handle;
+        Queue const& getGraphicsQueue() const { return *m_graphicsQueue; }
+        Queue const& getPresentQueue() const { return *m_presentQueue; }
 
-		std::vector<Queue> m_queues;
+    private:
+        UniqueHandle<VkDevice> m_handle;
 
-		VmaAllocator m_memoryAllocator{ VK_NULL_HANDLE };
+        std::vector<Queue> m_queues;
 
-		Queue const* m_graphicsQueue = nullptr;
-		Queue const* m_presentQueue = nullptr;
-	};
+        Queue const* m_graphicsQueue = nullptr;
+        Queue const* m_presentQueue = nullptr;
+    };
 }

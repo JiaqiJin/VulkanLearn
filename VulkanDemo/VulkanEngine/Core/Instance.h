@@ -12,16 +12,15 @@
 */
 namespace Rendering
 {
+    class PhysicalDeviceSurfaceContainer;
     class Surface;
-    class PhysicalDevice;
 
     class Instance
     {
     public:
-        Instance(const std::string& appName, std::vector<const char*> extensions, bool enableValidation);
+        Instance(const std::string& appName, std::vector<const char*> extensions, bool enableValidation, bool enableApiDump);
         ~Instance();
 
-        // Queries the GPUs of a VkInstance that is already created
         Instance(const Instance&) = default;
         Instance(Instance&&) = default;
         Instance& operator=(const Instance&) = default;
@@ -29,21 +28,17 @@ namespace Rendering
 
         VkInstance getHandle() const { return m_handle; }
 
-        // Querying valid physical devices on the machine
-        std::vector<PhysicalDevice> findPhysicalDevices(const Surface& surface);
+        std::vector<PhysicalDeviceSurfaceContainer> findPhysicalDevices(const Surface& surface);
 
     private:
-        // Creating VkInstance object
-        void createInstance(const std::string& appName, std::vector<const char*> extensions, bool enableValidation);
+        void createInstance(const std::string& appName, std::vector<const char*> extensions, bool enableValidation, bool enableApiDump);
 
     private:
         UniqueHandle<VkInstance> m_handle;
 
-        // validation layers 
         std::vector<VkLayerProperties> m_availableLayers;
         std::vector<const char*> m_availableLayerNames;
 
-        // Extension layers
         std::vector<VkExtensionProperties> m_availableExtensions;
         std::vector<const char*> m_availableExtensionNames;
     };

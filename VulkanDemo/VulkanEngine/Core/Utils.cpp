@@ -27,7 +27,7 @@ namespace Rendering
         VkMemoryPropertyFlags properties, std::unique_ptr<Buffer>& buffer, std::unique_ptr<DeviceMemory>& bufferMemory)
     {
         buffer = std::make_unique<Buffer>(app, size, usage);
-        bufferMemory = std::make_unique<DeviceMemory>(app.getDevice(), app.getPhysicalDevice(), buffer->getMemoryRequirements(), properties);
+        bufferMemory = std::make_unique<DeviceMemory>(app, buffer->getMemoryRequirements(), properties);
         buffer->bindMemory(*bufferMemory);
     }
 
@@ -35,8 +35,8 @@ namespace Rendering
         VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties,
         std::unique_ptr<Image>& image, std::unique_ptr<DeviceMemory>& imageMemory)
     {
-        image = std::make_unique<Image>(app.getDevice(), width, height, format, tiling, usage);
-        imageMemory = std::make_unique<DeviceMemory>(app.getDevice(), app.getPhysicalDevice(), image->getMemoryRequirements(), properties);
+        image = std::make_unique<Image>(app, width, height, format, tiling, usage);
+        imageMemory = std::make_unique<DeviceMemory>(app, image->getMemoryRequirements(), properties);
         image->bindMemory(*imageMemory);
     }
 

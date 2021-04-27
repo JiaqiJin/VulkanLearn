@@ -6,7 +6,7 @@
 
 namespace Rendering
 {
-    ScopedOneTimeCommandBuffer::ScopedOneTimeCommandBuffer(Application const& app)
+    ScopedOneTimeCommandBuffer::ScopedOneTimeCommandBuffer(const Application& app)
         : Object(app)
         , m_commandBuffer(getApp().getShortLivedCommandPool().createCommandBuffer())
     {

@@ -3,15 +3,14 @@
 #include <vulkan/vulkan.h>
 #include <cstddef>
 #include "UniqueHandle.h"
+#include "../Objects/Object.h"
 
 namespace Rendering
 {
-    class Device;
-
-    class DescriptorPool 
+    class DescriptorPool : public Object
     {
     public:
-        DescriptorPool(const Device& device, size_t size);
+        explicit DescriptorPool(const Application& app, std::size_t size);
         ~DescriptorPool();
 
         DescriptorPool(const DescriptorPool&) = default;
@@ -24,7 +23,6 @@ namespace Rendering
 
     private:
         UniqueHandle<VkDescriptorPool> m_handle;
-        const Device& m_device;
         std::size_t m_size;
     };
 }
