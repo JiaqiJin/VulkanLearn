@@ -116,13 +116,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\VulkanSDK\1.2.154.1\Include;E:\VisualStudio\VulkanLearn\Dep\assimp\include;E:\VisualStudio\VulkanLearn\Dep\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\VisualStudio\VulkanLearn\Dep\glfw-3.3.2.bin.WIN64\include;C:\VulkanSDK\1.2.154.1\Include;E:\VisualStudio\VulkanLearn\Dep\assimp\include;E:\VisualStudio\VulkanLearn\Dep\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\VulkanSDK\1.2.154.1\Lib;E:\VisualStudio\VulkanLearn\Dep\assimp\lib\Windows;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>assimp-vc142-mt.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>E:\VisualStudio\VulkanLearn\Dep\glfw-3.3.2.bin.WIN64\lib-vc2019;C:\VulkanSDK\1.2.154.1\Lib;E:\VisualStudio\VulkanLearn\Dep\assimp\lib\Windows;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc142-mt.lib;vulkan-1.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -146,14 +147,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Core\Device.cpp" />
     <ClCompile Include="Core\Instance.cpp" />
+    <ClCompile Include="Core\QueueFamily.cpp" />
+    <ClCompile Include="Core\Surface.cpp" />
     <ClCompile Include="Core\Vulkan.cpp" />
     <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Common.h" />
+    <ClInclude Include="Core\Device.h" />
     <ClInclude Include="Core\Instance.h" />
+    <ClInclude Include="Core\QueueFamily.h" />
+    <ClInclude Include="Core\Surface.h" />
     <ClInclude Include="Core\Vulkan.h" />
     <ClInclude Include="Core\Window.h" />
   </ItemGroup>
