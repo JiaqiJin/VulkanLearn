@@ -151,6 +151,7 @@
     <ClCompile Include="Core\Instance.cpp" />
     <ClCompile Include="Core\QueueFamily.cpp" />
     <ClCompile Include="Core\Surface.cpp" />
+    <ClCompile Include="Core\SwapChain.cpp" />
     <ClCompile Include="Core\Vulkan.cpp" />
     <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="main.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="Core\Instance.h" />
     <ClInclude Include="Core\QueueFamily.h" />
     <ClInclude Include="Core\Surface.h" />
+    <ClInclude Include="Core\SwapChain.h" />
     <ClInclude Include="Core\Vulkan.h" />
     <ClInclude Include="Core\Window.h" />
   </ItemGroup>

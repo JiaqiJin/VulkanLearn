@@ -44,6 +44,7 @@ namespace Rendering
 		VkPhysicalDevice m_physicalDevice{};
 		VkDevice m_device;
 
+	public:
 		uint32_t GraphicsFamilyIndex{};
 		uint32_t PresentFamilyIndex{};
 
