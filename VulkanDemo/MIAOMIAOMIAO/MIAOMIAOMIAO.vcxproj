@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Core\Device.cpp" />
+    <ClCompile Include="Core\ImageView.cpp" />
     <ClCompile Include="Core\Instance.cpp" />
     <ClCompile Include="Core\QueueFamily.cpp" />
     <ClCompile Include="Core\Surface.cpp" />
@@ -159,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="Common\Common.h" />
     <ClInclude Include="Core\Device.h" />
+    <ClInclude Include="Core\ImageView.h" />
     <ClInclude Include="Core\Instance.h" />
     <ClInclude Include="Core\QueueFamily.h" />
     <ClInclude Include="Core\Surface.h" />

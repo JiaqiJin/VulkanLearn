@@ -38,7 +38,9 @@ namespace Rendering
 		const Device& m_device;
 		const Surface& m_surface;
 		std::vector<VkImage> images;
-		std::vector<std::unique_ptr<ImageView>> imageViews;
+		std::vector<std::unique_ptr<ImageView>> m_imageViews;
+
+		void CreateImageView();
 	public:
 		VkPresentModeKHR PresentMode{};
 		VkFormat Format{};

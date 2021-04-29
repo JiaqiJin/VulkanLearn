@@ -3,6 +3,7 @@
 #include "Surface.h"
 #include "Instance.h"
 #include "Window.h"
+#include "ImageView.h"
 
 #include <algorithm>
 
@@ -59,7 +60,7 @@ namespace Rendering
 		Format = surfaceFormat.format;
 		Extent = extent;
 
-		// Image View todo
+		CreateImageView();
 	}
 
 	SwapChain::~SwapChain()
@@ -160,4 +161,11 @@ namespace Rendering
 		return imageCount;
 	}
 
+	void SwapChain::CreateImageView()
+	{
+		for (auto* const image : images)
+		{
+			m_imageViews.push_back(std::make_unique<ImageView>(m_device, image, Format));
+		}
+	}
 }
