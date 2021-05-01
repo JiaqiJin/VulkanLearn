@@ -9,6 +9,7 @@ namespace Rendering
 {
 	class Device;
 	class SwapChain;
+	class RenderPass;
 
 	class RasterizerGraphicsPipeline
 	{
@@ -21,9 +22,13 @@ namespace Rendering
 			return m_pipeline;
 		}
 
+		VkRenderPass GetRenderPass() const;
+
 	private:
 		const Device& m_device;
 		const SwapChain& m_swapChain;
 		VkPipeline m_pipeline{};
+
+		std::unique_ptr<RenderPass> m_renderPass;
 	};
 }

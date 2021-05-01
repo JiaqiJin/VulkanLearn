@@ -3,12 +3,13 @@
 #include "Shader.h"
 #include "Device.h"
 #include "SwapChain.h"
+#include "RenderPass.h"
 #include "../Geometry/Vertex.h"
 // TODO
 namespace Rendering
 {
 	RasterizerGraphicsPipeline::RasterizerGraphicsPipeline(const Device& device, const SwapChain& swapChain)
-		: m_device(device), m_swapChain(swapChain)
+		: m_device(device), m_swapChain(swapChain), m_renderPass(new RenderPass(device, swapChain, true, true))
 	{
 		// LOAD SHADERS
 		const Shader vertexShader(m_device, "Vertex.vert.spv");
@@ -125,7 +126,7 @@ namespace Rendering
 		pipelineInfo.pDepthStencilState = &depthStencil;
 		pipelineInfo.pColorBlendState = &colorBlending;
 		//pipelineInfo.layout = ;
-		//pipelineInfo.renderPass = ;
+		pipelineInfo.renderPass = m_renderPass->Get();
 		pipelineInfo.subpass = 0;
 		pipelineInfo.pDynamicState = nullptr; // Optional
 		pipelineInfo.basePipelineHandle = nullptr; // Optional
@@ -141,5 +142,10 @@ namespace Rendering
 			vkDestroyPipeline(m_device.Get(), m_pipeline, nullptr);
 			m_pipeline = nullptr;
 		}
+	}
+
+	VkRenderPass RasterizerGraphicsPipeline::GetRenderPass() const
+	{
+		return m_renderPass->Get();
 	}
 }
