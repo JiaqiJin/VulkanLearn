@@ -147,10 +147,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Core\CommandBuffers.cpp" />
+    <ClCompile Include="Core\CommandPool.cpp" />
     <ClCompile Include="Core\DepthBuffer.cpp" />
     <ClCompile Include="Core\DescriptorSetLayout.cpp" />
     <ClCompile Include="Core\DescriptorsManager.cpp" />
     <ClCompile Include="Core\Device.cpp" />
+    <ClCompile Include="Core\Fence.cpp" />
     <ClCompile Include="Core\Framebuffer.cpp" />
     <ClCompile Include="Core\Image.cpp" />
     <ClCompile Include="Core\ImageView.cpp" />
@@ -167,10 +170,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Common.h" />
+    <ClInclude Include="Core\CommandBuffers.h" />
+    <ClInclude Include="Core\CommandPool.h" />
     <ClInclude Include="Core\DepthBuffer.h" />
     <ClInclude Include="Core\DescriptorSetLayout.h" />
     <ClInclude Include="Core\DescriptorsManager.h" />
     <ClInclude Include="Core\Device.h" />
+    <ClInclude Include="Core\Fence.h" />
     <ClInclude Include="Core\Framebuffer.h" />
     <ClInclude Include="Core\Image.h" />
     <ClInclude Include="Core\ImageView.h" />

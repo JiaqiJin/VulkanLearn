@@ -66,6 +66,15 @@
     <ClCompile Include="Core\DescriptorsManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Fence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\CommandPool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\CommandBuffers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Common.h">
@@ -120,6 +129,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\DescriptorsManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Fence.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\CommandPool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\CommandBuffers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
