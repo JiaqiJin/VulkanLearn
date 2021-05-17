@@ -28,6 +28,15 @@ namespace Rendering
 
 		~DescriptorsManager();
 
+		VkDescriptorPool GetDescriptorPool() const
+		{
+			return descriptorPool;
+		}
+
+		const DescriptorSetLayout& GetDescriptorSetLayout() const
+		{
+			return *descriptorSetLayout;
+		}
 
 	private:
 		void CreateDescriptorPool(const std::vector<DescriptorBinding>& descriptorBindings);
