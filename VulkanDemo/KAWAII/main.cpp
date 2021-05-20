@@ -1,42 +1,16 @@
-#include <vulkan/vulkan.h>
+#include <windows.h>
+#include "ApplicationEntry/ApplicationEntry.h"
 
-#include <iostream>
-#include <stdexcept>
-#include <cstdlib>
-#include <glm/glm.hpp>
+LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	AppEntry::GetInstance()->HandleMsg(hWnd, uMsg, wParam, lParam);
+	return (DefWindowProc(hWnd, uMsg, wParam, lParam));
+}
 
-class HelloTriangleApplication {
-public:
-    void run() {
-        initVulkan();
-        mainLoop();
-        cleanup();
-    }
-
-private:
-    void initVulkan() {
-
-    }
-
-    void mainLoop() {
-
-    }
-
-    void cleanup() {
-
-    }
-};
-
-int main() {
-    HelloTriangleApplication app;
-    glm::vec3 v(1.0f);
-    try {
-        app.run();
-    }
-    catch (const std::exception& e) {
-        std::cerr << e.what() << std::endl;
-        return EXIT_FAILURE;
-    }
-
-    return EXIT_SUCCESS;
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
+{
+	AppEntry::GetInstance()->InitVulkan(hInstance, WndProc);
+	AppEntry::GetInstance()->Update();
+	AppEntry::Free();
+	return 0;
 }
