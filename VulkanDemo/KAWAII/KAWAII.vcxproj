@@ -147,14 +147,18 @@
   <ItemGroup>
     <ClCompile Include="ApplicationEntry\ApplicationEntry.cpp" />
     <ClCompile Include="Common\Singleton.cpp" />
+    <ClCompile Include="Core\KeyInput.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math\Math.cpp" />
+    <ClCompile Include="VulkanWrapper\Instance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ApplicationEntry\ApplicationEntry.h" />
     <ClInclude Include="Common\Macro.h" />
     <ClInclude Include="Common\Singleton.h" />
+    <ClInclude Include="Core\KeyInput.h" />
     <ClInclude Include="Math\Math.h" />
+    <ClInclude Include="VulkanWrapper\Instance.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
