@@ -151,6 +151,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math\Math.cpp" />
     <ClCompile Include="VulkanWrapper\Instance.cpp" />
+    <ClCompile Include="VulkanWrapper\PhysicalDevice.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ApplicationEntry\ApplicationEntry.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Core\KeyInput.h" />
     <ClInclude Include="Math\Math.h" />
     <ClInclude Include="VulkanWrapper\Instance.h" />
+    <ClInclude Include="VulkanWrapper\PhysicalDevice.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

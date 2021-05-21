@@ -8,6 +8,40 @@
 #include <fstream>
 #include <array>
 
+void AppEntry::InitVulkanInstance()
+{
+	VkApplicationInfo appInfo = {};
+	appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
+	appInfo.pApplicationName = "KAWAII";
+	appInfo.apiVersion = (((1) << 22) | ((2) << 12) | (154));
+
+	std::vector<const char*> extensions = { EXTENSION_VULKAN_SURFACE };
+	std::vector<const char*> layers;
+
+	extensions.push_back(EXTENSION_VULKAN_SURFACE_WIN32);
+#if defined(_DEBUG)
+	layers.push_back(EXTENSION_VULKAN_VALIDATION_LAYER);
+	extensions.push_back(EXTENSION_VULKAN_DEBUG_REPORT);
+#endif
+
+	VkInstanceCreateInfo instCreateInfo = {};
+	instCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+	instCreateInfo.pApplicationInfo = &appInfo;
+	instCreateInfo.enabledExtensionCount = (int32_t)extensions.size();
+	instCreateInfo.ppEnabledExtensionNames = extensions.data();
+	instCreateInfo.enabledLayerCount = (int32_t)layers.size();
+	instCreateInfo.ppEnabledLayerNames = layers.data();
+
+	m_pVulkanInstance = RHI::Instance::Create(instCreateInfo);
+	assert(m_pVulkanInstance != nullptr);
+}
+
+void AppEntry::InitPhysicalDevice(HINSTANCE hInstance, HWND hWnd)
+{
+	m_pPhysicalDevice = std::make_shared<RHI::PhysicalDevice>(m_pVulkanInstance, hInstance, hWnd);
+	ASSERTION(m_pPhysicalDevice != nullptr);
+}
+
 void AppEntry::SetupWindow(HINSTANCE hinstance, WNDPROC wndproc)
 {
 	m_hPlatformInst = hinstance;
@@ -190,4 +224,6 @@ void AppEntry::InitVulkan(HINSTANCE hInstance, WNDPROC wndproc)
 {
 	SetupWindow(hInstance, wndproc);
 	// TODO Init vulkan components
+	InitVulkanInstance();
+	InitPhysicalDevice(m_hPlatformInst, m_hWindow);
 }
