@@ -1,11 +1,11 @@
 #pragma once
-#define VK_USE_PLATFORM_WIN32_KHR 1 
 #include <vulkan/vulkan.h>
 
 #include "../Common/Singleton.h"
 
 #include "../VulkanWrapper/Instance.h"
 #include "../VulkanWrapper/PhysicalDevice.h"
+#include "../VulkanWrapper/Device.h"
 
 #include <vector>
 #include <memory>
@@ -20,12 +20,14 @@ public:
 
 	void InitVulkanInstance();
 	void InitPhysicalDevice(HINSTANCE hInstance, HWND hWnd);
+	void InitVulkanDevice();
 
 	void Update();
 
 public:
 	std::shared_ptr<RHI::Instance> m_pVulkanInstance;
 	std::shared_ptr<RHI::PhysicalDevice> m_pPhysicalDevice;
+	std::shared_ptr<RHI::Device> m_pDevice;
 
 private:
 	HINSTANCE m_hPlatformInst;

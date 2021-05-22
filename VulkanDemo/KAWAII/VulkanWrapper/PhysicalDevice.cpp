@@ -187,4 +187,11 @@ namespace RHI
 		m_instance = instance;
 		return true;
 	}
+
+	VkFormatProperties PhysicalDevice::GetPhysicalDeviceFormatProperties(VkFormat format) const
+	{
+		VkFormatProperties formatProp = {};
+		vkGetPhysicalDeviceFormatProperties(m_physicalDevice, format, &formatProp);
+		return formatProp;
+	}
 }

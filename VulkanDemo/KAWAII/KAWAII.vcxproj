@@ -114,7 +114,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>VK_USE_PLATFORM_WIN32_KHR;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\VulkanSDK\1.2.154.1\Include;E:\VisualStudio\VulkanLearn\Dep\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -131,7 +131,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>VK_USE_PLATFORM_WIN32_KHR;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\VulkanSDK\1.2.154.1\Include;E:\VisualStudio\VulkanLearn\Dep\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -150,6 +150,7 @@
     <ClCompile Include="Core\KeyInput.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math\Math.cpp" />
+    <ClCompile Include="VulkanWrapper\Device.cpp" />
     <ClCompile Include="VulkanWrapper\Instance.cpp" />
     <ClCompile Include="VulkanWrapper\PhysicalDevice.cpp" />
   </ItemGroup>
@@ -159,6 +160,7 @@
     <ClInclude Include="Common\Singleton.h" />
     <ClInclude Include="Core\KeyInput.h" />
     <ClInclude Include="Math\Math.h" />
+    <ClInclude Include="VulkanWrapper\Device.h" />
     <ClInclude Include="VulkanWrapper\Instance.h" />
     <ClInclude Include="VulkanWrapper\PhysicalDevice.h" />
   </ItemGroup>
