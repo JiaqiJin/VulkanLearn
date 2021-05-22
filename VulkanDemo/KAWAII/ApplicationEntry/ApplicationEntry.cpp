@@ -40,14 +40,14 @@ void AppEntry::InitPhysicalDevice(HINSTANCE hInstance, HWND hWnd)
 {
 	m_pPhysicalDevice = std::make_shared<RHI::PhysicalDevice>(m_pVulkanInstance, hInstance, hWnd);
 	ASSERTION(m_pPhysicalDevice != nullptr);
-	m_pDevice = std::make_shared<RHI::Device>(m_pInstance, m_pPhysicalDevice);
+	//m_pDevice = std::make_shared<RHI::Device>(m_pVulkanInstance, m_pPhysicalDevice);
 }
 
 void AppEntry::InitVulkanDevice()
 {
 	//m_pDevice = RHI::Device::Create(m_pVulkanInstance, m_pPhysicalDevice);
-	//m_pDevice = std::make_shared<RHI::Device>(m_pPhysicalDevice);
-	//ASSERTION(m_pDevice != nullptr);
+	m_pDevice = std::make_shared<RHI::Device>(m_pVulkanInstance, m_pPhysicalDevice);
+	ASSERTION(m_pDevice != nullptr);
 }
 
 void AppEntry::SetupWindow(HINSTANCE hinstance, WNDPROC wndproc)

@@ -13,11 +13,6 @@ namespace RHI
 	{
 	public:
 		Device(const std::shared_ptr<Instance> pInstance, const std::shared_ptr<PhysicalDevice> pPhyisicalDevice);
-		//Device(const Instance& pInstance, const PhysicalDevice& pPhyisicalDevice);
-		/*Device(const Device&) = delete;
-		Device(Device&&) = delete;
-		Device& operator=(const Device&) = delete;
-		Device& operator=(Device&&) = delete;*/
 
 		~Device();
 
@@ -30,7 +25,7 @@ namespace RHI
 
 		PFN_vkCmdDrawIndirectCountKHR CmdDrawIndexedIndirectCountKHR() const { return m_fpCmdDrawIndexedIndirectCountKHR; }
 
-		static std::shared_ptr<Device> Create(const std::shared_ptr<Instance>& pInstance, const std::shared_ptr<PhysicalDevice> pPhyisicalDevice);
+		//static std::shared_ptr<TestDevice> Create(const std::shared_ptr<Instance>& pInstance, const std::shared_ptr<PhysicalDevice> pPhyisicalDevice);
 	private:
 		VkDevice m_device;
 		std::shared_ptr<PhysicalDevice> m_pPhysicalDevice;
