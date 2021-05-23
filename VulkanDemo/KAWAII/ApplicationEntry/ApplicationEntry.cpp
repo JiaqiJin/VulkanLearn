@@ -78,8 +78,8 @@ void AppEntry::SetupWindow(HINSTANCE hinstance, WNDPROC wndproc)
 		exit(1);
 	}
 
-	int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-	int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+	int screenWidth = 1020;//GetSystemMetrics(SM_CXSCREEN);
+	int screenHeight = 1080;//GetSystemMetrics(SM_CYSCREEN);
 
 	if (fullscreen)
 	{
@@ -234,4 +234,5 @@ void AppEntry::InitVulkan(HINSTANCE hInstance, WNDPROC wndproc)
 	// TODO Init vulkan components
 	InitVulkanInstance();
 	InitPhysicalDevice(m_hPlatformInst, m_hWindow);
+	InitVulkanDevice();
 }
