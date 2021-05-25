@@ -25,7 +25,6 @@ namespace RHI
 
 		PFN_vkCmdDrawIndirectCountKHR CmdDrawIndexedIndirectCountKHR() const { return m_fpCmdDrawIndexedIndirectCountKHR; }
 
-		//static std::shared_ptr<TestDevice> Create(const std::shared_ptr<Instance>& pInstance, const std::shared_ptr<PhysicalDevice> pPhyisicalDevice);
 	private:
 		VkDevice m_device;
 		std::shared_ptr<PhysicalDevice> m_pPhysicalDevice;

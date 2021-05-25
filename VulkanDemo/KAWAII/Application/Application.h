@@ -11,7 +11,7 @@
 #include <memory>
 #include <Windows.h>
 
-class AppEntry : public Singleton<AppEntry>
+class Application : public Singleton<Application>
 {
 public:
 	void InitVulkan(HINSTANCE hInstance, WNDPROC wndproc);

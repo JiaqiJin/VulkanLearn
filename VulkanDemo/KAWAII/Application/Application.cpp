@@ -1,4 +1,4 @@
-#include "ApplicationEntry.h"
+#include "Application.h"
 #include "../Common/Macro.h"
 #include "../Math/Math.h"
 
@@ -8,7 +8,7 @@
 #include <fstream>
 #include <array>
 
-void AppEntry::InitVulkanInstance()
+void Application::InitVulkanInstance()
 {
 	VkApplicationInfo appInfo = {};
 	appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
@@ -36,21 +36,21 @@ void AppEntry::InitVulkanInstance()
 	assert(m_pVulkanInstance != nullptr);
 }
 
-void AppEntry::InitPhysicalDevice(HINSTANCE hInstance, HWND hWnd)
+void Application::InitPhysicalDevice(HINSTANCE hInstance, HWND hWnd)
 {
 	m_pPhysicalDevice = std::make_shared<RHI::PhysicalDevice>(m_pVulkanInstance, hInstance, hWnd);
 	ASSERTION(m_pPhysicalDevice != nullptr);
 	//m_pDevice = std::make_shared<RHI::Device>(m_pVulkanInstance, m_pPhysicalDevice);
 }
 
-void AppEntry::InitVulkanDevice()
+void Application::InitVulkanDevice()
 {
 	//m_pDevice = RHI::Device::Create(m_pVulkanInstance, m_pPhysicalDevice);
 	m_pDevice = std::make_shared<RHI::Device>(m_pVulkanInstance, m_pPhysicalDevice);
 	ASSERTION(m_pDevice != nullptr);
 }
 
-void AppEntry::SetupWindow(HINSTANCE hinstance, WNDPROC wndproc)
+void Application::SetupWindow(HINSTANCE hinstance, WNDPROC wndproc)
 {
 	m_hPlatformInst = hinstance;
 
@@ -149,7 +149,7 @@ void AppEntry::SetupWindow(HINSTANCE hinstance, WNDPROC wndproc)
 	SetFocus(m_hWindow);
 }
 
-void AppEntry::HandleMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+void Application::HandleMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	Vector2d mouseUV =
 	{
@@ -195,7 +195,7 @@ void AppEntry::HandleMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	}
 }
 
-void AppEntry::Update()
+void Application::Update()
 {
 	static uint32_t frameCount = 0;
 	static double fpsTimer = 0;
@@ -228,7 +228,7 @@ void AppEntry::Update()
 	}
 }
 
-void AppEntry::InitVulkan(HINSTANCE hInstance, WNDPROC wndproc)
+void Application::InitVulkan(HINSTANCE hInstance, WNDPROC wndproc)
 {
 	SetupWindow(hInstance, wndproc);
 	// TODO Init vulkan components

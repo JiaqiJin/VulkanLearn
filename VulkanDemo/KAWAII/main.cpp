@@ -1,12 +1,12 @@
 #include <Windows.h>
-#include "ApplicationEntry/ApplicationEntry.h"
+#include "Application/Application.h"
 #include <wrl.h>
 
 #pragma comment(lib, "runtimeobject.lib")
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	AppEntry::GetInstance()->HandleMsg(hWnd, uMsg, wParam, lParam);
+	Application::GetInstance()->HandleMsg(hWnd, uMsg, wParam, lParam);
 	return (DefWindowProc(hWnd, uMsg, wParam, lParam));
 }
 
@@ -29,9 +29,9 @@ int main(int argc, const char* argv[])
 
 	HINSTANCE hInst = GetModuleHandle(0);
 
-	AppEntry::GetInstance()->InitVulkan(hInst, WndProc);
-	AppEntry::GetInstance()->Update();
-	AppEntry::Free();
+	Application::GetInstance()->InitVulkan(hInst, WndProc);
+	Application::GetInstance()->Update();
+	Application::Free();
 
 	return 0;
 }
