@@ -39,10 +39,10 @@
     <ClCompile Include="VulkanWrapper\Device.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VulkanWrapper\Queue.cpp">
+    <ClCompile Include="VulkanWrapper\DeviceObjectBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VulkanWrapper\DeviceObjectBase.cpp">
+    <ClCompile Include="VulkanWrapper\Queue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,13 +71,13 @@
     <ClInclude Include="VulkanWrapper\Device.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VulkanWrapper\Queue.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Base\Base.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VulkanWrapper\DeviceObjectBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VulkanWrapper\Queue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

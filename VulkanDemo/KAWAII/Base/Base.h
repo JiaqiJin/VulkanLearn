@@ -7,7 +7,7 @@
 class Base
 {
 public:
-	virtual ~Base() = 0;
+	virtual ~Base() = 0 {};
 
 	virtual bool Init() { return true; }
 
@@ -36,7 +36,7 @@ public:
 
 	virtual ~SelfRefBase() {}
 
-protected:
+public:
 	virtual bool Init(const std::shared_ptr<T>& pSelf)
 	{
 		if (!Base::Init())
