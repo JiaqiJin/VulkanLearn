@@ -1,6 +1,6 @@
 #include "PhysicalDevice.h"
 #include "../Common/Macro.h"
-
+#include "../Common/Logger.h"
 namespace RHI
 {
 	PhysicalDevice::~PhysicalDevice()
@@ -11,8 +11,8 @@ namespace RHI
 
 	PhysicalDevice::PhysicalDevice(const std::shared_ptr<Instance>& instance, HINSTANCE hInst, HWND hWnd)
 	{
-		if (!Init(instance, hInst, hWnd))
-			std::cout << "Error Initialize the physical device";
+		if (Init(instance, hInst, hWnd))
+			K_ERROR("Error Initialize Physical Device");
 	}
 
 	bool PhysicalDevice::Init(const std::shared_ptr<Instance> instance, HINSTANCE hInst, HWND hWnd)

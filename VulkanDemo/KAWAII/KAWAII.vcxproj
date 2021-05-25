@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>VK_USE_PLATFORM_WIN32_KHR;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>Default</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\VisualStudio\VulkanLearn\Dep\Logger\include\spdlog;C:\VulkanSDK\1.2.154.1\Include;E:\VisualStudio\VulkanLearn\Dep\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\VisualStudio\VulkanLearn\Dep\Logger\include;C:\VulkanSDK\1.2.154.1\Include;E:\VisualStudio\VulkanLearn\Dep\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp14</LanguageStandard>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
@@ -135,7 +135,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>VK_USE_PLATFORM_WIN32_KHR;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>Default</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\VisualStudio\VulkanLearn\Dep\Logger\include\spdlog;C:\VulkanSDK\1.2.154.1\Include;E:\VisualStudio\VulkanLearn\Dep\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\VisualStudio\VulkanLearn\Dep\Logger\include;C:\VulkanSDK\1.2.154.1\Include;E:\VisualStudio\VulkanLearn\Dep\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp14</LanguageStandard>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
+    <ClCompile Include="Common\Logger.cpp" />
     <ClCompile Include="Common\Singleton.cpp" />
     <ClCompile Include="Core\KeyInput.cpp" />
     <ClCompile Include="main.cpp" />
@@ -163,6 +164,7 @@
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
     <ClInclude Include="Base\Base.h" />
+    <ClInclude Include="Common\Logger.h" />
     <ClInclude Include="Common\Macro.h" />
     <ClInclude Include="Common\Singleton.h" />
     <ClInclude Include="Core\KeyInput.h" />

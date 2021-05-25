@@ -1,12 +1,12 @@
 #include "Queue.h"
 #include "Device.h"
-
+#include "../Common/Logger.h"
 namespace RHI
 {
 	Queue::Queue(const std::shared_ptr<Device> pDevice, const std::shared_ptr<Queue> pSelf, PhysicalDevice::QueueFamily queueFamily)
 	{
 		if (!Init(pDevice, pSelf, queueFamily))
-			std::cout << "Error Initialize Queue " << std::endl;
+			K_ERROR("Error Initialize Queue Device");
 	}
 
 	bool Queue::Init(const std::shared_ptr<Device>& pDevice, const std::shared_ptr<Queue>& pSelf, PhysicalDevice::QueueFamily queueFamily)

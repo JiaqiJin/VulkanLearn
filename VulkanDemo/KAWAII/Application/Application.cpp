@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "../Common/Macro.h"
+#include "../Common/Logger.h"
 #include "../Math/Math.h"
 
 #include <math.h>
@@ -230,6 +231,8 @@ void Application::Update()
 
 void Application::InitVulkan(HINSTANCE hInstance, WNDPROC wndproc)
 {
+	Log::Init();
+	K_INFO("Init Vulkan Renderer");
 	SetupWindow(hInstance, wndproc);
 	// TODO Init vulkan components
 	InitVulkanInstance();

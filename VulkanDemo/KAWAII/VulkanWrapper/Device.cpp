@@ -1,7 +1,7 @@
 #include "Device.h"
 #include "Instance.h"
 #include "PhysicalDevice.h"
-
+#include "../Common/Logger.h"
 #include <set>
 #include <array>
 
@@ -11,7 +11,7 @@ namespace RHI
 		: m_pPhysicalDevice(pPhyisicalDevice), m_pVulkanInst(pInstance)
 	{
 		if (!Init(pInstance, pPhyisicalDevice))
-			std::cout << "Error initialize Device" << std::endl;
+			K_ERROR("Error Initialize Device");
 	}
 
 	bool Device::Init(const std::shared_ptr<Instance>& pInst, const std::shared_ptr<PhysicalDevice>& pPhyisicalDevice)
