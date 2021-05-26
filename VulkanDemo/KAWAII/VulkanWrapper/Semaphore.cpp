@@ -1,6 +1,5 @@
 #include "Semaphore.h"
 #include "Device.h"
-#include "../Common/Logger.h"
 
 namespace RHI
 {

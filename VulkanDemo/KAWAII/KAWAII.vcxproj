@@ -160,6 +160,7 @@
     <ClCompile Include="VulkanWrapper\Device.cpp" />
     <ClCompile Include="VulkanWrapper\Queue.cpp" />
     <ClCompile Include="VulkanWrapper\Semaphore.cpp" />
+    <ClCompile Include="VulkanWrapper\SwapChain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
@@ -175,6 +176,7 @@
     <ClInclude Include="VulkanWrapper\Device.h" />
     <ClInclude Include="VulkanWrapper\Queue.h" />
     <ClInclude Include="VulkanWrapper\Semaphore.h" />
+    <ClInclude Include="VulkanWrapper\SwapChain.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
