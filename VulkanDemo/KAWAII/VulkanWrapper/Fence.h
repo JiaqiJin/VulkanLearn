@@ -36,5 +36,6 @@ namespace RHI
 		VkFence m_fence;
 		FenceState m_fenceState;
 
+		friend class Queue;
 	};
 }

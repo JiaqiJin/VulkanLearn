@@ -155,12 +155,14 @@
     <ClCompile Include="Core\KeyInput.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math\Math.cpp" />
+    <ClCompile Include="VulkanWrapper\Fence.cpp" />
     <ClCompile Include="VulkanWrapper\Instance.cpp" />
     <ClCompile Include="VulkanWrapper\PhysicalDevice.cpp" />
     <ClCompile Include="VulkanWrapper\Device.cpp" />
     <ClCompile Include="VulkanWrapper\Queue.cpp" />
     <ClCompile Include="VulkanWrapper\Semaphore.cpp" />
     <ClCompile Include="VulkanWrapper\SwapChain.cpp" />
+    <ClCompile Include="VulkanWrapper\VKFenceGuardRes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
@@ -171,12 +173,14 @@
     <ClInclude Include="Core\KeyInput.h" />
     <ClInclude Include="Math\Math.h" />
     <ClInclude Include="VulkanWrapper\DeviceObjectBase.h" />
+    <ClInclude Include="VulkanWrapper\Fence.h" />
     <ClInclude Include="VulkanWrapper\Instance.h" />
     <ClInclude Include="VulkanWrapper\PhysicalDevice.h" />
     <ClInclude Include="VulkanWrapper\Device.h" />
     <ClInclude Include="VulkanWrapper\Queue.h" />
     <ClInclude Include="VulkanWrapper\Semaphore.h" />
     <ClInclude Include="VulkanWrapper\SwapChain.h" />
+    <ClInclude Include="VulkanWrapper\VKFenceGuardRes.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
