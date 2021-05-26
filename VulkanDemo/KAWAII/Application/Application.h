@@ -6,6 +6,7 @@
 #include "../VulkanWrapper/Instance.h"
 #include "../VulkanWrapper/PhysicalDevice.h"
 #include "../VulkanWrapper/Device.h"
+#include "../VulkanWrapper/Semaphore.h"
 
 #include <vector>
 #include <memory>

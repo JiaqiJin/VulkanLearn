@@ -1,6 +1,7 @@
 #pragma once
 #include "../Base/Base.h"
 #include "Device.h"
+#include "../Common/Macro.h"
 
 namespace RHI
 {

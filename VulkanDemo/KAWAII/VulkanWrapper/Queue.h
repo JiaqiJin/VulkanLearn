@@ -10,7 +10,7 @@ namespace RHI
 	class Queue : public DeviceObjectBase<Queue>
 	{
 	public:
-		Queue(const std::shared_ptr<Device> pDevice, const std::shared_ptr<Queue> pSelf, PhysicalDevice::QueueFamily queueFamily);
+		Queue(const std::shared_ptr<Device> pDevice, PhysicalDevice::QueueFamily queueFamily);
 
 		Queue(const Queue&) = default;
 		Queue& operator=(const Queue&) = delete;
