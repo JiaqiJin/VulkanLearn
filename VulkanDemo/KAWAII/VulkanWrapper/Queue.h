@@ -1,13 +1,14 @@
 #pragma once
 
-#include "DeviceObjectBase.h"
+#include <vulkan/vulkan.h>
 #include "PhysicalDevice.h"
+#include <memory>
 
 namespace RHI
 {
 	class Device;
 
-	class Queue : public DeviceObjectBase<Queue>
+	class Queue
 	{
 	public:
 		Queue(const std::shared_ptr<Device> pDevice, PhysicalDevice::QueueFamily queueFamily);
@@ -23,9 +24,10 @@ namespace RHI
 		PhysicalDevice::QueueFamily GetQueueFamily() const { return m_queueFamily; }
 
 	private:
-		bool Init(const std::shared_ptr<Device>& pDevice, const std::shared_ptr<Queue>& pSelf, PhysicalDevice::QueueFamily queueFamily);
+		bool Init(const std::shared_ptr<Device>& pDevice, PhysicalDevice::QueueFamily queueFamily);
 
 	private:
+		std::shared_ptr<Device> m_device;
 		VkQueue m_queue;
 		PhysicalDevice::QueueFamily m_queueFamily;
 	};

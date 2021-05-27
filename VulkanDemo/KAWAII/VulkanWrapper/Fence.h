@@ -1,13 +1,16 @@
 #pragma once
 
-#include "DeviceObjectBase.h"
+#include <vulkan/vulkan.h>
+
+#include <memory>
 
 namespace RHI
 {
+	class Device;
 	class Queue;
 	class VKFenceGuardRes;
 
-	class Fence : public DeviceObjectBase<Fence>
+	class Fence 
 	{
 	public:
 		enum FenceState
@@ -30,12 +33,12 @@ namespace RHI
 		FenceState GetFenceState() const { return m_fenceState; }
 
 	private:
-		bool Init(const std::shared_ptr<Device>& pDevice, const std::shared_ptr<Fence>& pSelf);
+		bool Init(const std::shared_ptr<Device>& pDevice);
 
 	private:
 		VkFence m_fence;
 		FenceState m_fenceState;
-
+		std::shared_ptr<Device> m_device;
 		friend class Queue;
 	};
 }

@@ -1,31 +1,31 @@
 #include "Semaphore.h"
 #include "Device.h"
 
+#include "../Common/Macro.h"
+#include "../Common/Logger.h"
+
 namespace RHI
 {
 	Semaphore::Semaphore(const std::shared_ptr<Device> device)
+		: m_device(device)
 	{
-		std::shared_ptr<Semaphore> pSemaphore = std::make_shared<Semaphore>(device);
-		if (!Init(device, pSemaphore))
+		if (!Init(device))
 			K_ERROR("Error Initialize Semaphore");
 			//std::cout << "Error Initialize Semaphore" << std::endl;
 	}
 
-	bool Semaphore::Init(const std::shared_ptr<Device>& pDevice, const std::shared_ptr<Semaphore>& pSelf)
+	bool Semaphore::Init(const std::shared_ptr<Device>& pDevice)
 	{
-		if (!DeviceObjectBase::Init(pDevice, pSelf))
-			return false;
-
-			VkSemaphoreCreateInfo info = {};
-			info.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
-			CHECK_VK_ERROR(vkCreateSemaphore(GetDevice()->GetDeviceHandle(), &info, nullptr, &m_semaphore));
+		VkSemaphoreCreateInfo info = {};
+		info.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
+		CHECK_VK_ERROR(vkCreateSemaphore(m_device->GetDeviceHandle(), &info, nullptr, &m_semaphore));
 
 		return true;
 	}
 
 	Semaphore::~Semaphore()
 	{
-		vkDestroySemaphore(GetDevice()->GetDeviceHandle(), m_semaphore, nullptr);
+		vkDestroySemaphore(m_device->GetDeviceHandle(), m_semaphore, nullptr);
 	}
 
 }

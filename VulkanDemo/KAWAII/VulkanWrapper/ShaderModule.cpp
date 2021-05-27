@@ -1,22 +1,22 @@
 #include "ShaderModule.h"
 #include "Device.h"
+
+#include "../Common/Macro.h"
+#include "../Common/Logger.h"
+
 #include <fstream>
 
 namespace RHI
 {
 	ShaderModule::ShaderModule(const std::shared_ptr<Device> pDevice, const std::wstring path, ShaderType type, const std::string entryName)
+		:m_device(pDevice)
 	{
-		std::shared_ptr<ShaderModule> pShaderModule = std::make_shared<ShaderModule>(pDevice, path, type, entryName);
-		if (!Init(pDevice, pShaderModule, path, type, entryName))
+		if (!Init(m_device, path, type, entryName))
 			K_ERROR("Error Initialize ShaderModule");
 	}
 
-	bool ShaderModule::Init(const std::shared_ptr<Device>& pDevice, const std::shared_ptr<ShaderModule>& pSelf,
-		const std::wstring& path, ShaderType type, const std::string& entryName)
+	bool ShaderModule::Init(const std::shared_ptr<Device>& pDevice, const std::wstring& path, ShaderType type, const std::string& entryName)
 	{
-		if (!DeviceObjectBase::Init(pDevice, pSelf))
-			return false;
-
 		// Loading a shader 
 		std::ifstream ifs;
 		ifs.open(path, std::ios::binary);
@@ -53,6 +53,6 @@ namespace RHI
 
 	ShaderModule::~ShaderModule()
 	{
-		vkDestroyShaderModule(GetDevice()->GetDeviceHandle(), m_shaderModule, nullptr);
+		vkDestroyShaderModule(m_device->GetDeviceHandle(), m_shaderModule, nullptr);
 	}
 }

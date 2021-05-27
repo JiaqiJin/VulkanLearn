@@ -156,11 +156,15 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math\Math.cpp" />
     <ClCompile Include="VulkanWrapper\Fence.cpp" />
+    <ClCompile Include="VulkanWrapper\ImageView.cpp" />
     <ClCompile Include="VulkanWrapper\Instance.cpp" />
     <ClCompile Include="VulkanWrapper\PhysicalDevice.cpp" />
     <ClCompile Include="VulkanWrapper\Device.cpp" />
+    <ClCompile Include="VulkanWrapper\PipelineBase.cpp" />
+    <ClCompile Include="VulkanWrapper\PipelineLayout.cpp" />
     <ClCompile Include="VulkanWrapper\Queue.cpp" />
     <ClCompile Include="VulkanWrapper\Semaphore.cpp" />
+    <ClCompile Include="VulkanWrapper\ShaderModule.cpp" />
     <ClCompile Include="VulkanWrapper\SwapChain.cpp" />
     <ClCompile Include="VulkanWrapper\VKFenceGuardRes.cpp" />
   </ItemGroup>
@@ -174,11 +178,15 @@
     <ClInclude Include="Math\Math.h" />
     <ClInclude Include="VulkanWrapper\DeviceObjectBase.h" />
     <ClInclude Include="VulkanWrapper\Fence.h" />
+    <ClInclude Include="VulkanWrapper\ImageView.h" />
     <ClInclude Include="VulkanWrapper\Instance.h" />
     <ClInclude Include="VulkanWrapper\PhysicalDevice.h" />
     <ClInclude Include="VulkanWrapper\Device.h" />
+    <ClInclude Include="VulkanWrapper\PipelineBase.h" />
+    <ClInclude Include="VulkanWrapper\PipelineLayout.h" />
     <ClInclude Include="VulkanWrapper\Queue.h" />
     <ClInclude Include="VulkanWrapper\Semaphore.h" />
+    <ClInclude Include="VulkanWrapper\ShaderModule.h" />
     <ClInclude Include="VulkanWrapper\SwapChain.h" />
     <ClInclude Include="VulkanWrapper\VKFenceGuardRes.h" />
   </ItemGroup>

@@ -2,9 +2,7 @@
 
 #include <vulkan/vulkan.h>
 
-#include "DeviceObjectBase.h"
 #include "PhysicalDevice.h"
-#include "Device.h"
 
 #include <vector>
 #include <memory>
@@ -13,8 +11,9 @@ namespace RHI
 {
 	class Semaphore;
 	class Queue;
+	class Device;
 
-	class SwapChain : public DeviceObjectBase<SwapChain>
+	class SwapChain
 	{
 	public:
 		SwapChain(const std::shared_ptr<Device>& pDevice);
@@ -28,9 +27,10 @@ namespace RHI
 		const VkSwapchainKHR GetDeviceHandle() const { return m_swapchain; }
 
 	private:
-		bool Init(const std::shared_ptr<Device>& pDevice, const std::shared_ptr<SwapChain>& pSelf);
+		bool Init(const std::shared_ptr<Device>& pDevice);
 
-	protected:
+	private:
+		std::shared_ptr<Device> m_device;
 		VkSwapchainKHR m_swapchain;
 	};
 }

@@ -1,10 +1,13 @@
 #pragma once
 
-#include "DeviceObjectBase.h"
+#include <vulkan/vulkan.h>
+#include <memory>
 
 namespace RHI
 {
-	class Semaphore : public DeviceObjectBase<Semaphore>
+	class Device;
+
+	class Semaphore
 	{
 	public:
 		Semaphore(const std::shared_ptr<Device> device);
@@ -19,9 +22,10 @@ namespace RHI
 		VkSemaphore GetSemaphore() const { return m_semaphore; }
 
 	private:
-		bool Init(const std::shared_ptr<Device>& pDevice, const std::shared_ptr<Semaphore>& pSelf);
+		bool Init(const std::shared_ptr<Device>& pDevice);
 
-	protected:
+	private:
+		std::shared_ptr<Device> m_device;
 		VkSemaphore m_semaphore;
 	};
 }

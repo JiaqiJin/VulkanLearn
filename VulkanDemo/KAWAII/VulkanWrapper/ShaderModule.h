@@ -1,10 +1,15 @@
 #pragma once
 
-#include "DeviceObjectBase.h"
+#include <vulkan/vulkan.h>
+#include <memory>
+#include <string>
+#include <vector>
 
 namespace RHI
 {
-	class ShaderModule : public DeviceObjectBase<ShaderModule>
+	class Device;
+
+	class ShaderModule
 	{
 	public:
 		enum ShaderType
@@ -29,10 +34,10 @@ namespace RHI
 		std::string GetEntryName() const { return m_entryName; }
 
 	protected:
-		bool Init(const std::shared_ptr<Device>& pDevice, const std::shared_ptr<ShaderModule>& pSelf, 
-			const std::wstring& path, ShaderType type, const std::string& entryName);
+		bool Init(const std::shared_ptr<Device>& pDevice, const std::wstring& path, ShaderType type, const std::string& entryName);
 
 	protected:
+		std::shared_ptr<Device> m_device;
 		VkShaderModule m_shaderModule;
 		std::wstring m_shaderPath;
 		ShaderType m_shaderType;
