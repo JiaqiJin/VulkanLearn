@@ -13,7 +13,7 @@ namespace RHI
 	class PipelineBase
 	{
 	public:
-
+		PipelineBase(std::shared_ptr<Device> pDevice);
 		virtual ~PipelineBase();
 
 		VkPipeline GetDeviceHandle() const { return m_pipeline; }

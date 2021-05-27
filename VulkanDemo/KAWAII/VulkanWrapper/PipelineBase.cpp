@@ -6,6 +6,12 @@
 
 namespace RHI
 {
+	PipelineBase::PipelineBase(std::shared_ptr<Device> pDevice)
+		: m_device(pDevice)
+	{
+
+	}
+
 	bool PipelineBase::Init(const std::shared_ptr<Device>& pDevice, const std::shared_ptr<PipelineLayout>& pPipelineLayout)
 	{
 		m_pPipelineLayout = pPipelineLayout;

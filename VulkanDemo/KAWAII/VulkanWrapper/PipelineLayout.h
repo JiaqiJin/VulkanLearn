@@ -9,8 +9,10 @@ namespace RHI
 	class PipelineLayout
 	{
 	public:
-
-	protected:
+		
+	private:
 		VkPipelineLayout m_pipelineLayout;
+
+		friend class PipelineBase;
 	};
 }
