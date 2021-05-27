@@ -19,11 +19,23 @@ namespace RHI
 		virtual VkPipeline CreatePipeline() override;
 
 	private:
-		bool GraphicPipeline::Init(const std::shared_ptr<Device>& pDevice, const VkGraphicsPipelineCreateInfo& info);
+		bool GraphicPipeline::Init();
 
 	private:
-		VkPipelineVertexInputStateCreateInfo m_vertexInputCreateInfo; // vertex input
+		std::vector<VkPipelineColorBlendAttachmentState> m_blendStatesInfo; // Color blending
+		std::vector<VkDynamicState> m_dynamicStates;
+		std::vector<VkPipelineShaderStageCreateInfo> m_shaderStageInfo;
+		std::vector<VkVertexInputBindingDescription> m_vertexBindingsInfo;
+		std::vector<VkVertexInputAttributeDescription>	m_vertexAttributesInfo;
 
+		VkPipelineColorBlendStateCreateInfo m_blendCreateInfo; // blending state
+		VkPipelineVertexInputStateCreateInfo m_vertexInputCreateInfo; // vertex input
 		VkGraphicsPipelineCreateInfo m_info; // Pipeline Info
+		VkPipelineInputAssemblyStateCreateInfo m_assemblyCreateInfo; // Input assembly
+		VkPipelineViewportStateCreateInfo m_viewportStateCreateInfo; // Viewports
+		VkPipelineRasterizationStateCreateInfo m_rasterizerCreateInfo; // Rasterizer
+		VkPipelineMultisampleStateCreateInfo m_multiSampleCreateInfo; // Multisampling
+		VkPipelineDepthStencilStateCreateInfo m_depthStencilCreateInfo; // Depth and stencil testing
+		VkPipelineDynamicStateCreateInfo m_dynamicStatesCreateInfo; // Dynamic state
 	};
 }

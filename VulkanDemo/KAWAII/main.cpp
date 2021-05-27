@@ -36,4 +36,4 @@ int main(int argc, const char* argv[])
 	return 0;
 }
 
-// Swap Chain, Fence
+// Swap Chain, Fence, Pipeline
