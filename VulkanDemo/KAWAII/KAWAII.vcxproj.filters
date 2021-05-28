@@ -78,6 +78,9 @@
     <ClCompile Include="VulkanWrapper\DescriptorSetLayout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="VulkanWrapper\RenderPass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Math\Math.h">
@@ -147,6 +150,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VulkanWrapper\DescriptorSetLayout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VulkanWrapper\RenderPass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

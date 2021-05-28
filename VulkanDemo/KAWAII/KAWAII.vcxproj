@@ -166,6 +166,7 @@
     <ClCompile Include="VulkanWrapper\PipelineBase.cpp" />
     <ClCompile Include="VulkanWrapper\PipelineLayout.cpp" />
     <ClCompile Include="VulkanWrapper\Queue.cpp" />
+    <ClCompile Include="VulkanWrapper\RenderPass.cpp" />
     <ClCompile Include="VulkanWrapper\Semaphore.cpp" />
     <ClCompile Include="VulkanWrapper\ShaderModule.cpp" />
     <ClCompile Include="VulkanWrapper\SwapChain.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="VulkanWrapper\PipelineBase.h" />
     <ClInclude Include="VulkanWrapper\PipelineLayout.h" />
     <ClInclude Include="VulkanWrapper\Queue.h" />
+    <ClInclude Include="VulkanWrapper\RenderPass.h" />
     <ClInclude Include="VulkanWrapper\Semaphore.h" />
     <ClInclude Include="VulkanWrapper\ShaderModule.h" />
     <ClInclude Include="VulkanWrapper\SwapChain.h" />

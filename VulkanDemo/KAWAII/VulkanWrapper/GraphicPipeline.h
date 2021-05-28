@@ -1,6 +1,8 @@
 #pragma once
 
 #include "PipelineBase.h"
+#include <memory>
+#include <vector>
 
 namespace RHI
 {
