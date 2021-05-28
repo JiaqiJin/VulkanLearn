@@ -155,6 +155,7 @@
     <ClCompile Include="Core\KeyInput.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math\Math.cpp" />
+    <ClCompile Include="VulkanWrapper\DescriptorSetLayout.cpp" />
     <ClCompile Include="VulkanWrapper\Fence.cpp" />
     <ClCompile Include="VulkanWrapper\GlobalDeviceObjects.cpp" />
     <ClCompile Include="VulkanWrapper\GraphicPipeline.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="Common\Singleton.h" />
     <ClInclude Include="Core\KeyInput.h" />
     <ClInclude Include="Math\Math.h" />
+    <ClInclude Include="VulkanWrapper\DescriptorSetLayout.h" />
     <ClInclude Include="VulkanWrapper\DeviceObjectBase.h" />
     <ClInclude Include="VulkanWrapper\Fence.h" />
     <ClInclude Include="VulkanWrapper\GlobalDeviceObjects.h" />
