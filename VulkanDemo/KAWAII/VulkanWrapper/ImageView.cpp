@@ -15,7 +15,6 @@ namespace RHI
 
 	bool ImageView::Init(const std::shared_ptr<Device>& pDevice, const VkImageViewCreateInfo& info)
 	{
-	
 		RETURN_FALSE_VK_RESULT(vkCreateImageView(m_device->GetDeviceHandle(), &info, nullptr, &m_imageView));
 
 		return true;

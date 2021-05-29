@@ -157,6 +157,7 @@
     <ClCompile Include="Math\Math.cpp" />
     <ClCompile Include="VulkanWrapper\DescriptorSetLayout.cpp" />
     <ClCompile Include="VulkanWrapper\Fence.cpp" />
+    <ClCompile Include="VulkanWrapper\Framebuffer.cpp" />
     <ClCompile Include="VulkanWrapper\GlobalDeviceObjects.cpp" />
     <ClCompile Include="VulkanWrapper\GraphicPipeline.cpp" />
     <ClCompile Include="VulkanWrapper\ImageView.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="VulkanWrapper\DescriptorSetLayout.h" />
     <ClInclude Include="VulkanWrapper\DeviceObjectBase.h" />
     <ClInclude Include="VulkanWrapper\Fence.h" />
+    <ClInclude Include="VulkanWrapper\Framebuffer.h" />
     <ClInclude Include="VulkanWrapper\GlobalDeviceObjects.h" />
     <ClInclude Include="VulkanWrapper\GraphicPipeline.h" />
     <ClInclude Include="VulkanWrapper\ImageView.h" />

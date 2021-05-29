@@ -19,35 +19,35 @@ namespace RHI
 			m_subpassDependencyList.push_back(m_renderPassInfo.pDependencies[i]);
 		m_renderPassInfo.pDependencies = m_subpassDependencyList.data();
 
+		// Subpass
 		for (uint32_t i = 0; i < m_renderPassInfo.subpassCount; i++)
 		{
-			// Describe the structure
 			VkSubpassDescription subpassDesc = m_renderPassInfo.pSubpasses[i];
 			SubpassDef subpass = {};
 
-			for(uint32_t i = 0; i < subpassDesc.colorAttachmentCount; i++)
+			for (uint32_t i = 0; i < subpassDesc.colorAttachmentCount; i++)
 				subpass.m_colorAttachmentRefs.push_back(subpassDesc.pColorAttachments[i]);
 
-			if(subpassDesc.pDepthStencilAttachment)
+			if (subpassDesc.pDepthStencilAttachment)
 				subpass.m_depthStencilAttachmentRef = *subpassDesc.pDepthStencilAttachment;
 			else
 				subpass.m_depthStencilAttachmentRef = {};
 
-			for(uint32_t i = 0; i < subpassDesc.inputAttachmentCount; i++)
+			for (uint32_t i = 0; i < subpassDesc.inputAttachmentCount; i++)
 				subpass.m_inputAttachmentRefs.push_back(subpassDesc.pInputAttachments[i]);
 
-			for(uint32_t i = 0; i < subpassDesc.preserveAttachmentCount; i++)
+			for (uint32_t i = 0; i < subpassDesc.preserveAttachmentCount; i++)
 				subpass.m_inputAttachmentRefs.push_back(subpassDesc.pInputAttachments[i]);
 
-			if(subpassDesc.pResolveAttachments != nullptr)
+			if (subpassDesc.pResolveAttachments != nullptr)
 			{
-				for(uint32_t i = 0; i < subpassDesc.colorAttachmentCount; i++)
+				for (uint32_t i = 0; i < subpassDesc.colorAttachmentCount; i++)
 					subpass.m_resolveAttachmentRefs.push_back(subpassDesc.pResolveAttachments[i]);
 			}
 			m_subpasses.push_back(subpass);
 		}
-		
-		for(uint32_t i = 0; i < m_renderPassInfo.subpassCount; i++)
+
+		for (uint32_t i = 0; i < m_renderPassInfo.subpassCount; i++)
 		{
 			VkSubpassDescription subpassDesc = m_renderPassInfo.pSubpasses[i];
 

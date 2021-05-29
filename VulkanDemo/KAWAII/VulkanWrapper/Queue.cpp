@@ -1,5 +1,7 @@
 #include "Queue.h"
 #include "Device.h"
+#include "Fence.h"
+#include "Semaphore.h"
 
 #include "../Common/Logger.h"
 #include "../Common/Macro.h"
@@ -20,6 +22,11 @@ namespace RHI
 		vkGetDeviceQueue(m_device->GetDeviceHandle(), pDevice->GetPhysicalDevice()->GetQueueFamilyIndex(queueFamily), 0, &m_queue);
 		m_queueFamily = queueFamily;
 		return true;
+	}
+
+	void Queue::WaitForIdle()
+	{
+		CHECK_VK_ERROR(vkQueueWaitIdle(m_queue));
 	}
 
 	Queue::~Queue()

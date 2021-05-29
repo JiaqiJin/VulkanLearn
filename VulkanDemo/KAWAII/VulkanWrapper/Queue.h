@@ -3,11 +3,15 @@
 #include <vulkan/vulkan.h>
 #include "PhysicalDevice.h"
 #include <memory>
+#include <vector>
 
 namespace RHI
 {
 	class Device;
-
+	class Fence;
+	class Semaphore;
+	// Wrapper class for VkQueue
+	// A physical device may support : Graphic, Compute, Transfer and Sparse.
 	class Queue
 	{
 	public:
@@ -18,6 +22,8 @@ namespace RHI
 		Queue& operator=(Queue&&) = delete;
 
 		~Queue();
+
+		void WaitForIdle();
 
 		// Getters
 		VkQueue GetQueue() { return m_queue; }
