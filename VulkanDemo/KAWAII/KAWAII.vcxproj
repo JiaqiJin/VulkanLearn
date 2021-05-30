@@ -155,7 +155,10 @@
     <ClCompile Include="Core\KeyInput.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math\Math.cpp" />
+    <ClCompile Include="VulkanWrapper\CommandBuffer.cpp" />
+    <ClCompile Include="VulkanWrapper\CommandPool.cpp" />
     <ClCompile Include="VulkanWrapper\DescriptorSetLayout.cpp" />
+    <ClCompile Include="VulkanWrapper\DeviceMemoryManager.cpp" />
     <ClCompile Include="VulkanWrapper\Fence.cpp" />
     <ClCompile Include="VulkanWrapper\Framebuffer.cpp" />
     <ClCompile Include="VulkanWrapper\GlobalDeviceObjects.cpp" />
@@ -181,7 +184,10 @@
     <ClInclude Include="Common\Singleton.h" />
     <ClInclude Include="Core\KeyInput.h" />
     <ClInclude Include="Math\Math.h" />
+    <ClInclude Include="VulkanWrapper\CommandBuffer.h" />
+    <ClInclude Include="VulkanWrapper\CommandPool.h" />
     <ClInclude Include="VulkanWrapper\DescriptorSetLayout.h" />
+    <ClInclude Include="VulkanWrapper\DeviceMemoryManager.h" />
     <ClInclude Include="VulkanWrapper\DeviceObjectBase.h" />
     <ClInclude Include="VulkanWrapper\Fence.h" />
     <ClInclude Include="VulkanWrapper\Framebuffer.h" />
