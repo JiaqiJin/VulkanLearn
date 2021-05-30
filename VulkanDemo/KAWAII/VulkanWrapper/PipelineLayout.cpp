@@ -7,7 +7,7 @@
 
 namespace RHI
 {
-	PipelineLayout::PipelineLayout(const std::shared_ptr<Device> pDevice, const DescriptorSetLayoutList descriptorSetLayoutList)
+	PipelineLayout::PipelineLayout(const std::shared_ptr<Device>& pDevice, const DescriptorSetLayoutList& descriptorSetLayoutList)
 		: m_pDevice(pDevice), m_descriptorSetLayoutList(descriptorSetLayoutList)
 	{
 		std::vector<VkDescriptorSetLayout> dsLayoutDeviceHandleList = GetDescriptorSetLayoutDeviceHandleList();
@@ -20,8 +20,8 @@ namespace RHI
 		CHECK_VK_ERROR(vkCreatePipelineLayout(m_pDevice->GetDeviceHandle(), &info, nullptr, &m_pipelineLayout));
 	}
 
-	PipelineLayout::PipelineLayout(const std::shared_ptr<Device> pDevice, const DescriptorSetLayoutList descriptorSetLayoutList,
-		const std::vector<VkPushConstantRange> pushConstsRanges)
+	PipelineLayout::PipelineLayout(const std::shared_ptr<Device>& pDevice, const DescriptorSetLayoutList& descriptorSetLayoutList,
+		const std::vector<VkPushConstantRange>& pushConstsRanges)
 		: m_pDevice(pDevice), m_descriptorSetLayoutList(descriptorSetLayoutList)
 	{
 		std::vector<VkDescriptorSetLayout> dsLayoutDeviceHandleList = GetDescriptorSetLayoutDeviceHandleList();

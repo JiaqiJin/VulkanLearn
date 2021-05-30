@@ -27,7 +27,7 @@ namespace RHI
 		const VkSwapchainKHR GetDeviceHandle() const { return m_swapchain; }
 
 	private:
-		bool Init(const std::shared_ptr<Device>& pDevice);
+		bool Init();
 
 	private:
 		std::shared_ptr<Device> m_device;

@@ -10,7 +10,7 @@ namespace RHI
 	class Semaphore
 	{
 	public:
-		Semaphore(const std::shared_ptr<Device> device);
+		Semaphore(const std::shared_ptr<Device>& device);
 
 		Semaphore(const Semaphore&) = delete;
 		Semaphore(Semaphore&& other) = delete;
@@ -22,7 +22,7 @@ namespace RHI
 		VkSemaphore GetSemaphore() const { return m_semaphore; }
 
 	private:
-		bool Init(const std::shared_ptr<Device>& pDevice);
+		bool Init();
 
 	private:
 		std::shared_ptr<Device> m_device;

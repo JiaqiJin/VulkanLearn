@@ -7,7 +7,7 @@
 
 namespace RHI
 {
-	CommandPool::CommandPool(const std::shared_ptr<Device> pDevice, 
+	CommandPool::CommandPool(const std::shared_ptr<Device>& pDevice,
 		PhysicalDevice::QueueFamily queueFamily,
 		CBPersistancy persistancy)
 		: m_pDevice(pDevice)

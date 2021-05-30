@@ -9,11 +9,11 @@ namespace RHI
 	Fence::Fence(const std::shared_ptr<Device>& pDevice)
 		: m_device(pDevice)
 	{
-		if (!Init(m_device))
+		if (!Init())
 			K_ERROR("Error Initialize Fence");
 	}
 
-	bool Fence::Init(const std::shared_ptr<Device>& pDevice)
+	bool Fence::Init()
 	{
 
 		VkFenceCreateInfo info = {};

@@ -7,14 +7,14 @@
 
 namespace RHI
 {
-	Device::Device(const std::shared_ptr<Instance> pInstance, const std::shared_ptr<PhysicalDevice> pPhyisicalDevice)
+	Device::Device(const std::shared_ptr<Instance>& pInstance, const std::shared_ptr<PhysicalDevice>& pPhyisicalDevice)
 		: m_pPhysicalDevice(pPhyisicalDevice), m_pVulkanInst(pInstance)
 	{
-		if (!Init(pInstance, pPhyisicalDevice))
+		if (!Init())
 			K_ERROR("Error Initialize Device");
 	}
 
-	bool Device::Init(const std::shared_ptr<Instance>& pInst, const std::shared_ptr<PhysicalDevice>& pPhyisicalDevice)
+	bool Device::Init()
 	{
 		std::set<uint32_t> queueIndexSet;
 		queueIndexSet.insert(m_pPhysicalDevice->GetQueueFamilyIndex(PhysicalDevice::QueueFamily::ALL_ROUND));

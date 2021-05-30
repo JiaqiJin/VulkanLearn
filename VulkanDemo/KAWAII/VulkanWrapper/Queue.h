@@ -15,7 +15,7 @@ namespace RHI
 	class Queue
 	{
 	public:
-		Queue(const std::shared_ptr<Device> pDevice, PhysicalDevice::QueueFamily queueFamily);
+		Queue(const std::shared_ptr<Device>& pDevice, PhysicalDevice::QueueFamily queueFamily);
 
 		Queue(const Queue&) = default;
 		Queue& operator=(const Queue&) = delete;
@@ -30,7 +30,7 @@ namespace RHI
 		PhysicalDevice::QueueFamily GetQueueFamily() const { return m_queueFamily; }
 
 	private:
-		bool Init(const std::shared_ptr<Device>& pDevice, PhysicalDevice::QueueFamily queueFamily);
+		bool Init();
 
 	private:
 		std::shared_ptr<Device> m_device;

@@ -17,8 +17,8 @@ namespace RHI
 		GraphicPipeline(const std::shared_ptr<Device>& pDevice,
 			const VkGraphicsPipelineCreateInfo info,
 			const std::vector<std::shared_ptr<ShaderModule>> shaders,
-			const std::shared_ptr<RenderPass> pRenderPass,
-			const std::shared_ptr<PipelineLayout> pPipelineLayout);
+			const std::shared_ptr<RenderPass>& pRenderPass,
+			const std::shared_ptr<PipelineLayout>& pPipelineLayout);
 
 		GraphicPipeline(const GraphicPipeline&) = delete;
 		GraphicPipeline& operator=(const GraphicPipeline&) = delete;

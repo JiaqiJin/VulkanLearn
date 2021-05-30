@@ -24,7 +24,7 @@ namespace RHI
 		};
 
 	public:
-		ShaderModule(const std::shared_ptr<Device> pDevice, const std::wstring path, ShaderType type, const std::string entryName);
+		ShaderModule(const std::shared_ptr<Device>& pDevice, const std::wstring& path, ShaderType type, const std::string& entryName);
 		~ShaderModule();
 
 		VkShaderModule GetDeviceHandle() const { return m_shaderModule; }
@@ -34,7 +34,7 @@ namespace RHI
 		std::string GetEntryName() const { return m_entryName; }
 
 	protected:
-		bool Init(const std::shared_ptr<Device>& pDevice, const std::wstring& path, ShaderType type, const std::string& entryName);
+		bool Init(const std::wstring& path);
 
 	protected:
 		std::shared_ptr<Device> m_device;

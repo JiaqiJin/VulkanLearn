@@ -25,7 +25,7 @@ namespace RHI
 		};
 
 	public:
-		CommandPool(const std::shared_ptr<Device> pDevice, PhysicalDevice::QueueFamily queueFamily, CBPersistancy persistancy);
+		CommandPool(const std::shared_ptr<Device>& pDevice, PhysicalDevice::QueueFamily queueFamily, CBPersistancy persistancy);
 		~CommandPool();
 
 		std::shared_ptr<CommandBuffer> AllocateCommandBuffer(CommandBuffer::CBLevel level);

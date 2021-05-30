@@ -12,7 +12,7 @@ namespace RHI
 	class FrameBuffer
 	{
 	public:
-		FrameBuffer(const std::shared_ptr<Device> pDevice);
+		FrameBuffer(const std::shared_ptr<Device>& pDevice);
 		~FrameBuffer();
 
 		bool Init();

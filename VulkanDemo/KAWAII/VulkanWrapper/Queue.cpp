@@ -8,19 +8,17 @@
 
 namespace RHI
 {
-	Queue::Queue(const std::shared_ptr<Device> pDevice, PhysicalDevice::QueueFamily queueFamily)
-		: m_device(pDevice)
+	Queue::Queue(const std::shared_ptr<Device>& pDevice, PhysicalDevice::QueueFamily queueFamily)
+		: m_device(pDevice), m_queueFamily(queueFamily)
 	{
-		std::shared_ptr<Queue> pQueue = std::make_shared<Queue>(pDevice, queueFamily);
-		if (!Init(pDevice, queueFamily))
+		if (!Init())
 			K_ERROR("Error Initialize Queue Device");
 	}
 
-	bool Queue::Init(const std::shared_ptr<Device>& pDevice, PhysicalDevice::QueueFamily queueFamily)
+	bool Queue::Init()
 	{
 		// 1st Queue in a queue family
-		vkGetDeviceQueue(m_device->GetDeviceHandle(), pDevice->GetPhysicalDevice()->GetQueueFamilyIndex(queueFamily), 0, &m_queue);
-		m_queueFamily = queueFamily;
+		vkGetDeviceQueue(m_device->GetDeviceHandle(), m_device->GetPhysicalDevice()->GetQueueFamilyIndex(m_queueFamily), 0, &m_queue);
 		return true;
 	}
 

@@ -25,7 +25,7 @@ namespace RHI
 		};
 
 	public:
-		RenderPass(const std::shared_ptr<Device> pDevice, const VkRenderPassCreateInfo renderPassInfo);
+		RenderPass(const std::shared_ptr<Device>& pDevice, const VkRenderPassCreateInfo& renderPassInfo);
 		RenderPass(const RenderPass&) = delete;
 		RenderPass& operator=(const RenderPass&) = delete;
 		RenderPass& operator=(RenderPass&&) = delete;

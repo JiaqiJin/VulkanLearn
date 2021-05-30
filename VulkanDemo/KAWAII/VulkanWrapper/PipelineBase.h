@@ -13,7 +13,7 @@ namespace RHI
 	class PipelineBase
 	{
 	public:
-		PipelineBase(std::shared_ptr<Device> pDevice);
+		PipelineBase(const std::shared_ptr<Device>& pDevice, const std::shared_ptr<PipelineLayout>& pPipelineLayout);
 		virtual ~PipelineBase();
 
 		VkPipeline GetDeviceHandle() const { return m_pipeline; }
@@ -22,7 +22,7 @@ namespace RHI
 		virtual uint32_t GetSubpassIndex() const { return 0; }
 
 	protected:
-		bool Init(const std::shared_ptr<Device>& pDevice, const std::shared_ptr<PipelineLayout>& pPipelineLayout);
+		bool Init();
 
 		virtual VkPipeline CreatePipeline() = 0;
 

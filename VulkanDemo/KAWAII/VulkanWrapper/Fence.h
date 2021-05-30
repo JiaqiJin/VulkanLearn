@@ -33,7 +33,7 @@ namespace RHI
 		FenceState GetFenceState() const { return m_fenceState; }
 
 	private:
-		bool Init(const std::shared_ptr<Device>& pDevice);
+		bool Init();
 
 	private:
 		VkFence m_fence;

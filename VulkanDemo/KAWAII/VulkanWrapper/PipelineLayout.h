@@ -14,9 +14,9 @@ namespace RHI
 	class PipelineLayout
 	{
 	public:
-		PipelineLayout(const std::shared_ptr<Device> pDevice, const DescriptorSetLayoutList descriptorSetLayoutList);
-		PipelineLayout(const std::shared_ptr<Device> pDevice, const DescriptorSetLayoutList descriptorSetLayoutList,
-			const std::vector<VkPushConstantRange> pushConstsRanges);
+		PipelineLayout(const std::shared_ptr<Device>& pDevice, const DescriptorSetLayoutList& descriptorSetLayoutList);
+		PipelineLayout(const std::shared_ptr<Device>& pDevice, const DescriptorSetLayoutList& descriptorSetLayoutList,
+			const std::vector<VkPushConstantRange>& pushConstsRanges);
 
 		~PipelineLayout();
 

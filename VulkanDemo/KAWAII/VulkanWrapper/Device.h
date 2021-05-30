@@ -12,7 +12,7 @@ namespace RHI
 	class Device
 	{
 	public:
-		Device(const std::shared_ptr<Instance> pInstance, const std::shared_ptr<PhysicalDevice> pPhyisicalDevice);
+		Device(const std::shared_ptr<Instance>& pInstance, const std::shared_ptr<PhysicalDevice>& pPhyisicalDevice);
 
 		Device(const Device&) = delete;
 		Device(Device&&) = delete;
@@ -21,7 +21,7 @@ namespace RHI
 
 		~Device();
 
-		bool Init(const std::shared_ptr<Instance>& pInst, const std::shared_ptr<PhysicalDevice>& pPhyisicalDevice);
+		bool Init();
 
 		// Getters
 		const VkDevice GetDeviceHandle() const { return m_device; }

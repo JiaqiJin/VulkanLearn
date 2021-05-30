@@ -7,8 +7,8 @@
 
 namespace RHI
 {
-	FrameBuffer::FrameBuffer(const std::shared_ptr<Device> pDevice)
-		: m_pDevice(pDevice)
+	FrameBuffer::FrameBuffer(const std::shared_ptr<Device>& pDevice)
+		: m_pDevice(std::move(pDevice))
 	{
 		if(!Init())
 			K_ERROR("Error Initialize FrameBuffer");

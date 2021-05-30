@@ -6,15 +6,15 @@
 
 namespace RHI
 {
-	Semaphore::Semaphore(const std::shared_ptr<Device> device)
+	Semaphore::Semaphore(const std::shared_ptr<Device>& device)
 		: m_device(device)
 	{
-		if (!Init(device))
+		if (!Init())
 			K_ERROR("Error Initialize Semaphore");
 			//std::cout << "Error Initialize Semaphore" << std::endl;
 	}
 
-	bool Semaphore::Init(const std::shared_ptr<Device>& pDevice)
+	bool Semaphore::Init()
 	{
 		VkSemaphoreCreateInfo info = {};
 		info.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;

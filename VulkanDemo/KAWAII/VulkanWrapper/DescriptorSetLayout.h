@@ -11,7 +11,7 @@ namespace RHI
 	class DescriptorSetLayout
 	{
 	public:
-		DescriptorSetLayout(const std::shared_ptr<Device> pDevice, const std::vector<VkDescriptorSetLayoutBinding> dsLayoutBinding);
+		DescriptorSetLayout(const std::shared_ptr<Device>& pDevice, const std::vector<VkDescriptorSetLayoutBinding>& dsLayoutBinding);
 		~DescriptorSetLayout();
 
 		DescriptorSetLayout(const DescriptorSetLayout&) = delete;

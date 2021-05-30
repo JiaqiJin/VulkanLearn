@@ -37,7 +37,8 @@ int main(int argc, const char* argv[])
 }
 
 // Swap Chain, Fence, Pipeline, RenderPass, Queue,
-// Framebuffer, Command Pool
+// Framebuffer, Command Buffer
+// Command Pool : remove share_from_this() ?.
 
 /*
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿

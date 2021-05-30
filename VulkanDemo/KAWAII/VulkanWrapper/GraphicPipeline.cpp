@@ -11,14 +11,14 @@ namespace RHI
 	GraphicPipeline::GraphicPipeline(const std::shared_ptr<Device>& pDevice,
 		const VkGraphicsPipelineCreateInfo info,
 		const std::vector<std::shared_ptr<ShaderModule>> shaders,
-		const std::shared_ptr<RenderPass> pRenderPass,
-		const std::shared_ptr<PipelineLayout> pPipelineLayout)
-		: PipelineBase(pDevice), 
+		const std::shared_ptr<RenderPass>& pRenderPass,
+		const std::shared_ptr<PipelineLayout>& pPipelineLayout)
+		: PipelineBase(pDevice, pPipelineLayout),
 		m_info(info),
 		m_shaders(shaders),
 		m_pRenderPass(pRenderPass)
 	{
-		m_pPipelineLayout = pPipelineLayout;
+		//m_pPipelineLayout = pPipelineLayout;
 
 		m_info.renderPass = pRenderPass->GetDeviceHandle();
 		m_info.layout = pPipelineLayout->GetDeviceHandle();
@@ -35,7 +35,7 @@ namespace RHI
 			stages[i].pName = pEntryName;
 		}
 
-		m_info.stageCount = stages.size();
+		m_info.stageCount = (uint32_t)stages.size();
 		m_info.pStages = stages.data();
 
 		if(!Init())
@@ -108,7 +108,7 @@ namespace RHI
 		m_info.pVertexInputState = &m_vertexInputCreateInfo;
 
 		// Init
-		if (!PipelineBase::Init(m_device, m_pPipelineLayout))
+		if (!PipelineBase::Init())
 			return false;
 
 		return true;

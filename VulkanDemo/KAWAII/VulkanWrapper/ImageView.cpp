@@ -6,14 +6,14 @@
 
 namespace RHI
 {
-	ImageView::ImageView(const std::shared_ptr<Device> pDevice, const VkImageViewCreateInfo info)
+	ImageView::ImageView(const std::shared_ptr<Device>& pDevice, const VkImageViewCreateInfo info)
 		: m_device(pDevice)
 	{
-		if (!Init(pDevice, info))
+		if (!Init(info))
 			K_ERROR("Error Initialize ImageView");
 	}
 
-	bool ImageView::Init(const std::shared_ptr<Device>& pDevice, const VkImageViewCreateInfo& info)
+	bool ImageView::Init(const VkImageViewCreateInfo& info)
 	{
 		RETURN_FALSE_VK_RESULT(vkCreateImageView(m_device->GetDeviceHandle(), &info, nullptr, &m_imageView));
 

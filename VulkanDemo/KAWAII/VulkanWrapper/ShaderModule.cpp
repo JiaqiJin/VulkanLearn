@@ -8,14 +8,14 @@
 
 namespace RHI
 {
-	ShaderModule::ShaderModule(const std::shared_ptr<Device> pDevice, const std::wstring path, ShaderType type, const std::string entryName)
-		:m_device(pDevice)
+	ShaderModule::ShaderModule(const std::shared_ptr<Device>& pDevice, const std::wstring& path, ShaderType type, const std::string& entryName)
+		:m_device(pDevice), m_entryName(entryName), m_shaderType(type), m_shaderPath(path)
 	{
-		if (!Init(m_device, path, type, entryName))
+		if (!Init(path))
 			K_ERROR("Error Initialize ShaderModule");
 	}
 
-	bool ShaderModule::Init(const std::shared_ptr<Device>& pDevice, const std::wstring& path, ShaderType type, const std::string& entryName)
+	bool ShaderModule::Init(const std::wstring& path)
 	{
 		// Loading a shader 
 		std::ifstream ifs;
@@ -26,16 +26,13 @@ namespace RHI
 		std::vector<char> buffer;
 		buffer.assign(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
 
-		VkShaderModuleCreateInfo createInfo = {};
-		createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
-		createInfo.codeSize = buffer.size();
-		createInfo.pCode = (uint32_t*)buffer.data(); // The bytecode pointer is a uint32_t
+		VkShaderModuleCreateInfo info = {};
+		info.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+		info.codeSize = buffer.size();
+		info.pCode = (uint32_t*)buffer.data();
+		CHECK_VK_ERROR(vkCreateShaderModule(m_device->GetDeviceHandle(), &info, nullptr, &m_shaderModule));
 
-		CHECK_VK_ERROR(vkCreateShaderModule(pDevice->GetDeviceHandle(), &createInfo, nullptr, &m_shaderModule));
-
-		m_shaderType = type;
-
-		switch (type)
+		switch (m_shaderType)
 		{
 		case ShaderTypeVertex: m_shaderStage = VK_SHADER_STAGE_VERTEX_BIT; break;
 		case ShaderTypeTessellationControl: m_shaderStage = VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT; break;
@@ -45,8 +42,6 @@ namespace RHI
 		case ShaderTypeCompute: m_shaderStage = VK_SHADER_STAGE_COMPUTE_BIT; break;
 		default: ASSERTION(false);
 		}
-
-		m_entryName = entryName;
 
 		return true;
 	}

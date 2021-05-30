@@ -11,7 +11,7 @@ namespace RHI
 	class ImageView
 	{
 	public:
-		ImageView(const std::shared_ptr<Device> pDevice, const VkImageViewCreateInfo info);
+		ImageView(const std::shared_ptr<Device>& pDevice, const VkImageViewCreateInfo info);
 		~ImageView();
 
 		ImageView(const ImageView&) = default;
@@ -21,7 +21,7 @@ namespace RHI
 
 		VkImageView GetDeviceHandle() const { return m_imageView; }
 	protected:
-		bool Init(const std::shared_ptr<Device>& pDevice, const VkImageViewCreateInfo& info);
+		bool Init(const VkImageViewCreateInfo& info);
 
 	private:
 		std::shared_ptr<Device> m_device;

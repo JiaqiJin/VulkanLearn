@@ -22,7 +22,7 @@ namespace RHI
 		};
 
 	public:
-		CommandBuffer(const std::shared_ptr<Device> pDevice, const std::shared_ptr<CommandPool> pCmdPool, CBLevel level);
+		CommandBuffer(const std::shared_ptr<Device>& pDevice, const std::shared_ptr<CommandPool>& pCmdPool, CBLevel level);
 
 		~CommandBuffer();
 

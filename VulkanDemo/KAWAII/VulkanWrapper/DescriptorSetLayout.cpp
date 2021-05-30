@@ -6,8 +6,8 @@
 
 namespace RHI
 {
-	DescriptorSetLayout::DescriptorSetLayout(const std::shared_ptr<Device> pDevice,
-		const std::vector<VkDescriptorSetLayoutBinding> dsLayoutBinding)
+	DescriptorSetLayout::DescriptorSetLayout(const std::shared_ptr<Device>& pDevice,
+		const std::vector<VkDescriptorSetLayoutBinding>& dsLayoutBinding)
 		: m_pDevice(pDevice), m_descriptorSetLayoutBinding(dsLayoutBinding)
 	{
 		VkDescriptorSetLayoutCreateInfo createInfo{};

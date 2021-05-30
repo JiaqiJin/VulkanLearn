@@ -6,7 +6,7 @@
 
 namespace RHI
 {
-	RenderPass::RenderPass(const std::shared_ptr<Device> pDevice, const VkRenderPassCreateInfo renderPassInfo)
+	RenderPass::RenderPass(const std::shared_ptr<Device>& pDevice, const VkRenderPassCreateInfo& renderPassInfo)
 		: m_pDevice(pDevice), m_renderPassInfo(renderPassInfo)
 	{
 		// Attachment

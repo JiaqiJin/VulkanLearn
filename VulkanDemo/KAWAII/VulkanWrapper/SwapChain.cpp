@@ -9,11 +9,11 @@ namespace RHI
 	SwapChain::SwapChain(const std::shared_ptr<Device>& pDevice)
 		: m_device(pDevice)
 	{
-		if (!Init(pDevice))
+		if (!Init())
 			K_ERROR("Error Initialize Swap Chain");
 	}
 
-	bool SwapChain::Init(const std::shared_ptr<Device>& pDevice)
+	bool SwapChain::Init()
 	{
 		VkPresentModeKHR swapchainPresentMode = VK_PRESENT_MODE_FIFO_KHR;
 		VkSurfaceTransformFlagsKHR preTransform;
