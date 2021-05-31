@@ -55,3 +55,5 @@ int main(int argc, const char* argv[])
 ⣿⣿⣿⣿⣿⣿⣿⠄⢸⣿⣿⣿⣿⣿⣿⣿⣿⡇⠄⣿⣿⣿⣿⣿⣿
 ⠛⠛⠛⠛⠛⠛⠛⠄⠘⠛⠛⠛⠛⠛⠛⠛⠛⠃⠄⠛⠛⠛⠛⠛⠛
 */
+
+// https://github.com/KhronosGroup/Vulkan-Docs/wiki/Synchronization-Examples

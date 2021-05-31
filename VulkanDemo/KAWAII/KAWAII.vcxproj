@@ -155,6 +155,8 @@
     <ClCompile Include="Core\KeyInput.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math\Math.cpp" />
+    <ClCompile Include="VulkanWrapper\Buffer.cpp" />
+    <ClCompile Include="VulkanWrapper\BufferBase.cpp" />
     <ClCompile Include="VulkanWrapper\CommandBuffer.cpp" />
     <ClCompile Include="VulkanWrapper\CommandPool.cpp" />
     <ClCompile Include="VulkanWrapper\DescriptorSetLayout.cpp" />
@@ -175,6 +177,7 @@
     <ClCompile Include="VulkanWrapper\ShaderModule.cpp" />
     <ClCompile Include="VulkanWrapper\SwapChain.cpp" />
     <ClCompile Include="VulkanWrapper\VKFenceGuardRes.cpp" />
+    <ClCompile Include="VulkanWrapper\VKGPUSyncRes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
@@ -184,6 +187,8 @@
     <ClInclude Include="Common\Singleton.h" />
     <ClInclude Include="Core\KeyInput.h" />
     <ClInclude Include="Math\Math.h" />
+    <ClInclude Include="VulkanWrapper\Buffer.h" />
+    <ClInclude Include="VulkanWrapper\BufferBase.h" />
     <ClInclude Include="VulkanWrapper\CommandBuffer.h" />
     <ClInclude Include="VulkanWrapper\CommandPool.h" />
     <ClInclude Include="VulkanWrapper\DescriptorSetLayout.h" />
@@ -205,6 +210,7 @@
     <ClInclude Include="VulkanWrapper\ShaderModule.h" />
     <ClInclude Include="VulkanWrapper\SwapChain.h" />
     <ClInclude Include="VulkanWrapper\VKFenceGuardRes.h" />
+    <ClInclude Include="VulkanWrapper\VKGPUSyncRes.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
