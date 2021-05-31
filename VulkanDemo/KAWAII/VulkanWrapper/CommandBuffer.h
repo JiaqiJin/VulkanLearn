@@ -55,7 +55,6 @@ namespace RHI
 		void BeginRenderPass(const std::shared_ptr<FrameBuffer>& pFrameBuffer, const std::shared_ptr<RenderPass>& pRenderPass, const std::vector<VkClearValue>& clearValues, bool includeSecondary = false);
 		void EndRenderPass();
 
-		// https://vkguide.dev/docs/chapter-3/push_constants/ 
 		// Push constants let us send a small amount of data (it has a limited size) to the shader
 		void PushConstant(const std::shared_ptr<PipelineLayout>& pPipelineLayout, VkShaderStageFlags shaderFlag, uint32_t offset, uint32_t size, const void* pData);
 
