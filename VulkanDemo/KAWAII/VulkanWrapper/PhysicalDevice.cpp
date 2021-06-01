@@ -1,34 +1,38 @@
 #include "PhysicalDevice.h"
+#include "Instance.h"
 #include "../Common/Macro.h"
 #include "../Common/Logger.h"
 namespace RHI
 {
 	PhysicalDevice::~PhysicalDevice()
 	{
-		if (m_instance.get())
-			vkDestroySurfaceKHR(m_instance->GetInstance(), m_surface, nullptr);
+		if (m_pVulkanInstance.get())
+			vkDestroySurfaceKHR(m_pVulkanInstance->GetDeviceHandle(), m_surface, nullptr);
 	}
 
 	PhysicalDevice::PhysicalDevice(const std::shared_ptr<Instance>& instance, HINSTANCE hInst, HWND hWnd)
+		: m_pVulkanInstance(instance)
 	{
-		if (Init(instance, hInst, hWnd))
+		if (!Init(instance, hInst, hWnd))
 			K_ERROR("Error Initialize Physical Device");
 	}
 
-	bool PhysicalDevice::Init(const std::shared_ptr<Instance> instance, HINSTANCE hInst, HWND hWnd)
+	bool PhysicalDevice::Init(const std::shared_ptr<Instance>& instance, HINSTANCE hInst, HWND hWnd)
 	{
+		//Get an available physical device
 		uint32_t gpuCount = 0;
-		vkEnumeratePhysicalDevices(instance->GetInstance(), &gpuCount, nullptr);
+		vkEnumeratePhysicalDevices(m_pVulkanInstance->GetDeviceHandle(), &gpuCount, nullptr);
 		if (gpuCount == 0)
 			return false;
 
 		std::vector<VkPhysicalDevice> physicalDevices;
 		physicalDevices.resize(gpuCount);
-		vkEnumeratePhysicalDevices(instance->GetInstance(), &gpuCount, physicalDevices.data());
+		vkEnumeratePhysicalDevices(m_pVulkanInstance->GetDeviceHandle(), &gpuCount, physicalDevices.data());
 
+		//Hard coded, using first physical device
 		m_physicalDevice = physicalDevices[0];
 
-		// Queue families properties
+		//Get queue properties from physical device
 		uint32_t queueFamilyCount = 0;
 		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &queueFamilyCount, nullptr);
 		if (queueFamilyCount == 0)
@@ -37,15 +41,38 @@ namespace RHI
 		m_queueProperties.resize(queueFamilyCount);
 		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &queueFamilyCount, m_queueProperties.data());
 
-		// Get physcal devices properties
+		//Get physical device properties
 		vkGetPhysicalDeviceProperties(m_physicalDevice, &m_physicalDeviceProperties);
 		vkGetPhysicalDeviceFeatures(m_physicalDevice, &m_physicalDeviceFeatures);
 		vkGetPhysicalDeviceMemoryProperties(m_physicalDevice, &m_physicalDeviceMemoryProperties);
+
+		//Get depth stencil format
+		std::vector<VkFormat> formats =
+		{
+			VK_FORMAT_D32_SFLOAT_S8_UINT,
+			VK_FORMAT_D32_SFLOAT,
+			VK_FORMAT_D24_UNORM_S8_UINT,
+			VK_FORMAT_D16_UNORM_S8_UINT,
+			VK_FORMAT_D16_UNORM
+		};
+
+		for (uint32_t i = 0; i < formats.size(); i++)
+		{
+			VkFormatProperties prop;
+			vkGetPhysicalDeviceFormatProperties(m_physicalDevice, formats[i], &prop);
+			if (prop.optimalTilingFeatures & VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT)
+			{
+				m_depthStencilFormat = formats[i];
+				break;
+			}
+		}
 
 		m_queueFamilyIndices[(uint32_t)QueueFamily::ALL_ROUND] = -1;
 		for (uint32_t i = 0; i < m_queueProperties.size(); i++)
 		{
 			// I assume default graphic queue provides present, compute and transfer too
+			// Maybe this needs to change in future
+			// I'll leave it for now
 			if ((m_queueProperties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT) &&
 				(m_queueProperties[i].queueFlags & VK_QUEUE_COMPUTE_BIT) &&
 				(m_queueProperties[i].queueFlags & VK_QUEUE_TRANSFER_BIT))
@@ -64,6 +91,10 @@ namespace RHI
 		{
 			// Find a dedicated compute queue
 			// Theoractically a dedicated compute queue should have only a compute flag
+			// This is the info that I scavenged across google
+			// But here for my nvidia 1070 there're no such queue family
+			// The nearest compute queue family I got is with compute, transfer and sparse binding
+			// That is, without graphic flag
 			if ((m_queueProperties[i].queueFlags & VK_QUEUE_COMPUTE_BIT) && !(m_queueProperties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT))
 			{
 				m_queueFamilyIndices[(uint32_t)QueueFamily::COMPUTE] = i;
@@ -93,6 +124,10 @@ namespace RHI
 		{
 			// Find a dedicated transfer queue
 			// Theoractically a dedicated transfer queue should have only a transfer flag
+			// This is the info that I scavenged across google
+			// But here for my nvidia 1070 there're no such queue family
+			// The nearest transfer queue family I got is with transfer and sparse binding
+			// That is, without graphic and compute flags
 			if ((m_queueProperties[i].queueFlags & VK_QUEUE_TRANSFER_BIT) &&
 				!(m_queueProperties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT) &&
 				!(m_queueProperties[i].queueFlags & VK_QUEUE_COMPUTE_BIT))
@@ -117,41 +152,27 @@ namespace RHI
 
 		ASSERTION(m_queueFamilyIndices[(uint32_t)QueueFamily::TRASFER] != -1);
 
-		//Get depth stencil format
-		std::vector<VkFormat> formats =
-		{
-			VK_FORMAT_D32_SFLOAT_S8_UINT,
-			VK_FORMAT_D32_SFLOAT,
-			VK_FORMAT_D24_UNORM_S8_UINT,
-			VK_FORMAT_D16_UNORM_S8_UINT,
-			VK_FORMAT_D16_UNORM
-		};
+		GET_INSTANCE_PROC_ADDR(m_pVulkanInstance->GetDeviceHandle(), GetPhysicalDeviceSurfaceCapabilitiesKHR);
+		GET_INSTANCE_PROC_ADDR(m_pVulkanInstance->GetDeviceHandle(), GetPhysicalDeviceSurfaceFormatsKHR);
+		GET_INSTANCE_PROC_ADDR(m_pVulkanInstance->GetDeviceHandle(), GetPhysicalDeviceSurfacePresentModesKHR);
+		GET_INSTANCE_PROC_ADDR(m_pVulkanInstance->GetDeviceHandle(), GetPhysicalDeviceSurfaceSupportKHR);
+		GET_INSTANCE_PROC_ADDR(m_pVulkanInstance->GetDeviceHandle(), CreateSwapchainKHR);
 
-		for (uint32_t i = 0; i < formats.size(); i++)
-		{
-			VkFormatProperties prop;
-			vkGetPhysicalDeviceFormatProperties(m_physicalDevice, formats[i], &prop);
-			if (prop.optimalTilingFeatures & VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT)
-			{
-				m_depthStencilFormat = formats[i];
-				break;
-			}
-		}
-
-		GET_INSTANCE_PROC_ADDR(instance->GetInstance(), GetPhysicalDeviceSurfaceCapabilitiesKHR);
-		GET_INSTANCE_PROC_ADDR(instance->GetInstance(), GetPhysicalDeviceSurfaceFormatsKHR);
-		GET_INSTANCE_PROC_ADDR(instance->GetInstance(), GetPhysicalDeviceSurfacePresentModesKHR);
-		GET_INSTANCE_PROC_ADDR(instance->GetInstance(), GetPhysicalDeviceSurfaceSupportKHR);
-		GET_INSTANCE_PROC_ADDR(instance->GetInstance(), CreateSwapchainKHR);
-		GET_INSTANCE_PROC_ADDR(instance->GetInstance(), CreateWin32SurfaceKHR);
-		GET_INSTANCE_PROC_ADDR(instance->GetInstance(), DestroySurfaceKHR);
-
+#if defined(_WIN32)
+		GET_INSTANCE_PROC_ADDR(m_pVulkanInstance->GetDeviceHandle(), CreateWin32SurfaceKHR);
+#endif
+		GET_INSTANCE_PROC_ADDR(m_pVulkanInstance->GetDeviceHandle(), DestroySurfaceKHR);
+		//return true;
+#if defined(_WIN32)
 		VkWin32SurfaceCreateInfoKHR surfaceInfo = {};
 		surfaceInfo.sType = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
 		surfaceInfo.hinstance = hInst;
 		surfaceInfo.hwnd = hWnd;
 
-		RETURN_FALSE_VK_RESULT(m_fpCreateWin32SurfaceKHR(instance->GetInstance(), &surfaceInfo, nullptr, &m_surface));
+		RETURN_FALSE_VK_RESULT(m_fpCreateWin32SurfaceKHR(m_pVulkanInstance->GetDeviceHandle(), &surfaceInfo, nullptr, &m_surface));
+#endif
+
+		RETURN_FALSE_VK_RESULT(m_fpGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice, m_surface, &m_surfaceCap));
 
 		std::vector<VkBool32> supports;
 		supports.resize(m_queueProperties.size());
@@ -159,6 +180,8 @@ namespace RHI
 		{
 			RETURN_FALSE_VK_RESULT(m_fpGetPhysicalDeviceSurfaceSupportKHR(m_physicalDevice, i, m_surface, &supports[i]));
 		}
+
+		// Assume all-round queue family is capable of present
 #if defined(_DEBUG)
 		uint32_t presentQueueIndex = -1;
 		for (uint32_t i = 0; i < m_queueProperties.size(); i++)
@@ -184,7 +207,7 @@ namespace RHI
 		m_presentModes.resize(presentModeCount);
 		RETURN_FALSE_VK_RESULT(m_fpGetPhysicalDeviceSurfacePresentModesKHR(m_physicalDevice, m_surface, &presentModeCount, m_presentModes.data()));
 
-		m_instance = instance;
+		m_pVulkanInstance = instance;
 		return true;
 	}
 

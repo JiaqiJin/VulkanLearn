@@ -13,18 +13,19 @@ void Application::InitVulkanInstance()
 {
 	VkApplicationInfo appInfo = {};
 	appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-	appInfo.pApplicationName = "KAWAII";
+	appInfo.pApplicationName = "VulkanLearn";
 	appInfo.apiVersion = (((1) << 22) | ((2) << 12) | (154));
 
+	//Need surface extension to create surface from device
 	std::vector<const char*> extensions = { EXTENSION_VULKAN_SURFACE };
 	std::vector<const char*> layers;
-
+#if defined(_WIN32)
 	extensions.push_back(EXTENSION_VULKAN_SURFACE_WIN32);
+#endif
 #if defined(_DEBUG)
 	layers.push_back(EXTENSION_VULKAN_VALIDATION_LAYER);
 	extensions.push_back(EXTENSION_VULKAN_DEBUG_REPORT);
 #endif
-
 	VkInstanceCreateInfo instCreateInfo = {};
 	instCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 	instCreateInfo.pApplicationInfo = &appInfo;
@@ -229,6 +230,19 @@ void Application::Update()
 	}
 }
 
+//void Application::testObject()
+//{
+//	uint32_t i = 1;
+//	m_CommandPool = std::make_shared<RHI::CommandPool>(m_pDevice, (RHI::PhysicalDevice::QueueFamily)i, RHI::CommandPool::CBPersistancy::COUNT);
+//	//RHI::CommandBuffer::CBLevel::PRIMARY
+//	m_CommandBuffer = m_CommandPool->AllocateCommandBuffer(RHI::CommandBuffer::CBLevel::PRIMARY);
+//	m_fence = std::make_shared<RHI::Fence>(m_pDevice);
+//	m_pQueue = std::make_shared<RHI::Queue>
+//		(m_pDevice, (RHI::PhysicalDevice::QueueFamily)i);
+//	m_pQueue->SubmitCommandBuffer(m_CommandBuffer, m_fence);
+//	std::cout << "HI";
+//}
+
 void Application::InitVulkan(HINSTANCE hInstance, WNDPROC wndproc)
 {
 	Log::Init();
@@ -238,4 +252,7 @@ void Application::InitVulkan(HINSTANCE hInstance, WNDPROC wndproc)
 	InitVulkanInstance();
 	InitPhysicalDevice(m_hPlatformInst, m_hWindow);
 	InitVulkanDevice();
+	RHI::GlobalDeviceObjects::GetInstance()->InitObjects(m_pDevice);
+	K_INFO("Init Vulkan Renderer");
+	//testObject();
 }

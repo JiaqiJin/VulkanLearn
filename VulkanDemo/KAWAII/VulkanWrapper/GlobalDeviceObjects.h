@@ -12,6 +12,7 @@ namespace RHI
 	class Queue;
 	class SwapChain;
 	class PhysicalDevice;
+	class CommandPool;
 
 	class GlobalDeviceObjects;
 
@@ -25,6 +26,7 @@ namespace RHI
 	protected:
 		std::shared_ptr<Device> m_pDevice;
 		std::shared_ptr<Queue> m_queues[(uint32_t)PhysicalDevice::QueueFamily::COUNT];
+		std::shared_ptr<CommandPool> m_pMainThreadCommandPools[(uint32_t)PhysicalDevice::QueueFamily::COUNT];
 
 		std::shared_ptr<SwapChain> m_pSwapChain;
 

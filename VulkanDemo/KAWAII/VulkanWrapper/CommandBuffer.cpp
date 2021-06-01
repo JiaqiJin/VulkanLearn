@@ -37,6 +37,7 @@ namespace RHI
 
 	bool CommandBuffer::Init(const VkCommandBufferAllocateInfo& info)
 	{
+		//m_info = info;
 		CHECK_VK_ERROR(vkAllocateCommandBuffers(m_pDevice->GetDeviceHandle(), &m_info, &m_commandBuffer));
 
 		return true;

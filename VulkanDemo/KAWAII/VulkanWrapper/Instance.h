@@ -10,15 +10,22 @@ namespace RHI
 	public:
 		~Instance();
 
-		VkInstance GetInstance() { return m_vulkanInst; }
-		const VkInstance GetInstance() const { return m_vulkanInst; }
+		VkInstance GetDeviceHandle() { return m_vulkanInst; }
+		//const VkInstance GetDeviceHandle() const { return m_vulkanInst; }
 
-		bool Init(const VkInstanceCreateInfo& createInfo);
+		bool Init(const VkInstanceCreateInfo&);
 
 	public:
-		static std::shared_ptr<Instance> Create(const VkInstanceCreateInfo& createInfo);
+		static std::shared_ptr<Instance> Create(const VkInstanceCreateInfo&);
 
 	private:
-		VkInstance m_vulkanInst;
+		VkInstance	m_vulkanInst;
+
+#ifdef _DEBUG
+		PFN_vkCreateDebugReportCallbackEXT				m_fpCreateDebugReportCallbackEXT;
+		PFN_vkDebugReportMessageEXT						m_fpDebugReportMessageEXT;
+		PFN_vkDestroyDebugReportCallbackEXT				m_fpDestroyDebugReportCallbackEXT;
+		VkDebugReportCallbackEXT						m_debugCallback;
+#endif
 	};
 }

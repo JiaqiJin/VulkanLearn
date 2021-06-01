@@ -2,15 +2,21 @@
 #include <vulkan/vulkan.h>
 
 #include "../Common/Singleton.h"
-
+#include "../VulkanWrapper/GlobalDeviceObjects.h"
 #include "../VulkanWrapper/Instance.h"
 #include "../VulkanWrapper/PhysicalDevice.h"
 #include "../VulkanWrapper/Device.h"
 #include "../VulkanWrapper/Semaphore.h"
+#include "../VulkanWrapper/CommandBuffer.h"
+#include "../VulkanWrapper/CommandPool.h"
+#include "../VulkanWrapper/Queue.h"
+#include "../VulkanWrapper/Fence.h"
 
 #include <vector>
 #include <memory>
 #include <Windows.h>
+
+
 
 class Application : public Singleton<Application>
 {
@@ -33,4 +39,12 @@ public:
 private:
 	HINSTANCE m_hPlatformInst;
 	HWND m_hWindow;
+
+	// Test
+private:
+	//void testObject();
+	//std::shared_ptr<RHI::Queue> m_pQueue;
+	//std::shared_ptr<RHI::CommandBuffer> m_CommandBuffer;
+	//std::shared_ptr<RHI::CommandPool> m_CommandPool;
+	//std::shared_ptr<RHI::Fence> m_fence;
 };

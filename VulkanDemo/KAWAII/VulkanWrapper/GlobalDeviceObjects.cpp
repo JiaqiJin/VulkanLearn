@@ -2,6 +2,7 @@
 #include "PhysicalDevice.h"
 #include "Queue.h"
 #include "SwapChain.h"
+#include "CommandPool.h"
 
 namespace RHI
 {
@@ -12,11 +13,16 @@ namespace RHI
 		for (uint32_t i = 0; i < (uint32_t)PhysicalDevice::QueueFamily::COUNT; i++)
 		{
 			m_queues[i] = std::make_shared<Queue>(pDevice, (PhysicalDevice::QueueFamily)i);
-			// TODO
+			m_pMainThreadCommandPools[i] = std::make_shared<CommandPool>(m_pDevice, PhysicalDevice::QueueFamily::ALL_ROUND, CommandPool::CBPersistancy::PERSISTANT);
 		}
 
 		m_pSwapChain = std::make_shared<SwapChain>(pDevice);
 
 		return true;
+	}
+
+	GlobalDeviceObjects::~GlobalDeviceObjects()
+	{
+
 	}
 }
