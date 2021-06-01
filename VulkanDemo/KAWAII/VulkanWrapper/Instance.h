@@ -8,15 +8,18 @@ namespace RHI
 	class Instance
 	{
 	public:
+		Instance(VkInstanceCreateInfo createInfo);
 		~Instance();
 
+		Instance(const Instance&) = delete;
+		Instance(Instance&&) = delete;
+		Instance& operator=(const Instance&) = delete;
+		Instance& operator=(Instance&&) = delete;
+
 		VkInstance GetDeviceHandle() { return m_vulkanInst; }
-		//const VkInstance GetDeviceHandle() const { return m_vulkanInst; }
+		const VkInstance GetDeviceHandle() const { return m_vulkanInst; }
 
 		bool Init(const VkInstanceCreateInfo&);
-
-	public:
-		static std::shared_ptr<Instance> Create(const VkInstanceCreateInfo&);
 
 	private:
 		VkInstance	m_vulkanInst;

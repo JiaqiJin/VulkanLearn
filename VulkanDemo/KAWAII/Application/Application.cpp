@@ -34,7 +34,7 @@ void Application::InitVulkanInstance()
 	instCreateInfo.enabledLayerCount = (int32_t)layers.size();
 	instCreateInfo.ppEnabledLayerNames = layers.data();
 
-	m_pVulkanInstance = RHI::Instance::Create(instCreateInfo);
+	m_pVulkanInstance = std::make_shared<RHI::Instance>(instCreateInfo);
 	assert(m_pVulkanInstance != nullptr);
 }
 
@@ -253,6 +253,6 @@ void Application::InitVulkan(HINSTANCE hInstance, WNDPROC wndproc)
 	InitPhysicalDevice(m_hPlatformInst, m_hWindow);
 	InitVulkanDevice();
 	RHI::GlobalDeviceObjects::GetInstance()->InitObjects(m_pDevice);
-	K_INFO("Init Vulkan Renderer");
+
 	//testObject();
 }

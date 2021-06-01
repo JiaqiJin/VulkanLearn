@@ -27,7 +27,7 @@ namespace RHI
 
 		~PhysicalDevice();
 
-		bool Init(const std::shared_ptr<Instance>& instance, HINSTANCE hInst, HWND hWnd);
+		bool Init(HINSTANCE hInst, HWND hWnd);
 
 		// Getters
 		const VkPhysicalDevice GetDeviceHandle() const { return m_physicalDevice; }

@@ -13,11 +13,11 @@ namespace RHI
 	PhysicalDevice::PhysicalDevice(const std::shared_ptr<Instance>& instance, HINSTANCE hInst, HWND hWnd)
 		: m_pVulkanInstance(instance)
 	{
-		if (!Init(instance, hInst, hWnd))
+		if (!Init(hInst, hWnd))
 			K_ERROR("Error Initialize Physical Device");
 	}
 
-	bool PhysicalDevice::Init(const std::shared_ptr<Instance>& instance, HINSTANCE hInst, HWND hWnd)
+	bool PhysicalDevice::Init(HINSTANCE hInst, HWND hWnd)
 	{
 		//Get an available physical device
 		uint32_t gpuCount = 0;
@@ -91,10 +91,6 @@ namespace RHI
 		{
 			// Find a dedicated compute queue
 			// Theoractically a dedicated compute queue should have only a compute flag
-			// This is the info that I scavenged across google
-			// But here for my nvidia 1070 there're no such queue family
-			// The nearest compute queue family I got is with compute, transfer and sparse binding
-			// That is, without graphic flag
 			if ((m_queueProperties[i].queueFlags & VK_QUEUE_COMPUTE_BIT) && !(m_queueProperties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT))
 			{
 				m_queueFamilyIndices[(uint32_t)QueueFamily::COMPUTE] = i;
@@ -102,7 +98,7 @@ namespace RHI
 			}
 		}
 
-		// No dedicated compute queue? Alright then, get one family that is capable of dealing with compute
+		// No dedicated compute queue? Get one family that is capable of dealing with compute
 		if (m_queueFamilyIndices[(uint32_t)QueueFamily::COMPUTE] == -1)
 		{
 			for (uint32_t i = 0; i < m_queueProperties.size(); i++)
@@ -124,10 +120,6 @@ namespace RHI
 		{
 			// Find a dedicated transfer queue
 			// Theoractically a dedicated transfer queue should have only a transfer flag
-			// This is the info that I scavenged across google
-			// But here for my nvidia 1070 there're no such queue family
-			// The nearest transfer queue family I got is with transfer and sparse binding
-			// That is, without graphic and compute flags
 			if ((m_queueProperties[i].queueFlags & VK_QUEUE_TRANSFER_BIT) &&
 				!(m_queueProperties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT) &&
 				!(m_queueProperties[i].queueFlags & VK_QUEUE_COMPUTE_BIT))
@@ -137,7 +129,6 @@ namespace RHI
 			}
 		}
 
-		// No dedicated transfer queue? Alright then, get one family that is capable of dealing with transfer
 		if (m_queueFamilyIndices[(uint32_t)QueueFamily::TRASFER] == -1)
 		{
 			for (uint32_t i = 0; i < m_queueProperties.size(); i++)
@@ -207,7 +198,6 @@ namespace RHI
 		m_presentModes.resize(presentModeCount);
 		RETURN_FALSE_VK_RESULT(m_fpGetPhysicalDeviceSurfacePresentModesKHR(m_physicalDevice, m_surface, &presentModeCount, m_presentModes.data()));
 
-		m_pVulkanInstance = instance;
 		return true;
 	}
 

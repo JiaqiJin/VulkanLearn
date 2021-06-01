@@ -32,12 +32,11 @@ namespace RHI
 		}
 	}
 
-	std::shared_ptr<Instance> Instance::Create(const VkInstanceCreateInfo& info)
+	Instance::Instance(VkInstanceCreateInfo createInfo)
 	{
-		std::shared_ptr<Instance> pInstance = std::make_shared<Instance>();
-		if (pInstance.get() && pInstance->Init(info))
-			return pInstance;
-		return nullptr;
+		if(!Init(createInfo))
+			K_ERROR("Error Initialize Vulkan Instance");
+		//CHECK_VK_ERROR(vkCreateInstance(&createInfo, nullptr, &m_vulkanInst));
 	}
 
 	bool Instance::Init(const VkInstanceCreateInfo& info)
