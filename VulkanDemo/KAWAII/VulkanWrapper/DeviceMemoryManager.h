@@ -57,7 +57,7 @@ namespace RHI
 	private:
 		typedef struct _MemoryNode
 		{
-			uint32_t bumByte = 0;
+			uint32_t numBytes = 0;
 			uint32_t memProperty = 0;
 			void* pData = nullptr;
 			VkDeviceMemory memory;
@@ -73,10 +73,21 @@ namespace RHI
 		} BindingInfo;
 
 	public:
+		static const uint32_t DEVICE_MEMORY_ALLOCATE_INC = 1024 * 1024 * 512;
+		static const uint32_t STAGING_MEMORY_ALLOCATE_INC = 1024 * 1024 * 256;
+
+	public:
 		DeviceMemoryManager(const std::shared_ptr<Device> pDevice);
 		~DeviceMemoryManager();
 
 	protected:
+		// Memory allocation
+		void AllocateBufferMemory(uint32_t key, uint32_t numBytes, uint32_t memoryTypeBits, uint32_t memoryPropertyBits, 
+			uint32_t& typeIndex, uint32_t& offset);
+		bool FindFreeBufferMemoryChunk(uint32_t key, uint32_t typeIndex, uint32_t numBytes, uint32_t& offset);
+		void AllocateImageMemory(uint32_t key, uint32_t numBytes, uint32_t memoryTypeBits, 
+			uint32_t memoryPropertyBits, uint32_t& typeIndex, uint32_t& offset);
+
 		void FreeBufferMemChunk(uint32_t key);
 		void FreeImageMemChunk(uint32_t key);
 
@@ -92,6 +103,8 @@ namespace RHI
 		// uint32_t stands for actual buffer binding table index
 		// bool stands for whether it's freed
 		std::vector<std::pair<uint32_t, bool>> m_bufferBindingLookupTable;
+
+		static const uint32_t LOOKUP_TABLE_SIZE_INC = 256;
 
 		std::shared_ptr<Device> m_pDevice;
 		friend class MemoryKey;
