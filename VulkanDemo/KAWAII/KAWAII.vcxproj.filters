@@ -102,6 +102,9 @@
     <ClCompile Include="VulkanWrapper\Buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="VulkanWrapper\Image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Math\Math.h">
@@ -195,6 +198,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VulkanWrapper\Buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VulkanWrapper\Image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

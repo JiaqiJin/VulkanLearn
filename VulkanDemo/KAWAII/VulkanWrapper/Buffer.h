@@ -3,6 +3,7 @@
 #include <vulkan/vulkan.h>
 
 #include "BufferBase.h"
+#include "DeviceMemoryManager.h"
 
 #include <memory>
 #include <vector>
