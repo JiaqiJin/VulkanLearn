@@ -20,6 +20,8 @@ namespace RHI
 		VkAccessFlags GetAccessFlags() const { return m_accessFlags; }
 		const VkBufferCreateInfo& GetBufferInfo() const { return m_info; }
 
+		virtual VkBuffer GetDeviceHandle() const = 0;
+
 	protected:
 		VkBufferCreateInfo m_info;
 		VkPipelineStageFlags m_accessStages;

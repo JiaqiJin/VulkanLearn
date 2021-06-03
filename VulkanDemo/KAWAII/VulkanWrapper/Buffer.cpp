@@ -12,6 +12,18 @@ namespace RHI
 
 	}
 
+	VkMemoryRequirements Buffer::GetMemoryReqirments() const
+	{
+		VkMemoryRequirements reqs;
+		vkGetBufferMemoryRequirements(m_pDevice->GetDeviceHandle(), m_buffer, &reqs);
+		return reqs;
+	}
+
+	void Buffer::BindMemory(VkDeviceMemory memory, uint32_t offset) const
+	{
+		CHECK_VK_ERROR(vkBindBufferMemory(m_pDevice->GetDeviceHandle(), m_buffer, memory, offset));
+	}
+
 	Buffer::~Buffer()
 	{
 		if (m_buffer)

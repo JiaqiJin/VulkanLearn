@@ -5,6 +5,8 @@
 #include <unordered_map>
 #include <memory>
 #include <vector>
+// https://www.informit.com/articles/article.aspx?p=2756465&seqNum=3
+// https://developer.nvidia.com/vulkan-memory-management  https://github.com/KhronosGroup/Vulkan-Guide/blob/master/chapters/memory_allocation.md
 /*
 * Memory Management for buffers : There will be 32 chunk of memory in "Buffer Mem Pool",
 * exactly the same as Vulkan physical device provided "VK_MAX_MEMORY_TYPES", and each of them consiste size, data ptr,
@@ -12,18 +14,18 @@
 * and using "type index" to acquire Vulkan memory object from "Buffer Memory Pool"
 * Memory Management for buffers Table : 
 * 
- Buffer MEM POOL			Binding Lookup Table		Binding Info Table
---------------- 			--------------- 			---------------
-|	Mem Node(0)		|		|		Key 0		|		|	Binding Info(0)	||
-|	pData, NumByte  |	  ->|	|BindingInfo|	|		|	|Type Index|	||
-|	vkMemory		|	-/	|	-Index			|		|	|Start Byte|	||
-|	Binding List	|--	/	|	|Freed Flag|	|		|	| numByte  |	||
-|	|key0, key1|	|----->	|		Key1		|	  ->|	|  pData   |	||
-|	|key2, key3|	|		|	|BindingInfo|	|	-/	|					||
-|		.			|		|	-Index			|-/		|		.			||
-|		.			|		|	|Freed Flag|	|		|		.			||
-|		.			|		|		.			|		|					||
-|	Mem Node(32)	|->		|		.			|		|	Binding Info(n)	||
+* Buffer MEM POOL			Binding Lookup Table		Binding Info Table
+*--------------- 			--------------- 			---------------
+*|	Mem Node(0)		|		|		Key 0		|		|	Binding Info(0)	|
+*|	pData, NumByte  |	  ->|	|BindingInfo|	|		|	|Type Index|	|
+*|	vkMemory		|	-/	|	-Index			|		|	|Start Byte|	|
+*|	Binding List	|--	/	|	|Freed Flag|	|		|	| numByte  |	|
+*|	|key0, key1|	|----->	|		Key1		|	  ->|	|  pData   |	|
+*|	|key2, key3|	|		|	|BindingInfo|	|	-/	|					|
+*|		.			|		|	-Index			|-/		|		.			|
+*|		.			|		|	|Freed Flag|	|		|		.			|
+*|		.			|		|		.			|		|					|
+*|	Mem Node(32)	|->		|		.			|		|	Binding Info(n)	|
 
 * Memory Management for images : 
 * Each image must bind a different memory object. So image buffer pool doesn't update a binding list for multiple images.
@@ -52,7 +54,7 @@ namespace RHI
 		friend class DeviceMemoryManager;
 	};
 
-	class DeviceMemoryManager
+	class DeviceMemoryManager : public std::enable_shared_from_this<DeviceMemoryManager>
 	{
 	private:
 		typedef struct _MemoryNode
@@ -80,6 +82,12 @@ namespace RHI
 		DeviceMemoryManager(const std::shared_ptr<Device> pDevice);
 		~DeviceMemoryManager();
 
+		std::shared_ptr<MemoryKey> AllocateBufferMemChunk(const std::shared_ptr<Buffer>& pBuffer, uint32_t memoryPropertyBits, const void* pData);
+		std::shared_ptr<MemoryKey> AllocateImageMemChunk(const std::shared_ptr<Image>& pImage, uint32_t memoryPropertyBits, const void* pData);
+		bool UpdateBufferMemChunk(const std::shared_ptr<MemoryKey>& pMemKey, const void* pData, uint32_t offset, uint32_t numBytes);
+		bool UpdateImageMemChunk(const std::shared_ptr<MemoryKey>& pMemKey, const void* pData, uint32_t offset, uint32_t numBytes);
+		void* GetDataPtr(const std::shared_ptr<MemoryKey>& pMemKey);
+
 	protected:
 		// Memory allocation
 		void AllocateBufferMemory(uint32_t key, uint32_t numBytes, uint32_t memoryTypeBits, uint32_t memoryPropertyBits, 
@@ -90,6 +98,9 @@ namespace RHI
 
 		void FreeBufferMemChunk(uint32_t key);
 		void FreeImageMemChunk(uint32_t key);
+
+		void UpdateMemoryChunk(uint32_t offset, uint32_t numBytes, void* pDst, const void* pData);
+		void ReleaseMemory();
 
 	private:
 		std::vector<MemoryNode> m_bufferMemPool;

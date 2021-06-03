@@ -3,6 +3,7 @@
 #include "Queue.h"
 #include "SwapChain.h"
 #include "CommandPool.h"
+#include "DeviceMemoryManager.h"
 
 namespace RHI
 {
@@ -15,6 +16,9 @@ namespace RHI
 			m_queues[i] = std::make_shared<Queue>(pDevice, (PhysicalDevice::QueueFamily)i);
 			m_pMainThreadCommandPools[i] = std::make_shared<CommandPool>(m_pDevice, PhysicalDevice::QueueFamily::ALL_ROUND, CommandPool::CBPersistancy::PERSISTANT);
 		}
+
+		if (m_pDeviceMemMgr == nullptr)
+			m_pDeviceMemMgr = std::make_shared<DeviceMemoryManager>(m_pDevice);
 
 		m_pSwapChain = std::make_shared<SwapChain>(pDevice);
 
