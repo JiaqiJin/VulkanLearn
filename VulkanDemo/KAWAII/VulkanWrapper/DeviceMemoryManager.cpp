@@ -33,7 +33,7 @@ namespace RHI
 		m_bufferMemPool.resize(sizeof(uint32_t) * 8, {}); // Same size as bit count of uint32_t, i.e. type index count
 	}
 
-	std::shared_ptr<MemoryKey> DeviceMemoryManager::AllocateBufferMemChunk(const std::shared_ptr<Buffer>& pBuffer,
+	std::shared_ptr<MemoryKey> DeviceMemoryManager::AllocateBufferMemChunk(const Buffer* pBuffer,
 		uint32_t memoryPropertyBits, const void* pData)
 	{
 		std::shared_ptr<MemoryKey> pMemKey = std::make_shared<MemoryKey>(shared_from_this(), true);
@@ -80,7 +80,7 @@ namespace RHI
 		return pMemKey;
 	}
 
-	std::shared_ptr<MemoryKey> DeviceMemoryManager::AllocateImageMemChunk(const std::shared_ptr<Image>& pImage, 
+	std::shared_ptr<MemoryKey> DeviceMemoryManager::AllocateImageMemChunk(const Image* pImage,
 		uint32_t memoryPropertyBits, const void* pData)
 	{
 		std::shared_ptr<MemoryKey> pMemKey = std::make_shared<MemoryKey>(shared_from_this(), false);

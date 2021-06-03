@@ -22,7 +22,7 @@ namespace RHI
 		std::vector<gli::texture> textures;
 	} GliImageWrapper;
 
-	class Image : public VKGPUSyncRes, public std::enable_shared_from_this<Image>
+	class Image : public VKGPUSyncRes//, public std::enable_shared_from_this<Image>
 	{
 	public:
 		Image(const std::shared_ptr<Device>& pDevice);

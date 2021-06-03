@@ -10,7 +10,7 @@ namespace RHI
 	Image::Image(const std::shared_ptr<Device>& pDevice)
 		: VKGPUSyncRes(pDevice)
 	{
-
+		
 	}
 
 	VkMemoryRequirements Image::GetMemoryReqirments() const
@@ -39,7 +39,7 @@ namespace RHI
 		m_info.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 
 		CHECK_VK_ERROR(vkCreateImage(m_pDevice->GetDeviceHandle(), &m_info, nullptr, &m_image));
-		m_pMemKey = DeviceMemMgr()->AllocateImageMemChunk(shared_from_this(), memoryPropertyFlag);
+		m_pMemKey = DeviceMemMgr()->AllocateImageMemChunk(this, memoryPropertyFlag);
 
 		m_info.initialLayout = layout;
 		m_memProperty = memoryPropertyFlag;

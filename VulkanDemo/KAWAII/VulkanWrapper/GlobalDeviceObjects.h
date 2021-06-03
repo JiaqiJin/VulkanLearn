@@ -4,7 +4,6 @@
 #include "Device.h"
 #include "../Common/Singleton.h"
 #include "PhysicalDevice.h"
-
 #include <map>
 
 namespace RHI
@@ -14,6 +13,9 @@ namespace RHI
 	class PhysicalDevice;
 	class CommandPool;
 	class DeviceMemoryManager;
+
+	//class Image;
+	//class MemoryKey;
 
 	class GlobalDeviceObjects;
 
@@ -47,5 +49,7 @@ namespace RHI
 
 		std::shared_ptr<SwapChain> m_pSwapChain;
 
+	/*	std::shared_ptr<MemoryKey> test_node;
+		std::shared_ptr<Image> m_image;*/
 	};
 }
