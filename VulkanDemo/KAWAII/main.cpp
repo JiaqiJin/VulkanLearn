@@ -57,3 +57,4 @@ int main(int argc, const char* argv[])
 */
 
 // https://github.com/KhronosGroup/Vulkan-Docs/wiki/Synchronization-Examples
+// https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#preamble
