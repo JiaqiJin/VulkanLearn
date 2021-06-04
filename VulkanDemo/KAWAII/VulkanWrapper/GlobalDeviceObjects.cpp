@@ -5,6 +5,9 @@
 #include "CommandPool.h"
 #include "DeviceMemoryManager.h"
 #include "Image.h"
+#include "Buffer.h"
+#include "StagingBuffer.h"
+
 namespace RHI
 {
 	bool GlobalDeviceObjects::InitObjects(const std::shared_ptr<Device>& pDevice)
@@ -24,6 +27,9 @@ namespace RHI
 	
 	/*	m_image = std::make_shared<Image>(m_pDevice);
 		test_node = m_pDeviceMemMgr->AllocateImageMemChunk(m_image.get(), VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);*/
+		uint32_t biytes = 1000;
+		m_bufferTest = std::shared_ptr<StagingBuffer>(new StagingBuffer(m_pDevice, biytes));
+
 
 		return true;
 	}

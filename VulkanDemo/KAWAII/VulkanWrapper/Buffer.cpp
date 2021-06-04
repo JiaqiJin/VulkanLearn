@@ -6,8 +6,8 @@
 
 namespace RHI
 {
-	Buffer::Buffer(const std::shared_ptr<Device>& pDevice, const VkBufferCreateInfo& info, uint32_t memoryPropertyFlag)
-		: BufferBase(pDevice, info)
+	Buffer::Buffer(const std::shared_ptr<Device>& pDevice, uint32_t memoryPropertyFlag)
+		: BufferBase(pDevice)
 	{
 
 	}

@@ -111,6 +111,9 @@
     <ClCompile Include="Thread\ThreadWorker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="VulkanWrapper\StagingBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Math\Math.h">
@@ -216,6 +219,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Thread\ThreadTaskQueue.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VulkanWrapper\StagingBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -12,13 +12,13 @@ namespace RHI
 	class BufferBase : public VKGPUSyncRes
 	{
 	public:
-		BufferBase(const std::shared_ptr<Device>& pDevice, const VkBufferCreateInfo& info);
+		BufferBase(const std::shared_ptr<Device>& pDevice);
 		virtual ~BufferBase() = default;
 
 		// Getters
 		VkPipelineStageFlags GetAccessStages() const { return m_accessStages; }
 		VkAccessFlags GetAccessFlags() const { return m_accessFlags; }
-		const VkBufferCreateInfo& GetBufferInfo() const { return m_info; }
+		//virtual const VkBufferCreateInfo& GetBufferInfo() const = 0;
 
 		virtual VkBuffer GetDeviceHandle() const = 0;
 

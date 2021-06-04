@@ -39,6 +39,7 @@ namespace RHI
 		m_info.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 
 		CHECK_VK_ERROR(vkCreateImage(m_pDevice->GetDeviceHandle(), &m_info, nullptr, &m_image));
+		// Memory Allocation
 		m_pMemKey = DeviceMemMgr()->AllocateImageMemChunk(this, memoryPropertyFlag);
 
 		m_info.initialLayout = layout;
@@ -53,6 +54,37 @@ namespace RHI
 		const VkImageCreateInfo& info, uint32_t memoryPropertyFlag)
 	{
 		return true;
+	}
+
+	void Image::CreateEmptyTexture(const Vector3ui& size,
+		uint32_t mipLevels,
+		uint32_t layers,
+		VkFormat format,
+		VkImageLayout defaultLayout,
+		VkImageUsageFlags usage,
+		VkPipelineStageFlags stageFlag,
+		VkAccessFlags accessFlag,
+		VkImageViewCreateFlags createFlag)
+	{
+		// TODO
+
+		VkImageCreateInfo textureCreateInfo = {};
+		textureCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
+		textureCreateInfo.flags = createFlag;
+		textureCreateInfo.format = format;
+		textureCreateInfo.usage = usage;
+		textureCreateInfo.extent.depth = size.z;
+		textureCreateInfo.extent.width = size.x;
+		textureCreateInfo.extent.height = size.y;
+		textureCreateInfo.arrayLayers = layers;
+		textureCreateInfo.imageType = size.z == 1 ? VK_IMAGE_TYPE_2D : VK_IMAGE_TYPE_3D;
+		textureCreateInfo.initialLayout = defaultLayout;
+		textureCreateInfo.mipLevels = mipLevels;
+		textureCreateInfo.samples = VK_SAMPLE_COUNT_1_BIT;
+		textureCreateInfo.tiling = VK_IMAGE_TILING_OPTIMAL; // Texels are laid out in an implementation defined order for optimal access
+		textureCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+
+		Init(textureCreateInfo, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 	}
 
 	Image::~Image()

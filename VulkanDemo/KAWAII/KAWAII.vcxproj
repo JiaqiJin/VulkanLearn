@@ -178,6 +178,7 @@
     <ClCompile Include="VulkanWrapper\RenderPass.cpp" />
     <ClCompile Include="VulkanWrapper\Semaphore.cpp" />
     <ClCompile Include="VulkanWrapper\ShaderModule.cpp" />
+    <ClCompile Include="VulkanWrapper\StagingBuffer.cpp" />
     <ClCompile Include="VulkanWrapper\SwapChain.cpp" />
     <ClCompile Include="VulkanWrapper\VKFenceGuardRes.cpp" />
     <ClCompile Include="VulkanWrapper\VKGPUSyncRes.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="VulkanWrapper\RenderPass.h" />
     <ClInclude Include="VulkanWrapper\Semaphore.h" />
     <ClInclude Include="VulkanWrapper\ShaderModule.h" />
+    <ClInclude Include="VulkanWrapper\StagingBuffer.h" />
     <ClInclude Include="VulkanWrapper\SwapChain.h" />
     <ClInclude Include="VulkanWrapper\VKFenceGuardRes.h" />
     <ClInclude Include="VulkanWrapper\VKGPUSyncRes.h" />

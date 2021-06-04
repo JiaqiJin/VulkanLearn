@@ -13,7 +13,7 @@ namespace RHI
 	class Buffer : public BufferBase
 	{
 	public:
-		Buffer(const std::shared_ptr<Device>& pDevice, const VkBufferCreateInfo& info, uint32_t memoryPropertyFlag);
+		Buffer(const std::shared_ptr<Device>& pDevice, uint32_t memoryPropertyFlag);
 
 		virtual ~Buffer();
 

@@ -3,7 +3,7 @@
 #include "Buffer.h"
 #include "VKGPUSyncRes.h"
 #include "Buffer.h"
-
+#include "../Math/Math.h"
 #include <gli/gli.hpp>
 
 #include <memory>
@@ -30,9 +30,22 @@ namespace RHI
 
 		// Getters
 		VkImage GetDeviceHandle() const { return m_image; }
+		const VkImageCreateInfo& GetImageInfo() const { return m_info; }
+		virtual uint32_t GetMemoryProperty() const { return m_memProperty; }
 		virtual VkMemoryRequirements GetMemoryReqirments() const;
 
 		void BindMemory(VkDeviceMemory memory, uint32_t offset) const;
+
+	public:
+		void CreateEmptyTexture(const Vector3ui& size,
+			uint32_t mipLevels,
+			uint32_t layers,
+			VkFormat format,
+			VkImageLayout defaultLayout,
+			VkImageUsageFlags usage,
+			VkPipelineStageFlags stageFlag,
+			VkAccessFlags accessFlag,
+			VkImageViewCreateFlags createFlag = 0);
 
 	protected:
 		bool Init( VkImage img);

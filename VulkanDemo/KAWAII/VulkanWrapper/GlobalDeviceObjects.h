@@ -16,6 +16,7 @@ namespace RHI
 
 	//class Image;
 	//class MemoryKey;
+	class StagingBuffer;
 
 	class GlobalDeviceObjects;
 
@@ -48,6 +49,8 @@ namespace RHI
 		std::shared_ptr<DeviceMemoryManager> m_pDeviceMemMgr;
 
 		std::shared_ptr<SwapChain> m_pSwapChain;
+
+		std::shared_ptr<StagingBuffer> m_bufferTest;
 
 	/*	std::shared_ptr<MemoryKey> test_node;
 		std::shared_ptr<Image> m_image;*/
