@@ -4,13 +4,15 @@
 #include <memory>
 #include <vector>
 #include <mutex>
-
+// https://gpuopen.com/learn/vulkan-renderpasses/
 namespace RHI
 {
 	class Device;
 	// Specify color and depth buffer, how many sampler to use and how their content shoul be handled throughout the rendering operation
+	// Contains the structure of frame. In simple for, a RenderPass encapsulates the set of framebuffer attacments.
 	// In Vulkan, Render pass consists of one or more subpasses; for simple rendering operations.
 	// Subpass : are subsequence rendering operation that depend on the framebuffer in previus passes. 
+	// Each subpass can reference a subset of the framebuffer attachements. 
 	class RenderPass
 	{
 	public:

@@ -23,8 +23,12 @@ namespace RHI
 
 		void BindMemory(VkDeviceMemory memory, uint32_t offset) const;
 
+		bool Init(const VkBufferCreateInfo& info, uint32_t memoryPropertyFlag);
+		 
+		static std::shared_ptr<Buffer> Create(const std::shared_ptr<Device>& pDevice, const VkBufferCreateInfo& info, uint32_t memoryPropertyFlag);
 	protected:
 		VkBuffer m_buffer = 0;
-
+		bool m_isHostVisible;
+		std::shared_ptr<MemoryKey> m_pMemKey;
 	};
 }

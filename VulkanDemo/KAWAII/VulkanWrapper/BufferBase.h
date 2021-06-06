@@ -22,6 +22,8 @@ namespace RHI
 
 		virtual VkBuffer GetDeviceHandle() const = 0;
 
+		bool Init(const VkBufferCreateInfo& info);
+
 	protected:
 		VkBufferCreateInfo m_info;
 		VkPipelineStageFlags m_accessStages;

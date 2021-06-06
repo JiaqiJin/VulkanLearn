@@ -9,4 +9,11 @@ namespace RHI
 
 	}
 
+	bool BufferBase::Init(const VkBufferCreateInfo& info)
+	{
+		m_info = info;
+
+		return true;
+	}
+
 }
