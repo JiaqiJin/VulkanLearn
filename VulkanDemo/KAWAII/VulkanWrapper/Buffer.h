@@ -14,6 +14,7 @@ namespace RHI
 	{
 	public:
 		Buffer(const std::shared_ptr<Device>& pDevice, uint32_t memoryPropertyFlag);
+		Buffer(const std::shared_ptr<Device>& pDevice, const VkBufferCreateInfo& info ,uint32_t memoryPropertyFlag);
 
 		virtual ~Buffer();
 
@@ -24,8 +25,9 @@ namespace RHI
 		void BindMemory(VkDeviceMemory memory, uint32_t offset) const;
 
 		bool Init(const VkBufferCreateInfo& info, uint32_t memoryPropertyFlag);
-		 
+		
 		static std::shared_ptr<Buffer> Create(const std::shared_ptr<Device>& pDevice, const VkBufferCreateInfo& info, uint32_t memoryPropertyFlag);
+
 	protected:
 		VkBuffer m_buffer = 0;
 		bool m_isHostVisible;

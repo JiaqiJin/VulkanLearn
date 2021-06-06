@@ -1,5 +1,8 @@
 #include "VertexBuffer.h"
 
+#include "../Common/Macro.h"
+#include "../Common/Logger.h"
+
 namespace RHI
 {
 	VertexBuffer::VertexBuffer(const std::shared_ptr<Device> pDevice, uint32_t numBytes)
@@ -10,6 +13,7 @@ namespace RHI
 		info.usage = VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
 		info.size = numBytes;
 
-		m_info = info;
+		if(!Buffer::Init(info, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT))
+			K_ERROR("Error Initialize Vertex Buffer");
 	}
 }

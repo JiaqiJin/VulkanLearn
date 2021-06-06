@@ -29,7 +29,12 @@ namespace RHI
 		test_node = m_pDeviceMemMgr->AllocateImageMemChunk(m_image.get(), VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);*/
 		uint32_t biytes = 1000;
 		m_bufferTest = std::shared_ptr<StagingBuffer>(new StagingBuffer(m_pDevice, biytes));
-
+		VkBuffer buffer = m_bufferTest->GetDeviceHandle();
+		
+		VkBufferCreateInfo info = m_bufferTest->GetBufferInfo();
+		VkBufferCreateInfo _info = m_bufferTest->GetBufferInfo();
+		
+		//m_buffer = Buffer::Create(m_pDevice, _info, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
 
 		return true;
 	}

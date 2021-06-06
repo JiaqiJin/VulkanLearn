@@ -19,7 +19,7 @@ namespace RHI
 		VkPipelineStageFlags GetAccessStages() const { return m_accessStages; }
 		VkAccessFlags GetAccessFlags() const { return m_accessFlags; }
 		//virtual const VkBufferCreateInfo& GetBufferInfo() const = 0;
-
+		VkBufferCreateInfo GetBufferInfo() const { return m_info; }
 		virtual VkBuffer GetDeviceHandle() const = 0;
 
 		bool Init(const VkBufferCreateInfo& info);

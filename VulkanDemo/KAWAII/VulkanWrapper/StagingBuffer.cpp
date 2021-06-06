@@ -11,7 +11,8 @@ namespace RHI
 		info.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
 		info.size = numBytes;
 
-		m_info = info;
+		if (!Buffer::Init(info, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT))
+			K_ERROR("Error Initialize Vertex Buffer");
 	}
 
 	StagingBuffer::StagingBuffer(const std::shared_ptr<Device>& pDevice, uint32_t numBytes, bool ReadableStagingBuffer)

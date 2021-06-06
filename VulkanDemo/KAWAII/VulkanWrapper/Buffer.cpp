@@ -10,15 +10,15 @@ namespace RHI
 	Buffer::Buffer(const std::shared_ptr<Device>& pDevice, uint32_t memoryPropertyFlag)
 		: BufferBase(pDevice)
 	{
-		if (m_info.sType != VK_NULL_HANDLE)
-		{
-			CHECK_VK_ERROR(vkCreateBuffer(m_pDevice->GetDeviceHandle(), &m_info, nullptr, &m_buffer));
-			m_pMemKey = DeviceMemMgr()->AllocateBufferMemChunk(this, memoryPropertyFlag);
+		if (!Init(m_info, memoryPropertyFlag))
+			K_ERROR("Error Initialize Buffer");
+	}
 
-			m_isHostVisible = memoryPropertyFlag & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT;
-		}
-		/*else
-			K_INFO("VkBufferCreateInfo is NULL");*/
+	Buffer::Buffer(const std::shared_ptr<Device>& pDevice, const VkBufferCreateInfo& info, uint32_t memoryPropertyFlag)
+		: BufferBase(pDevice)
+	{
+		if (!Init(m_info, memoryPropertyFlag))
+			K_ERROR("Error Initialize Buffer");
 	}
 
 	bool Buffer::Init(const VkBufferCreateInfo& info, uint32_t memoryPropertyFlag)
@@ -34,7 +34,7 @@ namespace RHI
 
 	std::shared_ptr<Buffer> Buffer::Create(const std::shared_ptr<Device>& pDevice, const VkBufferCreateInfo& info, uint32_t memoryPropertyFlag)
 	{
-		std::shared_ptr<Buffer> pBuffer = std::make_shared<Buffer>(pDevice, memoryPropertyFlag);
+		std::shared_ptr<Buffer> pBuffer = std::make_shared<Buffer>(pDevice, info, memoryPropertyFlag);
 		if (pBuffer.get() && pBuffer->Init(info, memoryPropertyFlag))
 			return pBuffer;
 		return nullptr;
